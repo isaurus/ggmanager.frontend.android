@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "304409997731",
+    "project_id": "ggmanager-8ad40",
+    "storage_bucket": "ggmanager-8ad40.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304409997731:android:02679c46ce978da5972a16",
+        "android_client_info": {
+          "package_name": "com.isaac.ggmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304409997731-841jevq481j735te6j9uei2n8ngbnk59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaac.ggmanager",
+            "certificate_hash": "a85aa4e7230f3d3d9f5b8151dd047716842f88c9"
+          }
+        },
+        {
+          "client_id": "304409997731-3785edelq99hb5b7j2pvlf7mtsc1uv6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD89vQzsRe3lVPk8MEhWHrZPag44K8o7aM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304409997731-3785edelq99hb5b7j2pvlf7mtsc1uv6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
