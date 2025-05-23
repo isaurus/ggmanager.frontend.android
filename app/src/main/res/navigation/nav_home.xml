@@ -24,9 +24,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_teamContainerFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment"/>
     </fragment>
 
     <fragment
@@ -49,33 +46,6 @@
         <action
             android:id="@+id/action_soloQFragment_to_teamContainerFragment"
             app:destination="@id/teamContainerFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="com.isaac.ggmanager.ui.home.userprofile.UserProfileFragment"
-        android:label="UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile">
-        <action
-            android:id="@+id/action_userProfileFragment_to_editUserProfileFragment"
-            app:destination="@id/editUserProfileFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_userProfileFragment_to_teamContainerFragment"
-            app:destination="@id/teamContainerFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
-        android:id="@+id/editUserProfileFragment"
-        android:name="com.isaac.ggmanager.ui.home.userprofile.EditUserProfileFragment"
-        android:label="EditUserProfileFragment"
-        tools:layout="@layout/fragment_edit_user_profile">
-        <action
-            android:id="@+id/action_editUserProfileFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
     </fragment>

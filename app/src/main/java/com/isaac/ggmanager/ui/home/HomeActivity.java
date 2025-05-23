@@ -22,12 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity {
 
-    // ViewBinding para acceder a los elementos de la UI
     private ActivityHomeBinding binding;
-
-    // NagivationController para navegar por la UI
     private NavController navController;
-
     private HomeViewModel homeViewModel;
 
     @Override
@@ -48,30 +44,29 @@ public class HomeActivity extends AppCompatActivity {
         if (navHostFragment != null){
             navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
-
-
-            UIVisibilityUtils.setupVisibilityListener(  // ¡NO ME ESCONDE EL LOGOUT DEL TOOLBAR!
-                    navController,
-                    new Integer[] { R.id.userProfileFragment, R.id.editUserProfileFragment },
-                    binding.linearLayout,
-                    binding.bottomNavigation
-            );
+            //hideAndShowBottomNavigation();
         }
-
         setUpToolbar();
     }
 
     private void setUpToolbar() {
-        // Configurar clic en el avatar
         binding.actionUserProfile.setOnClickListener(v -> {
-            // Navegar al perfil de usuario
-            // navController.navigate(R.id.userProfileFragment);
             startActivity(new Intent(this, UserProfileActivity.class));
         });
 
         binding.actionLogout.setOnClickListener(v -> signOut());
     }
 
+    /*
+    private void hideAndShowBottomNavigation(){
+        UIVisibilityUtils.setupVisibilityListener(
+                navController,
+                new Integer[] { R.id.userProfileFragment, R.id.editUserProfileFragment },
+                binding.linearLayout,
+                binding.bottomNavigation
+        );
+    }
+     */
 
     private void signOut() {
         homeViewModel.signOut();
@@ -83,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        binding = null; // Limpiar la referencia de View Binding
+        binding = null;
     }
 
     @Override

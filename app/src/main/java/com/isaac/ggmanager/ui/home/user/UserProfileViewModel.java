@@ -1,6 +1,5 @@
 package com.isaac.ggmanager.ui.home.user;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

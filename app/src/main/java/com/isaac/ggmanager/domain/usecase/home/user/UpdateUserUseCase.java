@@ -18,6 +18,9 @@ public class UpdateUserUseCase {
     }
 
     public LiveData<Resource<Boolean>> execute(UserModel userModel){
+        if(userModel.getAvatar() == null){
+            userModel.setAvatar("ic_avatar_avocado");
+        }
         return firestoreUserRepository.updateUser(userModel);
     }
 }

@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 case VALIDATING:
                     binding.progressBar.setVisibility(View.GONE);
                     binding.btnGoogleSignIn.setEnabled(false);
-
                     break;
                 case LOADING:
                     binding.progressBar.setVisibility(View.VISIBLE);

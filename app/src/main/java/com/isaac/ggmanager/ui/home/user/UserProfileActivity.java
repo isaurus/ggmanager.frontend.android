@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.DateFormatUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
+import com.isaac.ggmanager.core.utils.UIUserUtils;
 import com.isaac.ggmanager.databinding.ActivityUserProfileBinding;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.ui.home.HomeActivity;
@@ -61,7 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfileViewModel.getUserProfileViewState().observe(this, userProfileViewState -> {
             switch (userProfileViewState.getStatus()) {
                 case SUCCESS:
-                    updateUI(userProfileViewState.getData());
+                    UIUserUtils.fillUserProfileUI(binding, userProfileViewState.getData(), this);
                     break;
                 case LOADING:
                     // PROGRESS BAR
@@ -73,22 +74,8 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUI(UserModel userModel){
-
-        int resId = getResources().getIdentifier(userModel.getAvatar(), "drawable", getPackageName());
-
-        binding.imgProfilePic.setImageResource(resId);
-        binding.tvUserName.setText(userModel.getName());
-        binding.tvEmail.setText(userModel.getEmail());
-        binding.tvUserBirthdate.setText(DateFormatUtils.dateToString(userModel.getBirthdate()));
-        binding.tvCountry.setText(userModel.getCountry());
-    }
-
     private void launchEditProfileActivity(){
         startActivity(new Intent(this, EditUserProfileActivity.class));
-    }
 
-    private void launchHomeActivity(){
-        startActivity(new Intent(this, HomeActivity.class));
     }
 }

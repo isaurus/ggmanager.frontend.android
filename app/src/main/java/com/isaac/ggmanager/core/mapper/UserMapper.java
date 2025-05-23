@@ -9,7 +9,13 @@ import java.util.Map;
 
 public class UserMapper {
 
-    // REALMENTE NO NECESITO ESTE, FIREBASE YA ME DA LA OPCIÓN CON documentSnapshot.toObject(UserModel.class)
+    /**
+     * Mapeo para recuperar el UID y el email del usuario de Firebase y devolver un UserModel con
+     * las propiedades UID y email devueltas por Firebase.
+     *
+     * @param firebaseUser
+     * @return
+     */
     public static UserModel fromFirebaseUser(FirebaseUser firebaseUser) {
         if (firebaseUser == null) return null;
 
@@ -20,6 +26,7 @@ public class UserMapper {
     }
 
     // En caso de que quieras mapear de Firestore document a UserModel
+    // NO NECESARIO
     public static UserModel fromMap(Map<String, Object> data) {
         UserModel user = new UserModel();
         // user.setFirebaseUid((String) data.get("firebaseUid"));
@@ -41,11 +48,10 @@ public class UserMapper {
      */
     public static Map<String, Object> toMap(UserModel user) {
         Map<String, Object> map = new HashMap<>();
-        //map.put("firebaseUid", user.getFirebaseUid());
-        //map.put("email", user.getEmail());
+
         map.put("avatar", user.getAvatar());
         map.put("name", user.getName());
-        map.put("birthDate", user.getBirthdate());
+        map.put("birthdate", user.getBirthdate());
         map.put("country", user.getCountry());
 
         return map;

@@ -2,12 +2,12 @@ package com.isaac.ggmanager.di;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.isaac.ggmanager.data.repository.FirestoreUserRepositoryImpl;
+import com.isaac.ggmanager.data.remote.FirestoreUserRepositoryImpl;
 import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
-import com.isaac.ggmanager.data.repository.FirebaseAuthRepositoryImpl;
+import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;

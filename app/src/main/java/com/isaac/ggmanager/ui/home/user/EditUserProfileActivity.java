@@ -1,14 +1,16 @@
 package com.isaac.ggmanager.ui.home.user;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.isaac.ggmanager.core.utils.CountryProviderUtils;
 import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
@@ -41,6 +43,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         setUpDatePicker();
+        setUpCountryDropdown();
 
         setUpListeners();
         observeViewModel();
@@ -55,7 +58,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
             String avatar = avatarSelected;
             String name = binding.etName.getText().toString().trim();
             String birthdate = binding.etBirthdate.getText().toString().trim();
-            String country = binding.etCountry.getText().toString().trim();
+            String country = binding.atvCountry.getText().toString().trim();
 
             editUserProfileViewModel.validateEditUserForm(avatar, name, birthdate, country);
         });
@@ -71,7 +74,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 case VALIDATING:
                     binding.btnSaveProfile.setEnabled(false);
 
-                    // ¿AVATAR?
+                    // VALIDACIÓN DE AVATAR
                     binding.tilName.setError(editUserProfileViewState.isNameValid() ? null : "Nombre no permitido");
                     binding.tilBirthdate.setError(editUserProfileViewState.isBirthdateValid() ? null : "Fecha errónea");
                     binding.tilCountry.setError(editUserProfileViewState.isCountryValid() ? null : "País erróneo");
@@ -88,10 +91,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void launchUserProfileActivity(){
-        startActivity(new Intent(this, UserProfileActivity.class));
-    }
-
     private void setUpDatePicker() {
         DatePickerUtils.setupDatePicker(
                 this,
@@ -100,10 +99,23 @@ public class EditUserProfileActivity extends AppCompatActivity {
         );
     }
 
+    private void setUpCountryDropdown() {
+        AutoCompleteTextView countryInput = binding.atvCountry;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                CountryProviderUtils.getCountries(this)
+        );
+
+        countryInput.setAdapter(adapter);
+    }
+
+
     private void enableButtonOnTextChange(){
         TextWatcherUtils.enableViewOnTextChange(binding.etName, binding.btnSaveProfile,binding.tilName);
         TextWatcherUtils.enableViewOnTextChange(binding.etBirthdate, binding.btnSaveProfile,binding.tilBirthdate);
-        TextWatcherUtils.enableViewOnTextChange(binding.etCountry, binding.btnSaveProfile,binding.tilCountry);
+        TextWatcherUtils.enableViewOnTextChange(binding.atvCountry, binding.btnSaveProfile,binding.tilCountry);
     }
 
     // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"

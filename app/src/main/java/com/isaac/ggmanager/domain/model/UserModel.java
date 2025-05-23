@@ -2,6 +2,9 @@ package com.isaac.ggmanager.domain.model;
 
 import java.util.Date;
 
+/**
+ * Modelo de dominio para un usuario.
+ */
 public class UserModel {
     private String firebaseUid;
     private String avatar;
@@ -17,14 +20,19 @@ public class UserModel {
 
     /**
      * Constructor para persistir el usuario en Firestore cuando se registra o se logea por primera
-     * vez en la aplicación.
+     * vez en la aplicación. Establece algunas propiedades por defecto para generar consistencia con
+     * Firestore Database.
      *
-     * @param firebaseUid El UID del usuario recién creado.
-     * @param email El correo que ha utilizado el usuario para registrarse.
+     * @param firebaseUid El UID del usuario recién creado en Firebase Auth.
+     * @param email El correo que ha utilizado el usuario para registrarse/logearse.
      */
     public UserModel(String firebaseUid, String email){
         this.firebaseUid = firebaseUid;
         this.email = email;
+        this.avatar = "ic_avatar_avocado";
+        this.name = "Por definir";
+        this.birthdate = null;
+        this.country = "Por definir";
     }
 
     /**

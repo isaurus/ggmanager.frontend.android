@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.data.repository;
+package com.isaac.ggmanager.data.remote;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -42,10 +42,6 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
     public LiveData<Resource<Boolean>> createUser(UserModel userModel) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
-
-        if (userModel.getAvatar() == null){
-            userModel.setAvatar("");
-        }
 
         firestore.collection("users")
                 .document(userModel.getFirebaseUid())
