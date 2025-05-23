@@ -75,14 +75,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void launchEditProfileActivity(){
-        //Intent intent = new Intent(this, EditUserProfileActivity.class);
-        //intent.putExtra("user", userModel);
-        //startActivity(intent);
         startActivity(new Intent(this, EditUserProfileActivity.class));
 
-    }
-
-    private void launchHomeActivity(){
-        startActivity(new Intent(this, HomeActivity.class));
     }
 }

@@ -14,7 +14,6 @@ public class HomeViewModel extends ViewModel {
     private final SignOutUseCase signoutUseCase;
 
     @Inject
-
     public HomeViewModel(SignOutUseCase signoutUseCase) {
         this.signoutUseCase = signoutUseCase;
     }

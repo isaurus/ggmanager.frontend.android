@@ -1,7 +1,6 @@
 package com.isaac.ggmanager.ui.home.user;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,7 +14,6 @@ import com.isaac.ggmanager.core.utils.CountryProviderUtils;
 import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
-import com.isaac.ggmanager.core.utils.UIUserUtils;
 import com.isaac.ggmanager.databinding.ActivityEditUserProfileBinding;
 
 import java.util.Calendar;

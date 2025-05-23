@@ -1,9 +1,12 @@
 package com.isaac.ggmanager.ui.home.user;
 
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.isaac.ggmanager.core.Constants;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
 
@@ -50,20 +53,23 @@ public class EditUserProfileViewModel extends ViewModel {
         });
     }
 
-    public void validateEditUserForm(String avatar, String name, String birthdate, String country){
-        boolean isAvatarValid = isValidAvatar(avatar);
+    public void validateEditUserForm(String avatar, String name, String birthdate, String country) {
         boolean isNameValid = isValidName(name);
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
+        if (!isValidAvatar(avatar)) {
+            avatar = "ic_avatar_avocado";
+        }
+
         editUserProfileViewState.setValue(EditUserProfileViewState.validating(
-                isAvatarValid,
+                true,
                 isNameValid,
                 isBirthdateValid,
                 isCountryValid
         ));
 
-        if (isAvatarValid && isNameValid && isBirthdateValid && isCountryValid) {
+        if (isNameValid && isBirthdateValid && isCountryValid) {
             editUserProfileViewState.setValue(EditUserProfileViewState.loading());
             updateUserProfile(avatar, name, birthdate, country);
         }
@@ -73,8 +79,9 @@ public class EditUserProfileViewModel extends ViewModel {
 
 
 
+
     private boolean isValidAvatar(String avatar){
-        return !avatar.isEmpty();
+        return avatar != null;
     }
 
     private boolean isValidName(String name){
