@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.domain.usecase.auth;
+package com.isaac.ggmanager.domain.usecase.login;
 
 import androidx.lifecycle.LiveData;
 

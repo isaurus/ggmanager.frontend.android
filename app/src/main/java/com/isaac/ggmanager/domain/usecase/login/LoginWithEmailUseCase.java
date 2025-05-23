@@ -1,23 +1,22 @@
-package com.isaac.ggmanager.domain.usecase.auth;
+package com.isaac.ggmanager.domain.usecase.login;
 
 import androidx.lifecycle.LiveData;
-
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 
 import javax.inject.Inject;
 
-public class LoginWithGoogleUseCase {
+public class LoginWithEmailUseCase {
 
     private final FirebaseAuthRepository firebaseAuthRepository;
 
     @Inject
-    public LoginWithGoogleUseCase(FirebaseAuthRepository firebaseAuthRepository) {
+    public LoginWithEmailUseCase(FirebaseAuthRepository firebaseAuthRepository) {
         this.firebaseAuthRepository = firebaseAuthRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(String tokenId){
-        return firebaseAuthRepository.loginWithGoogle(tokenId);
+    public LiveData<Resource<Boolean>> execute(String email, String password){
+        return firebaseAuthRepository.loginWithEmail(email, password);
     }
 }

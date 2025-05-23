@@ -7,14 +7,14 @@ import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
-import com.isaac.ggmanager.domain.usecase.auth.LoginWithEmailUseCase;
 import com.isaac.ggmanager.data.repository.FirebaseAuthRepositoryImpl;
-import com.isaac.ggmanager.domain.usecase.auth.LoginWithGoogleUseCase;
-import com.isaac.ggmanager.domain.usecase.auth.RegisterWithEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
+import com.isaac.ggmanager.domain.usecase.login.LoginWithEmailUseCase;
+import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
+import com.isaac.ggmanager.domain.usecase.login.RegisterWithEmailUseCase;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.isaac.ggmanager;
+package com.isaac.ggmanager.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.isaac.ggmanager.databinding.ActivityLaunchBinding;
 import com.isaac.ggmanager.ui.login.LoginActivity;
-import com.isaac.ggmanager.ui.login.LoginViewModel;
 import com.isaac.ggmanager.ui.home.HomeActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class LaunchActivity extends AppCompatActivity {
 
     private ActivityLaunchBinding binding;
-    private LoginViewModel loginViewModel;
+    private LaunchViewModel launchViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Iniciamos el AuthViewModel
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        launchViewModel = new ViewModelProvider(this).get(LaunchViewModel.class);
 
         // Comprobamos si el usuario está ya autenticado
         checkAuthState();
@@ -46,7 +45,7 @@ public class LaunchActivity extends AppCompatActivity {
      * registro/login.
      */
     private void checkAuthState() {
-        if (loginViewModel.isUserAuthenticated()){   // Si está autenticado
+        if (launchViewModel.isUserAuthenticated()){   // Si está autenticado
             startActivity(new Intent(this, HomeActivity.class));
         } else {    // Si NO está autenticado
             startActivity(new Intent(this, LoginActivity.class));
