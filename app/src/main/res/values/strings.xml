@@ -1,3 +1,56 @@
 <resources>
     <string name="app_name">GG Manager</string>
+
+    <string-array name="countries_array">
+        <item>Alemania</item>
+        <item>Andorra</item>
+        <item>Austria</item>
+        <item>Bélgica</item>
+        <item>Bielorrusia</item>
+        <item>Bosnia y Herzegovina</item>
+        <item>Bulgaria</item>
+        <item>Chequia</item>
+        <item>Chipre</item>
+        <item>Ciudad del Vaticano</item>
+        <item>Croacia</item>
+        <item>Dinamarca</item>
+        <item>Eslovaquia</item>
+        <item>Eslovenia</item>
+        <item>España</item>
+        <item>Estonia</item>
+        <item>Finlandia</item>
+        <item>Francia</item>
+        <item>Georgia</item>
+        <item>Grecia</item>
+        <item>Hungría</item>
+        <item>Irlanda</item>
+        <item>Islandia</item>
+        <item>Italia</item>
+        <item>Kazajistán</item>
+        <item>Kosovo</item>
+        <item>Letonia</item>
+        <item>Liechtenstein</item>
+        <item>Lituania</item>
+        <item>Luxemburgo</item>
+        <item>Malta</item>
+        <item>Moldavia</item>
+        <item>Mónaco</item>
+        <item>Montenegro</item>
+        <item>Noruega</item>
+        <item>Países Bajos</item>
+        <item>Polonia</item>
+        <item>Portugal</item>
+        <item>Reino Unido</item>
+        <item>Rumanía</item>
+        <item>Rusia</item>
+        <item>San Marino</item>
+        <item>Serbia</item>
+        <item>Suecia</item>
+        <item>Suiza</item>
+        <item>Turquía</item>
+        <item>Ucrania</item>
+    </string-array>
+
+
+
 </resources>

@@ -51,18 +51,19 @@ public class EditUserProfileViewModel extends ViewModel {
     }
 
     public void validateEditUserForm(String avatar, String name, String birthdate, String country){
+        boolean isAvatarValid = isValidAvatar(avatar);
         boolean isNameValid = isValidName(name);
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
         editUserProfileViewState.setValue(EditUserProfileViewState.validating(
-                true,
+                isAvatarValid,
                 isNameValid,
                 isBirthdateValid,
                 isCountryValid
         ));
 
-        if (isNameValid && isBirthdateValid && isCountryValid) {
+        if (isAvatarValid && isNameValid && isBirthdateValid && isCountryValid) {
             editUserProfileViewState.setValue(EditUserProfileViewState.loading());
             updateUserProfile(avatar, name, birthdate, country);
         }
@@ -72,6 +73,9 @@ public class EditUserProfileViewModel extends ViewModel {
 
 
 
+    private boolean isValidAvatar(String avatar){
+        return !avatar.isEmpty();
+    }
 
     private boolean isValidName(String name){
         return !name.isEmpty() && !(name.length() > MAX_NAME_LENGTH);

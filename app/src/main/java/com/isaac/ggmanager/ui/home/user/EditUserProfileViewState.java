@@ -68,6 +68,10 @@ public class EditUserProfileViewState {
         return resource.getStatus();
     }
 
+    public <T> T getData() {
+        return (T) resource.getData();
+    }
+
     public String getMessage(){
         return resource.getMessage();
     }
