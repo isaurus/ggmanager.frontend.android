@@ -43,6 +43,10 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
+        if (userModel.getAvatar() == null){
+            userModel.setAvatar("");
+        }
+
         firestore.collection("users")
                 .document(userModel.getFirebaseUid())
                 .set(userModel)

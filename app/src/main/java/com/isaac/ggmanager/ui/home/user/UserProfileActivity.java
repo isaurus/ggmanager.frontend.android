@@ -74,6 +74,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void updateUI(UserModel userModel){
+
         int resId = getResources().getIdentifier(userModel.getAvatar(), "drawable", getPackageName());
 
         binding.imgProfilePic.setImageResource(resId);

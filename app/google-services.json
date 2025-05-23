@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "304409997731-28jc7ot6hhq36k0lb1eda2ct0nrsk95g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaac.ggmanager",
+            "certificate_hash": "5d12a71cfd0fd8b2382a9e06cfcf33bbe509c4c7"
+          }
+        },
+        {
           "client_id": "304409997731-841jevq481j735te6j9uei2n8ngbnk59.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
