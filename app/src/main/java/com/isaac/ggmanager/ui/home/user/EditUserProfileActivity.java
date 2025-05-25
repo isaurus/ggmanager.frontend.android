@@ -1,6 +1,7 @@
 package com.isaac.ggmanager.ui.home.user;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,6 +16,7 @@ import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.ActivityEditUserProfileBinding;
+import com.isaac.ggmanager.ui.home.HomeActivity;
 
 import java.util.Calendar;
 
@@ -82,7 +84,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     binding.btnSaveProfile.setEnabled(false);
                     break;
                 case SUCCESS:
-                    finish();
+                    //finish();   // EN LUGAR DE FINISH LANZAR A HOME ACTIVITY
+                    this.startActivity(new Intent(this, HomeActivity.class));
+                    this.finish();
                     break;
                 case ERROR:
                     Toast.makeText(this, editUserProfileViewState.getMessage(), Toast.LENGTH_LONG).show();

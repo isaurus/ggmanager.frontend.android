@@ -1,14 +1,11 @@
 package com.isaac.ggmanager.ui.home.user;
 
-import android.content.SharedPreferences;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.isaac.ggmanager.core.Constants;
 import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.SaveUserProfileUseCase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,21 +21,21 @@ public class EditUserProfileViewModel extends ViewModel {
 
     private static final int MAX_NAME_LENGTH = 20;
 
-    private final UpdateUserUseCase updateUserUseCase;
+    private final SaveUserProfileUseCase saveUserProfileUseCase;
 
     public final MutableLiveData<EditUserProfileViewState> editUserProfileViewState = new MutableLiveData<>();
 
     @Inject
-    public EditUserProfileViewModel(UpdateUserUseCase updateUserUseCase){
-        this.updateUserUseCase = updateUserUseCase;
+    public EditUserProfileViewModel(SaveUserProfileUseCase saveUserProfileUseCase){
+        this.saveUserProfileUseCase = saveUserProfileUseCase;
     }
 
     public LiveData<EditUserProfileViewState> getEditUserProfileViewState() { return editUserProfileViewState; }
 
-    public void updateUserProfile(String avatar, String name, String birthdate, String country){
+    public void saveUserProfile(String avatar, String name, String birthdate, String country){
         UserModel userModel = createUserModel(avatar, name, birthdate, country);
 
-        updateUserUseCase.execute(userModel).observeForever(resource -> {
+        saveUserProfileUseCase.execute(userModel).observeForever(resource -> {
             switch (resource.getStatus()) {
                 case SUCCESS:
                     editUserProfileViewState.setValue(EditUserProfileViewState.success());
@@ -58,7 +55,7 @@ public class EditUserProfileViewModel extends ViewModel {
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
-        if (!isValidAvatar(avatar)) {
+        if (!isValidAvatar(avatar)) {   // ESTA CONDICIÓN GESTIONA PROPORCIONA UN AVATAR PREDETERMINADO SI EL USUARIO NO SELECCIONA UNO, EVITANDO EL NULL
             avatar = "ic_avatar_avocado";
         }
 
@@ -71,7 +68,7 @@ public class EditUserProfileViewModel extends ViewModel {
 
         if (isNameValid && isBirthdateValid && isCountryValid) {
             editUserProfileViewState.setValue(EditUserProfileViewState.loading());
-            updateUserProfile(avatar, name, birthdate, country);
+            saveUserProfile(avatar, name, birthdate, country);
         }
     }
 

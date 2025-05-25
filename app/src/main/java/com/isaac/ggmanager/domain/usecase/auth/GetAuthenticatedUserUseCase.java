@@ -1,6 +1,7 @@
 package com.isaac.ggmanager.domain.usecase.auth;
 
 
+import com.google.firebase.auth.FirebaseUser;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 
@@ -19,7 +20,7 @@ public class GetAuthenticatedUserUseCase {
         this.firebaseAuthRepository = firebaseAuthRepository;
     }
 
-    public UserModel execute(){
+    public FirebaseUser execute(){
         return firebaseAuthRepository.getAuthenticatedUser();
     }
 }

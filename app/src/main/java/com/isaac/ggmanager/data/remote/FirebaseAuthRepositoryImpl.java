@@ -8,8 +8,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.isaac.ggmanager.core.Resource;
-import com.isaac.ggmanager.core.mapper.UserMapper;
-import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 
 import javax.inject.Inject;
@@ -69,10 +67,9 @@ public class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
      * @return El FirebaseUser mapeado a UserModel.
      */
     @Override
-    public UserModel getAuthenticatedUser() {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    public FirebaseUser getAuthenticatedUser() {
 
-        return UserMapper.fromFirebaseUser(firebaseUser);
+        return firebaseAuth.getCurrentUser();
     }
 
     /**

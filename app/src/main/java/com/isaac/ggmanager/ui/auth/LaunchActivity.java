@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.isaac.ggmanager.databinding.ActivityLaunchBinding;
+import com.isaac.ggmanager.ui.home.user.EditUserProfileActivity;
 import com.isaac.ggmanager.ui.login.LoginActivity;
 import com.isaac.ggmanager.ui.home.HomeActivity;
 
@@ -39,6 +40,19 @@ public class LaunchActivity extends AppCompatActivity {
         checkAuthState();
     }
 
+
+    private void observeViewModel(){
+        launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
+            if (launchViewState.getData() != null){
+                startActivity(new Intent(this, HomeActivity.class));
+            } else {
+                startActivity(new Intent(this, EditUserProfileActivity.class));
+            }
+            finish();
+        });
+    }
+
+
     /**
      * Comprueba si el usuario está previamente logeado. En caso afirmativo, lanza al usuario a las
      * funcionalidades principales de la aplicación. En caso contrario, lo direcciona a la fase de
@@ -46,10 +60,12 @@ public class LaunchActivity extends AppCompatActivity {
      */
     private void checkAuthState() {
         if (launchViewModel.isUserAuthenticated()){   // Si está autenticado
-            startActivity(new Intent(this, HomeActivity.class));
+            launchViewModel.isUserPersisted();
+            observeViewModel();
         } else {    // Si NO está autenticado
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
-        finish();
+
     }
 }

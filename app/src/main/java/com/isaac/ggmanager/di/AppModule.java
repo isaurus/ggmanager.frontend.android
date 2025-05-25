@@ -10,9 +10,7 @@ import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
 import com.isaac.ggmanager.domain.usecase.login.RegisterWithEmailUseCase;
@@ -128,18 +126,6 @@ public class AppModule {
     @Singleton
     public static FirestoreUserRepository provideFirestoreUserRepository(FirebaseFirestore firestore, FirebaseAuthRepository firebaseAuthRepository){
         return new FirestoreUserRepositoryImpl(firestore, firebaseAuthRepository);
-    }
-
-    @Provides
-    @Singleton
-    public static CreateUserUseCase provideSaveUserIfNotExists(FirestoreUserRepository firestoreUserRepository){
-        return new CreateUserUseCase(firestoreUserRepository);
-    }
-
-    @Provides
-    @Singleton
-    public static UpdateUserUseCase provideEditUserProfileUseCase(FirestoreUserRepository firestoreUserRepository){
-        return new UpdateUserUseCase(firestoreUserRepository);
     }
 
     @Provides

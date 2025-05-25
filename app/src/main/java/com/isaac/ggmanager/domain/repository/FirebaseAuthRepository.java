@@ -2,6 +2,7 @@ package com.isaac.ggmanager.domain.repository;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
 
@@ -43,7 +44,7 @@ public interface FirebaseAuthRepository {
      *
      * @return El usuario autenticado mapeado a UserModel.
      */
-    UserModel getAuthenticatedUser();
+    FirebaseUser getAuthenticatedUser();
 
     /**
      * Comprueba si el usuario ha iniciado sesión previamente en la aplicación para lanzar las
