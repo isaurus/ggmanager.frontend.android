@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case SUCCESS:
                     binding.progressBar.setVisibility(View.GONE);
-                    this.startActivity(new Intent(this, HomeActivity.class));
+                    this.startActivity(new Intent(this, HomeActivity.class));   // LANZAR A ACTIVITY PARA PERSISTIR USUARIO (DIFERENTE DE EDITUSERPROFILE)
                     this.finish();
                     break;
                 case ERROR:

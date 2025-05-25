@@ -8,6 +8,7 @@ import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
+import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
@@ -145,5 +146,11 @@ public class AppModule {
     @Singleton
     public static GetCurrentUserUseCase provideGetCurrentUserUseCase(FirestoreUserRepository firestoreUserRepository){
         return new GetCurrentUserUseCase(firestoreUserRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static CheckUserHasTeamUseCase provideCheckUserHasTeamUseCase(FirestoreUserRepository firestoreUserRepository){
+        return new CheckUserHasTeamUseCase(firestoreUserRepository);
     }
 }

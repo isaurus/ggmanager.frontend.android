@@ -8,7 +8,7 @@ public class TeamModel {
     private String name;
     private String description;
     private String adminUid;
-    private List<String> members;
+    private List<String> members;       // CREO QUE ES INNECESARIO
     private Timestamp createdAt;
 
     public TeamModel(){}

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.core.mapper.UserMapper;
 import com.isaac.ggmanager.domain.model.UserModel;
@@ -45,7 +46,7 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
 
         firestore.collection("users")
                 .document(userModel.getFirebaseUid())
-                .set(userModel)
+                .set(userModel, SetOptions.merge())
                 .addOnSuccessListener(unused -> result.setValue(Resource.success(true)))
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al guardar usuario: " + e.getMessage())));
 
@@ -74,6 +75,11 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
         return result;
     }
 
+    /**
+     * Consulta el usuario en Firestore Database para devolver el usuario.
+     *
+     * @return El usuario como modelo de dominio.
+     */
     @Override
     public LiveData<Resource<UserModel>> getCurrentUser(){
         MutableLiveData<Resource<UserModel>> result = new MutableLiveData<>();
@@ -99,5 +105,24 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al obtener usuario: " + e.getMessage())));
 
         return result;
+    }
+
+    @Override
+    public LiveData<Resource<Boolean>> hasTeam() {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        String userUid = firebaseAuthRepository.getAuthenticatedUser().getFirebaseUid();
+
+        firestore.collection("users")
+                .document(userUid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    String teamId = documentSnapshot.getString("teamId");
+                    result.setValue(Resource.success(teamId != null && !teamId.isEmpty()));
+                })
+                .addOnFailureListener(e -> result.setValue(Resource.error("Error al consultar el equipo al que pertenece el usuario: " + e.getMessage())));
+
+        return null;
     }
 }

@@ -36,4 +36,11 @@ public interface FirestoreUserRepository {
      * @return UserModel para pintar sus propiedades en la UI.
      */
     LiveData<Resource<UserModel>> getCurrentUser();
+
+    /**
+     * Comprueba si el usuario pertenece a algún equipo.
+     *
+     * @return true en caso afirmativo, false en caso contrario.
+     */
+    LiveData<Resource<Boolean>> hasTeam();
 }

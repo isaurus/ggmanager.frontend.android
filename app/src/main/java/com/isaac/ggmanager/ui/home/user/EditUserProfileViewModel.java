@@ -97,7 +97,7 @@ public class EditUserProfileViewModel extends ViewModel {
     }
 
     private UserModel createUserModel(String avatar, String name, String birthdate, String country){
-        return new UserModel(avatar, name, formatDate(birthdate), country);
+        return new UserModel(avatar, name, formatDate(birthdate), country, null);
     }
 
     private Date formatDate(String birthdate){

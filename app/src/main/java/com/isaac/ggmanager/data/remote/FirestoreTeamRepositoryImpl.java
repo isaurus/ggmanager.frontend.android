@@ -29,8 +29,13 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
         String teamId = firestore.collection("teams").document().getId();
         teamModel.setId(teamId);
 
+        firestore.collection("teams")
+                .document(teamId)
+                .set(teamModel)
+                .addOnSuccessListener(unused -> result.setValue(Resource.success(true)))
+                .addOnFailureListener(e -> result.setValue(Resource.error("Error al crear equipo: " + e.getMessage())));
 
-        return null;
+        return result;
     }
 
     @Override
