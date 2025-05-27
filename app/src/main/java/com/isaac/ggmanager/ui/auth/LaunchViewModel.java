@@ -14,8 +14,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class LaunchViewModel extends ViewModel {
 
-    private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;
-    private final GetCurrentUserUseCase getCurrentUserUseCase;
+    private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;  // Para lanzar a login o directamente a la app
+    private final GetCurrentUserUseCase getCurrentUserUseCase;  // Para lanzar al Home o al Edit
 
     public final MutableLiveData<LaunchViewState> launchViewState = new MutableLiveData<>();
 
@@ -28,9 +28,21 @@ public class LaunchViewModel extends ViewModel {
 
     public LiveData<LaunchViewState> getLaunchViewState() { return launchViewState; }
 
+
+
+
+
     public void isUserPersisted(){
         getCurrentUserUseCase.execute().observeForever(resource -> {
-            launchViewState.setValue(LaunchViewState.success(resource.getData()));
+            switch (resource.getStatus()){
+                case SUCCESS:
+                    launchViewState.setValue(LaunchViewState.success(resource.getData()));
+                    break;
+                case ERROR:
+                    launchViewState.setValue(LaunchViewState.error(resource.getMessage()));
+                    break;
+            }
+
         });
     }
 

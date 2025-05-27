@@ -2,6 +2,7 @@ package com.isaac.ggmanager.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,36 +37,31 @@ public class LaunchActivity extends AppCompatActivity {
         // Iniciamos el AuthViewModel
         launchViewModel = new ViewModelProvider(this).get(LaunchViewModel.class);
 
-        // Comprobamos si el usuario está ya autenticado
-        checkAuthState();
+        observeViewModel();
     }
-
 
     private void observeViewModel(){
-        launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
-            if (launchViewState.getData() != null){
-                startActivity(new Intent(this, HomeActivity.class));
-            } else {
-                startActivity(new Intent(this, EditUserProfileActivity.class));
-            }
-            finish();
-        });
-    }
 
-
-    /**
-     * Comprueba si el usuario está previamente logeado. En caso afirmativo, lanza al usuario a las
-     * funcionalidades principales de la aplicación. En caso contrario, lo direcciona a la fase de
-     * registro/login.
-     */
-    private void checkAuthState() {
-        if (launchViewModel.isUserAuthenticated()){   // Si está autenticado
-            launchViewModel.isUserPersisted();
-            observeViewModel();
-        } else {    // Si NO está autenticado
+        if (!launchViewModel.isUserAuthenticated()){
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        }
+        } else {
+            launchViewModel.isUserPersisted();
 
+            launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
+                switch (launchViewState.getStatus()){
+                    case SUCCESS:
+                        if (launchViewState.getData() != null){
+                            startActivity(new Intent(this, HomeActivity.class));
+                        } else {
+                            startActivity(new Intent(this, EditUserProfileActivity.class));
+                        }
+                        break;
+                    case ERROR:
+                        Toast.makeText(this, launchViewState.getMessage(), Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            });
+        }
     }
 }
