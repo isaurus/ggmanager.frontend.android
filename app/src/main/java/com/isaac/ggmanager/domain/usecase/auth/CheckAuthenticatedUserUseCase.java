@@ -7,7 +7,8 @@ import javax.inject.Inject;
 
 /**
  * Use case para verificar si el usuario está ya autenticado. Devuelve true en caso afirmativo,
- * false en caso contrario.
+ * false en caso contrario. Se utiliza para que, tras abrir la aplicación, el usuario sea llevado
+ * al LoginActivity o al HomeActivity
  */
 public class CheckAuthenticatedUserUseCase {
 

@@ -32,6 +32,7 @@ import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.databinding.ActivityLoginBinding;
 import com.isaac.ggmanager.ui.home.HomeActivity;
+import com.isaac.ggmanager.ui.home.user.EditUserProfileActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -76,9 +77,20 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case SUCCESS:
                     binding.progressBar.setVisibility(View.GONE);
-                    this.startActivity(new Intent(this, HomeActivity.class));
-                    this.finish();
+
+                    System.out.println("Usuario: " + loginViewState.getData());
+
+                    if (loginViewState.getData() != null) {
+                        // Usuario ya creado, vamos al Home
+                        startActivity(new Intent(this, HomeActivity.class));
+                    }
+                    else {
+                        // Usuario no está en Firestore aún, debe crear su perfil
+                        startActivity(new Intent(this, EditUserProfileActivity.class));
+                    }
+                    finish();
                     break;
+
                 case ERROR:
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(this, loginViewState.getMessage(), Toast.LENGTH_LONG).show();

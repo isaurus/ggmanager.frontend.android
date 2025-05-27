@@ -8,10 +8,9 @@ import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
+import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
 import com.isaac.ggmanager.domain.usecase.login.RegisterWithEmailUseCase;
@@ -131,19 +130,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static CreateUserUseCase provideSaveUserIfNotExists(FirestoreUserRepository firestoreUserRepository){
-        return new CreateUserUseCase(firestoreUserRepository);
-    }
-
-    @Provides
-    @Singleton
-    public static UpdateUserUseCase provideEditUserProfileUseCase(FirestoreUserRepository firestoreUserRepository){
-        return new UpdateUserUseCase(firestoreUserRepository);
-    }
-
-    @Provides
-    @Singleton
     public static GetCurrentUserUseCase provideGetCurrentUserUseCase(FirestoreUserRepository firestoreUserRepository){
         return new GetCurrentUserUseCase(firestoreUserRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static CheckUserHasTeamUseCase provideCheckUserHasTeamUseCase(FirestoreUserRepository firestoreUserRepository){
+        return new CheckUserHasTeamUseCase(firestoreUserRepository);
     }
 }

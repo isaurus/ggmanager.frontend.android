@@ -49,8 +49,8 @@ public class LoginViewState {
      * @param <T> tipo de dato que se puede retornar (en este caso, un booleano verdadero)
      * @return instancia de LoginViewState en estado SUCCESS
      */
-    public static <T> LoginViewState success(){
-        return new LoginViewState(Resource.success(true), true, true);
+    public static <T> LoginViewState success(T data){
+        return new LoginViewState(Resource.success(data), true, true);
     }
 
     /**

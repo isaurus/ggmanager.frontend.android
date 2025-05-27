@@ -8,20 +8,16 @@ import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 
 import javax.inject.Inject;
 
-/**
- * Use case para crear un usuario. Se utiliza la primera vez que el usuario se logea con Google o se
- * registra manualmente.
- */
-public class CreateUserUseCase {
+public class SaveUserProfileUseCase {
 
     private final FirestoreUserRepository firestoreUserRepository;
 
     @Inject
-    public CreateUserUseCase(FirestoreUserRepository firestoreUserRepository) {
+    public SaveUserProfileUseCase(FirestoreUserRepository firestoreUserRepository){
         this.firestoreUserRepository = firestoreUserRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(UserModel userModel){
-        return firestoreUserRepository.createUser(userModel);
+    public LiveData<Resource<Boolean>> execute (UserModel userModel){
+        return firestoreUserRepository.saveUserProfile(userModel);
     }
 }

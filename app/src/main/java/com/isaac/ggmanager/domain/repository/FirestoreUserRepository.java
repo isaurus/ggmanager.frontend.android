@@ -13,27 +13,24 @@ import com.isaac.ggmanager.domain.model.UserModel;
 public interface FirestoreUserRepository {
 
     /**
-     * Persiste a un usuario en Firestore Database la primera vez que el usuario se logea con Google
-     * o se registra manualmente. El UserModel se recibe desde 'getAuthenticatedUser()', que se mapea
-     * a UserModel obteniendo su firebaseUid y su email.
-     *
-     * @param userModel El modelo de datos que será persistido en Firestore Database.
-     * @return true en caso de éxito, false en caso contrario, encapsulado en un Resource.
-     */
-    LiveData<Resource<Boolean>> createUser(UserModel userModel);
-
-    /**
-     * Persiste al usuario actualizado en Firestore Database.
-     *
-     * @param userModel El usuario con las nuevas propiedades a persistir.
-     * @return true si la acción es exitosa, false en caso contrario, encapsulado en Resource.
-     */
-    LiveData<Resource<Boolean>> updateUser(UserModel userModel);
-
-    /**
      * Obtiene el usuario persistido en Firestore Database.
      *
      * @return UserModel para pintar sus propiedades en la UI.
      */
     LiveData<Resource<UserModel>> getCurrentUser();
+
+    /**
+     * Comprueba si el usuario pertenece a algún equipo.
+     *
+     * @return true en caso afirmativo, false en caso contrario.
+     */
+    LiveData<Resource<Boolean>> hasTeam();
+
+    /**
+     * Persiste al usuario en Firestore Database. Su propósito es tanto para persistir un nuevo usuario
+     * si aún no existe, como para actualizarlo en caso de que ya esté persistido.
+     *
+     * @return LiveData observable por la Activity.
+     */
+    LiveData<Resource<Boolean>> saveUserProfile(UserModel userModel);
 }
