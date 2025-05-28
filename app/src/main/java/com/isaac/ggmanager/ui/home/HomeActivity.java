@@ -2,6 +2,7 @@ package com.isaac.ggmanager.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
-import com.isaac.ggmanager.core.utils.UIVisibilityUtils;
 import com.isaac.ggmanager.databinding.ActivityHomeBinding;
 import com.isaac.ggmanager.ui.home.user.UserProfileActivity;
 import com.isaac.ggmanager.ui.login.LoginActivity;
@@ -41,12 +41,31 @@ public class HomeActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
 
-        if (navHostFragment != null){
+        if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
-            //hideAndShowBottomNavigation();
         }
+
+        observeViewModel();
         setUpToolbar();
+    }
+
+    private void observeViewModel() {
+        homeViewModel.checkUserHasTeam();
+
+        homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
+            switch (homeViewState.getStatus()) {
+                case SUCCESS:
+                    if (navController != null && navController.getCurrentDestination() != null
+                            && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
+                        navController.navigate(R.id.teamContainerFragment);
+                    }
+                    break;
+                case ERROR:
+                    Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        });
     }
 
     private void setUpToolbar() {
@@ -56,17 +75,6 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.actionLogout.setOnClickListener(v -> signOut());
     }
-
-    /*
-    private void hideAndShowBottomNavigation(){
-        UIVisibilityUtils.setupVisibilityListener(
-                navController,
-                new Integer[] { R.id.userProfileFragment, R.id.editUserProfileFragment },
-                binding.linearLayout,
-                binding.bottomNavigation
-        );
-    }
-     */
 
     private void signOut() {
         homeViewModel.signOut();

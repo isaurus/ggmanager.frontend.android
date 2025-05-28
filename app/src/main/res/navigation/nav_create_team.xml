@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_create_team"
+    app:startDestination="@id/initCreateTeamFragment">
+
+    <fragment
+        android:id="@+id/initCreateTeamFragment"
+        android:name="com.isaac.ggmanager.ui.home.team.InitCreateTeamFragment"
+        android:label="fragment_init_create_team"
+        tools:layout="@layout/fragment_init_create_team" >
+        <action
+            android:id="@+id/action_initCreateTeamFragment_to_infoCreateTeamFragment"
+            app:destination="@id/infoCreateTeamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoCreateTeamFragment"
+        android:name="com.isaac.ggmanager.ui.home.team.InfoCreateTeamFragment"
+        android:label="fragment_info_create_team"
+        tools:layout="@layout/fragment_info_create_team" >
+        <action
+            android:id="@+id/action_infoCreateTeamFragment_to_createTeamFragment"
+            app:destination="@id/createTeamFragment" />
+        <action
+            android:id="@+id/action_infoCreateTeamFragment_to_initCreateTeamFragment"
+            app:destination="@id/initCreateTeamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTeamFragment"
+        android:name="com.isaac.ggmanager.ui.home.team.CreateTeamFragment"
+        android:label="fragment_create_team"
+        tools:layout="@layout/fragment_create_team" >
+        <action
+            android:id="@+id/action_createTeamFragment_to_infoCreateTeamFragment"
+            app:destination="@id/infoCreateTeamFragment" />
+    </fragment>
+</navigation>

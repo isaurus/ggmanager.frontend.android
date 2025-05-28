@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.team.InfoCreateTeamFragment"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/tv_create_team_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Crea un nuevo equipo"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_create_team_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Los Equipos son miembros agrupados y gestionados por un administrador, es decir, el creador del equipo."
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_create_team_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_title" />
+
+    <TextView
+        android:id="@+id/tv_create_team_about"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Con un Equipo podrás:"
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_subtitle"
+        app:layout_constraintStart_toStartOf="@+id/tv_create_team_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_subtitle" />
+
+    <ImageView
+        android:id="@+id/iv_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_about" />
+
+    <TextView
+        android:id="@+id/tv_create_team_about_events"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Crear eventos"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_events"
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_about"
+        app:layout_constraintStart_toEndOf="@+id/iv_events"
+        app:layout_constraintTop_toTopOf="@+id/iv_events" />
+
+    <ImageView
+        android:id="@+id/iv_tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_checkbox"
+        app:layout_constraintEnd_toEndOf="@+id/iv_events"
+        app:layout_constraintStart_toStartOf="@+id/iv_events"
+        app:layout_constraintTop_toBottomOf="@+id/iv_events" />
+
+
+    <TextView
+        android:id="@+id/tv_create_team_about_tasks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Crear tareas"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_tasks"
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_about_events"
+        app:layout_constraintStart_toStartOf="@+id/tv_create_team_about_events"
+        app:layout_constraintTop_toTopOf="@+id/iv_tasks" />
+
+    <ImageView
+        android:id="@+id/iv_members"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_checkbox"
+        app:layout_constraintEnd_toEndOf="@+id/iv_tasks"
+        app:layout_constraintStart_toStartOf="@+id/iv_tasks"
+        app:layout_constraintTop_toBottomOf="@+id/iv_tasks" />
+
+
+    <TextView
+        android:id="@+id/tv_create_team_about_members"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Gestionar miembros"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_members"
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_about_tasks"
+        app:layout_constraintStart_toStartOf="@+id/tv_create_team_about_tasks"
+        app:layout_constraintTop_toTopOf="@+id/iv_members" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_team"
+        style="@style/Large_Button"
+        android:text="Crear equipo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_about_members" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

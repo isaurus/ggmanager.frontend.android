@@ -14,7 +14,7 @@ public class UserModel {
     private String email;
     private Date birthdate;
     private String country;
-    @Nullable private String teamId;  // El usuario puede pertenecer a un grupo, del cual recoge su ID. Si es null, no pertenece a ningún grupo.
+    private String teamId;  // El usuario puede pertenecer a un grupo, del cual recoge su ID. Si es null, no pertenece a ningún grupo.
 
     /**
      * Constructor para deserialización automática con Firestore.

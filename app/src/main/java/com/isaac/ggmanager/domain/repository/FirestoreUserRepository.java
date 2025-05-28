@@ -33,4 +33,6 @@ public interface FirestoreUserRepository {
      * @return LiveData observable por la Activity.
      */
     LiveData<Resource<Boolean>> saveUserProfile(UserModel userModel);
+
+    LiveData<Resource<Boolean>> assignTeamToUser(UserModel userModel, String teamId);
 }

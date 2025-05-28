@@ -81,11 +81,9 @@ public class LoginActivity extends AppCompatActivity {
                     System.out.println("Usuario: " + loginViewState.getData());
 
                     if (loginViewState.getData() != null) {
-                        // Usuario ya creado, vamos al Home
                         startActivity(new Intent(this, HomeActivity.class));
                     }
                     else {
-                        // Usuario no está en Firestore aún, debe crear su perfil
                         startActivity(new Intent(this, EditUserProfileActivity.class));
                     }
                     finish();

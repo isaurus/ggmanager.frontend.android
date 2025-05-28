@@ -17,7 +17,7 @@ public class CreateTeamUseCase {
         this.firestoreTeamRepository = firestoreTeamRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(TeamModel teamModel){
+    public LiveData<Resource<String>> execute(TeamModel teamModel){
         return firestoreTeamRepository.createTeam(teamModel);
     }
 }

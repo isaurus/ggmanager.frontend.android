@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.home.team.InitCreateTeamFragment">
+
+    <TextView
+        android:id="@+id/tv_create_team_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="¡Agrupémonos!"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_create_team_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Para usar las funciones de Equipos necesitas unirte a uno o crear uno propio"
+        app:layout_constraintEnd_toEndOf="@+id/tv_create_team_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_create_team_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_team"
+        style="@style/Large_Button"
+        android:text="Crear equipo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_join_team"
+        style="@style/Large_Button"
+        android:text="Unirse a equipo"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_create_team" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

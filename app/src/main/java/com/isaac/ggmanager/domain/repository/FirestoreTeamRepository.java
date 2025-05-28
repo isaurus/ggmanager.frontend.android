@@ -7,6 +7,6 @@ import com.isaac.ggmanager.domain.model.TeamModel;
 
 public interface FirestoreTeamRepository {
 
-    LiveData<Resource<Boolean>> createTeam(TeamModel teamModel);
+    LiveData<Resource<String>> createTeam(TeamModel teamModel);
     LiveData<Resource<Boolean>> inviteUserToTeam(String teamId, String userId);
 }
