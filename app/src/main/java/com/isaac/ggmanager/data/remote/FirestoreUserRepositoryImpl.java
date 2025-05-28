@@ -106,6 +106,6 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
                 })
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al consultar el equipo al que pertenece el usuario: " + e.getMessage())));
 
-        return null;
+        return result;
     }
 }

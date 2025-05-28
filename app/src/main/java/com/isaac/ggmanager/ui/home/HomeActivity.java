@@ -2,6 +2,7 @@ package com.isaac.ggmanager.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +46,30 @@ public class HomeActivity extends AppCompatActivity {
             navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
         }
+
+        observeViewModel();
         setUpToolbar();
+    }
+
+    private void observeViewModel() {
+        homeViewModel.checkUserHasTeam();
+
+        homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
+            switch (homeViewState.getStatus()){
+                case SUCCESS:
+                    if(homeViewState.getData()) {
+                        navController.navigate(R.id.teamContainerFragment);
+
+                    } else {
+                        navController.navigate(R.id.createTeamContainerFragment);
+
+                    }
+                    break;
+                case ERROR:
+                    Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        });
     }
 
     private void setUpToolbar() {
