@@ -2,14 +2,17 @@ package com.isaac.ggmanager.di;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.isaac.ggmanager.data.remote.FirestoreTeamRepositoryImpl;
 import com.isaac.ggmanager.data.remote.FirestoreUserRepositoryImpl;
 import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
+import com.isaac.ggmanager.domain.repository.FirestoreTeamRepository;
 import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
@@ -130,6 +133,12 @@ public class AppModule {
 
     @Provides
     @Singleton
+    public static FirestoreTeamRepository provideFirestoreTeamRepository(FirebaseFirestore firestore){
+        return new FirestoreTeamRepositoryImpl(firestore);
+    }
+
+    @Provides
+    @Singleton
     public static GetCurrentUserUseCase provideGetCurrentUserUseCase(FirestoreUserRepository firestoreUserRepository){
         return new GetCurrentUserUseCase(firestoreUserRepository);
     }
@@ -138,5 +147,11 @@ public class AppModule {
     @Singleton
     public static CheckUserHasTeamUseCase provideCheckUserHasTeamUseCase(FirestoreUserRepository firestoreUserRepository){
         return new CheckUserHasTeamUseCase(firestoreUserRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static CreateTeamUseCase provideCreateTeamUseCase(FirestoreTeamRepository firestoreTeamRepository){
+        return new CreateTeamUseCase(firestoreTeamRepository);
     }
 }

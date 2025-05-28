@@ -44,7 +44,6 @@ public class HomeActivity extends AppCompatActivity {
         if (navHostFragment != null){
             navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
-            //hideAndShowBottomNavigation();
         }
         setUpToolbar();
     }
@@ -56,17 +55,6 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.actionLogout.setOnClickListener(v -> signOut());
     }
-
-    /*
-    private void hideAndShowBottomNavigation(){
-        UIVisibilityUtils.setupVisibilityListener(
-                navController,
-                new Integer[] { R.id.userProfileFragment, R.id.editUserProfileFragment },
-                binding.linearLayout,
-                binding.bottomNavigation
-        );
-    }
-     */
 
     private void signOut() {
         homeViewModel.signOut();

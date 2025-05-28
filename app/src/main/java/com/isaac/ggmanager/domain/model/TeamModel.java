@@ -1,25 +1,28 @@
 package com.isaac.ggmanager.domain.model;
 
-import java.security.Timestamp;
 import java.util.List;
 
 public class TeamModel {
     private String id;
-    private String name;
-    private String description;
+    private String teamName;
+    private String teamDescription;
     private String adminUid;
     private List<String> members;       // CREO QUE ES INNECESARIO
-    private Timestamp createdAt;
 
     public TeamModel(){}
 
-    public TeamModel(String id, String name, String description, String adminUid, List<String> members, Timestamp createdAt) {
+    public TeamModel(String teamName, String teamDescription){
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.teamName = teamName;
+        this.teamDescription = teamDescription;
+    }
+
+    public TeamModel(String id, String teamName, String teamDescription, String adminUid, List<String> members) {
+        this.id = id;
+        this.teamName = teamName;
+        this.teamDescription = teamDescription;
         this.adminUid = adminUid;
         this.members = members;
-        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -30,20 +33,20 @@ public class TeamModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTeamDescription() {
+        return teamDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTeamDescription(String teamDescription) {
+        this.teamDescription = teamDescription;
     }
 
     public String getAdminUid() {
@@ -60,13 +63,5 @@ public class TeamModel {
 
     public void setMembers(List<String> members) {
         this.members = members;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 }

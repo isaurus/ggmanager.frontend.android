@@ -16,6 +16,10 @@ import com.isaac.ggmanager.ui.home.team.calendar.CalendarFragment;
 import com.isaac.ggmanager.ui.home.team.member.MemberFragment;
 import com.isaac.ggmanager.ui.home.team.task.TaskFragment;
 
+/**
+ * Contenedor para gestionar el flujo de los fragments contenidos en el caso de que el usuario
+ * pertenezca a algún equipo.
+ */
 public class TeamContainerFragment extends Fragment {
 
     private FragmentTeamContainerBinding binding;
