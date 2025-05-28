@@ -17,6 +17,7 @@ public class HomeViewModel extends ViewModel {
     private final SignOutUseCase signoutUseCase;
     private final CheckUserHasTeamUseCase checkUserHasTeamUseCase;
 
+
     private final MutableLiveData<HomeViewState> homeViewState = new MutableLiveData<>();
 
     @Inject

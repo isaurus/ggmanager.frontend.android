@@ -4,8 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
+import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.SaveUserProfileUseCase;
 
 import javax.inject.Inject;
 
@@ -15,12 +19,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class CreateTeamViewModel extends ViewModel {
 
     private final CreateTeamUseCase createTeamUseCase;
+    private final GetCurrentUserUseCase getCurrentUserUseCase;
+    private final SaveUserProfileUseCase saveUserProfileUseCase;
 
     private final MutableLiveData<CreateTeamViewState> createTeamViewState = new MutableLiveData<>();
 
     @Inject
-    public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase){
+    public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase,
+                               GetCurrentUserUseCase getCurrentUserUseCase,
+                               SaveUserProfileUseCase saveUserProfileUseCase){
         this.createTeamUseCase = createTeamUseCase;
+        this.getCurrentUserUseCase = getCurrentUserUseCase;
+        this.saveUserProfileUseCase = saveUserProfileUseCase;
     }
 
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
@@ -31,7 +41,20 @@ public class CreateTeamViewModel extends ViewModel {
         createTeamUseCase.execute(teamModel).observeForever(resource -> {
             switch (resource.getStatus()){
                 case SUCCESS:
-                    createTeamViewState.setValue(CreateTeamViewState.success());
+                    String teamId = resource.getData();
+
+                    getCurrentUserUseCase.execute().observeForever(userResource -> {
+                        if (userResource.getStatus() == Resource.Status.SUCCESS){
+                            UserModel currentUser = userResource.getData();
+                            currentUser.setTeamId(teamId);
+
+                            saveUserProfileUseCase.execute(currentUser).observeForever(updatedResource -> {
+                                if (updatedResource.getStatus() == Resource.Status.SUCCESS) createTeamViewState.setValue(CreateTeamViewState.success());
+                            });
+                        }
+                    });
+
+                    //createTeamViewState.setValue(CreateTeamViewState.success());
                     break;
                 case LOADING:
                     createTeamViewState.setValue(CreateTeamViewState.loading());

@@ -37,7 +37,10 @@ public class TeamContainerFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
-        // Observar si el usuario tiene equipo
+        observeViewModel();
+    }
+
+    private void observeViewModel(){
         homeViewModel.getHomeViewstate().observe(getViewLifecycleOwner(), homeViewState -> {
             switch (homeViewState.getStatus()){
                 case SUCCESS:

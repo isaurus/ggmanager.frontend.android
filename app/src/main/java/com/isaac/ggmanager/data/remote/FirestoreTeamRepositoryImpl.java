@@ -30,8 +30,8 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
     }
 
     @Override
-    public LiveData<Resource<Boolean>> createTeam(TeamModel teamModel) {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+    public LiveData<Resource<String>> createTeam(TeamModel teamModel) {
+        MutableLiveData<Resource<String>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
         String userUid = firebaseAuthRepository.getAuthenticatedUser().getUid();
@@ -45,7 +45,7 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
         firestore.collection("teams")
                 .document(teamId)
                 .set(teamModel)
-                .addOnSuccessListener(unused -> result.setValue(Resource.success(true)))
+                .addOnSuccessListener(unused -> result.setValue(Resource.success(teamId)))
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al crear equipo: " + e.getMessage())));
 
         return result;

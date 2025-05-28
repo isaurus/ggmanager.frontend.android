@@ -77,7 +77,7 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
                         UserModel user = documentSnapshot.toObject(UserModel.class);
                         result.setValue(Resource.success(user));
                     } else if (!documentSnapshot.exists()) {
-                        result.setValue(Resource.success(null)); // <- Esta línea es la clave
+                        result.setValue(Resource.success(null));
                     }
                 })
                 .addOnFailureListener(e ->
@@ -87,9 +87,11 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
         return result;
     }
 
-
-
-
+    /**
+     * Comprueba si el usuario pertenece a algún equipo para actualizar la UI.
+     *
+     * @return ¿?¿?¿?
+     */
     @Override
     public LiveData<Resource<Boolean>> hasTeam() {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
@@ -105,6 +107,22 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
                     result.setValue(Resource.success(teamId != null && !teamId.isEmpty()));
                 })
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al consultar el equipo al que pertenece el usuario: " + e.getMessage())));
+
+        return result;
+    }
+
+    @Override
+    public LiveData<Resource<Boolean>> assignTeamToUser(UserModel userModel, String teamId){
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        String userUid = firebaseAuthRepository.getAuthenticatedUser().getUid();
+
+        firestore.collection("users")
+                .document(userUid)
+                .update("teamId", teamId)
+                .addOnSuccessListener(unused -> result.setValue(Resource.success(null)))
+                .addOnFailureListener(e -> result.setValue(Resource.error("Error al obtener usuario: " + e.getMessage())));
 
         return result;
     }

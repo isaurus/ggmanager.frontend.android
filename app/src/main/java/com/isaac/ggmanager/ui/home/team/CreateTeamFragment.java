@@ -1,5 +1,6 @@
 package com.isaac.ggmanager.ui.home.team;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.FragmentCreateTeamBinding;
+import com.isaac.ggmanager.ui.home.HomeActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -64,7 +66,11 @@ public class CreateTeamFragment extends Fragment {
                     binding.tilTeamDescription.setError(createTeamViewState.isTeamDescriptionValid() ? null : "Descripción no permitido");
                     break;
                 case SUCCESS:
-                    // ¿QUÉ HAGO AQUÍ? ¿LANZAR EL HOME ACTIVITY QUE, AL TENER EQUIPO EL USUARIO, MOSTRARÁ EL CONTENEDOR DE TEAMCONTAINER?
+                    // Lanzamos HomeActivity nuevamente, que al observar que el usuario ya tiene equipo, navegará a TeamContainerFragment
+                    Intent intent = new Intent(requireContext(), HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    requireActivity().finish(); // opcional pero recomendable para evitar volver a esta pantalla
                     break;
                 case LOADING:
                     binding.btnCreateTeam.setEnabled(false);

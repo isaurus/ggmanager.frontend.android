@@ -56,17 +56,14 @@ public class HomeActivity extends AppCompatActivity {
         homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
             switch (homeViewState.getStatus()) {
                 case SUCCESS:
-                    // Siempre navegamos al teamContainerFragment una vez
                     if (navController != null && navController.getCurrentDestination() != null
                             && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
                         navController.navigate(R.id.teamContainerFragment);
                     }
-                    // La lógica de mostrar contenido o creación se maneja dentro de TeamContainerFragment
                     break;
                 case ERROR:
                     Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
-                // opcionalmente manejar LOADING si tienes ese estado
             }
         });
     }
