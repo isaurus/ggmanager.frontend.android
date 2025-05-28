@@ -23,10 +23,8 @@ public class CreateTeamContainerFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCreateTeamContainerBinding.inflate(inflater, container, false);
 
-        // Ajustamos los Insets
         InsetsUtils.applySystemWindowInsetsPadding(binding.getRoot());
 
-        // No necesitas inicializar ningún NavController aquí
         return binding.getRoot();
     }
 

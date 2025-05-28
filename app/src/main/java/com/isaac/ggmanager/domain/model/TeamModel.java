@@ -7,15 +7,9 @@ public class TeamModel {
     private String teamName;
     private String teamDescription;
     private String adminUid;
-    private List<String> members;       // CREO QUE ES INNECESARIO
+    private List<String> members;
 
     public TeamModel(){}
-
-    public TeamModel(String teamName, String teamDescription){
-        this.id = id;
-        this.teamName = teamName;
-        this.teamDescription = teamDescription;
-    }
 
     public TeamModel(String id, String teamName, String teamDescription, String adminUid, List<String> members) {
         this.id = id;

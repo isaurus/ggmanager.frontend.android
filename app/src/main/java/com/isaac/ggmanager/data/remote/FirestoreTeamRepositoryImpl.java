@@ -6,7 +6,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
+import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
 import com.isaac.ggmanager.domain.repository.FirestoreTeamRepository;
+import com.isaac.ggmanager.domain.repository.FirestoreUserRepository;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,10 +20,13 @@ import javax.inject.Singleton;
 public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
 
     private final FirebaseFirestore firestore;
+    private final FirebaseAuthRepository firebaseAuthRepository;
 
     @Inject
-    public FirestoreTeamRepositoryImpl(FirebaseFirestore firestore){
+    public FirestoreTeamRepositoryImpl(FirebaseFirestore firestore,
+                                       FirebaseAuthRepository firebaseAuthRepository){
         this.firestore = firestore;
+        this.firebaseAuthRepository = firebaseAuthRepository;
     }
 
     @Override
@@ -26,8 +34,13 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
+        String userUid = firebaseAuthRepository.getAuthenticatedUser().getUid();
         String teamId = firestore.collection("teams").document().getId();
+
         teamModel.setId(teamId);
+        teamModel.setAdminUid(userUid);
+        teamModel.setMembers(new ArrayList<>(Arrays.asList(userUid)));
+
 
         firestore.collection("teams")
                 .document(teamId)

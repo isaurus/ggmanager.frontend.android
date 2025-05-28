@@ -26,7 +26,21 @@ public class CreateTeamViewModel extends ViewModel {
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
 
     public void createTeam(String teamName, String teamDescription){
-        TeamModel teamModel = new TeamModel(teamName, teamDescription);
+        TeamModel teamModel = new TeamModel(null, teamName, teamDescription, null, null);
+
+        createTeamUseCase.execute(teamModel).observeForever(resource -> {
+            switch (resource.getStatus()){
+                case SUCCESS:
+                    createTeamViewState.setValue(CreateTeamViewState.success());
+                    break;
+                case LOADING:
+                    createTeamViewState.setValue(CreateTeamViewState.loading());
+                    break;
+                case ERROR:
+                    createTeamViewState.setValue(CreateTeamViewState.error(resource.getMessage()));
+                    break;
+            }
+        });
     }
 
     public void validateCreateTeamForm(String teamName, String teamDescription){
@@ -38,6 +52,7 @@ public class CreateTeamViewModel extends ViewModel {
         if (isTeamNameValid && isTeamDescriptionValid){
             createTeamViewState.setValue(CreateTeamViewState.loading());
 
+            createTeam(teamName, teamDescription);
         }
     }
 

@@ -133,8 +133,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static FirestoreTeamRepository provideFirestoreTeamRepository(FirebaseFirestore firestore){
-        return new FirestoreTeamRepositoryImpl(firestore);
+    public static FirestoreTeamRepository provideFirestoreTeamRepository(FirebaseFirestore firestore, FirebaseAuthRepository firebaseAuthRepository){
+        return new FirestoreTeamRepositoryImpl(firestore, firebaseAuthRepository);
     }
 
     @Provides

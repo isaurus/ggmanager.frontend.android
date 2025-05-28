@@ -84,7 +84,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     binding.btnSaveProfile.setEnabled(false);
                     break;
                 case SUCCESS:
-                    //finish();   // EN LUGAR DE FINISH LANZAR A HOME ACTIVITY
                     this.startActivity(new Intent(this, HomeActivity.class));
                     this.finish();
                     break;
