@@ -11,7 +11,7 @@
         android:id="@+id/img_ehub_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/ic_ggmanager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,8 @@
         android:text="Gestión de equipos de esports"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/img_ehub_logo"
-        app:layout_constraintStart_toStartOf="@+id/img_ehub_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_ehub_logo" />
 
     <com.google.android.material.button.MaterialButton
