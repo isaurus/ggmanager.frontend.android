@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
-import com.isaac.ggmanager.core.utils.UIVisibilityUtils;
 import com.isaac.ggmanager.databinding.ActivityHomeBinding;
 import com.isaac.ggmanager.ui.home.user.UserProfileActivity;
 import com.isaac.ggmanager.ui.login.LoginActivity;
@@ -42,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
 
-        if (navHostFragment != null){
+        if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
         }
@@ -55,19 +54,19 @@ public class HomeActivity extends AppCompatActivity {
         homeViewModel.checkUserHasTeam();
 
         homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
-            switch (homeViewState.getStatus()){
+            switch (homeViewState.getStatus()) {
                 case SUCCESS:
-                    if(homeViewState.getData()) {
+                    // Siempre navegamos al teamContainerFragment una vez
+                    if (navController != null && navController.getCurrentDestination() != null
+                            && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
                         navController.navigate(R.id.teamContainerFragment);
-
-                    } else {
-                        navController.navigate(R.id.createTeamContainerFragment);
-
                     }
+                    // La lógica de mostrar contenido o creación se maneja dentro de TeamContainerFragment
                     break;
                 case ERROR:
                     Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
+                // opcionalmente manejar LOADING si tienes ese estado
             }
         });
     }

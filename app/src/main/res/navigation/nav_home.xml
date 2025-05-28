@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
-    app:startDestination="@id/createTeamContainerFragment">
+    app:startDestination="@id/teamContainerFragment">
 
     <fragment
         android:id="@+id/teamContainerFragment"
@@ -36,9 +36,6 @@
             app:destination="@id/teamContainerFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_achievementFragment_to_createTeamContainerFragment"
-            app:destination="@id/createTeamContainerFragment" />
     </fragment>
 
     <fragment
@@ -51,21 +48,6 @@
             app:destination="@id/teamContainerFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_soloQFragment_to_createTeamContainerFragment"
-            app:destination="@id/createTeamContainerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/createTeamContainerFragment"
-        android:name="com.isaac.ggmanager.ui.home.team.CreateTeamContainerFragment"
-        android:label="CreateTeamContainerFragment"
-        tools:layout="@layout/fragment_create_team_container">
-        <action
-            android:id="@+id/action_createTeamContainerFragment_to_achievementFragment"
-            app:destination="@id/achievementFragment" />
-        <action
-            android:id="@+id/action_createTeamContainerFragment_to_soloQFragment"
-            app:destination="@id/soloQFragment" />
     </fragment>
 
 </navigation>
