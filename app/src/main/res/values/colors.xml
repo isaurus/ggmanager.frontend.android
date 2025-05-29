@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#EE5733</color>
-    <color name="dark_background">#0C1B33</color>
-    <color name="light_background">#FFFFFF</color>
-    <color name="primary_text">#1C1C1C</color>
-    <color name="secondary_text">#6E6E6E</color>
-    <color name="success">#27AE60</color>
-    <color name="error">#E74C3C</color>
+    <!-- Colores primarios: usados para elementos principales como barra de acción y botones -->
+    <color name="colorPrimary">#00897B</color>           <!-- Teal 600: color principal -->
+    <color name="colorPrimaryVariant">#00695C</color>    <!-- Teal 800: variante oscura para sombras y estados activos -->
+    <color name="colorOnPrimary">#FFFFFF</color>         <!-- Texto o iconos sobre colorPrimary -->
+
+    <!-- Colores secundarios: para acentos, botones secundarios, indicadores -->
+    <color name="colorSecondary">#0288D1</color>         <!-- Azul claro (Light Blue 700) -->
+    <color name="colorSecondaryVariant">#0277BD</color>  <!-- Azul oscuro (Light Blue 800) -->
+    <color name="colorOnSecondary">#FFFFFF</color>       <!-- Texto o iconos sobre colorSecondary -->
+
+    <!-- Fondos y superficies: colores para fondos y elementos superficiales -->
+    <color name="colorBackground">#FAFAFA</color>        <!-- Gris muy claro para fondo general -->
+    <color name="colorOnBackground">#212121</color>      <!-- Texto principal sobre fondo -->
+
+    <color name="colorSurface">#FFFFFF</color>           <!-- Fondo para cards, menús, diálogos -->
+    <color name="colorOnSurface">#212121</color>         <!-- Texto sobre superficies -->
+
+    <!-- Colores de error: para mostrar errores o alertas -->
+    <color name="colorError">#D32F2F</color>             <!-- Rojo intenso (Red 700) -->
+    <color name="colorOnError">#FFFFFF</color>           <!-- Texto/iconos sobre error -->
+
+    <!-- Separadores y sombras -->
+    <color name="colorDivider">#1F000000</color>         <!-- Líneas divisorias suaves (12% negro) -->
+
+    <!-- Colores de texto específicos -->
+    <color name="textPrimary">#212121</color>            <!-- Texto principal, casi negro -->
+    <color name="textSecondary">#616161</color>          <!-- Texto secundario, gris medio -->
+    <color name="textDisabled">#BDBDBD</color>           <!-- Texto deshabilitado, gris claro -->
+
+    <!-- Colores personalizados para branding o elementos destacados -->
+    <color name="brandTealLight">#4DB6AC</color>         <!-- Teal 300: para acentos suaves -->
+    <color name="brandBlueAccent">#03A9F4</color>        <!-- Azul acento (Light Blue 500) -->
+
+    <color name="input_box_stroke">#008080</color> <!-- teal -->
+    <color name="input_box_background">#FFFFFF</color>
+
+    <color name="icon_color">#000000</color> <!-- Negro -->
+
 </resources>

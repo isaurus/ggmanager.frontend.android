@@ -18,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:src="@drawable/ic_back"/>
+            android:src="@drawable/ic_back"
+            app:tint="@color/icon_color" />
     </LinearLayout>
 
     <ImageView
@@ -33,7 +34,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -47,12 +48,15 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_birthdate"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -70,12 +74,15 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="none"
-            android:paddingStart="50dp"/>
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:paddingStart="50dp"
+            android:fontFamily="@font/roboto_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_country"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Input.OutlinedBox.Dropdown"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -92,12 +99,15 @@
             android:inputType="none"
             android:cursorVisible="false"
             android:focusable="true"
-            android:paddingStart="50dp"/>
+            android:paddingStart="50dp"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save_profile"
-        style="@style/Large_Button"
+        style="@style/Button.Primary"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="80dp"
@@ -108,7 +118,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_pick_avatar"
-        style="@style/Short_Button"
+        style="@style/Button.Primary"
         android:layout_marginStart="20dp"
         android:text="Elegir Avatar"
         app:layout_constraintBottom_toBottomOf="@+id/img_profile_pic"
