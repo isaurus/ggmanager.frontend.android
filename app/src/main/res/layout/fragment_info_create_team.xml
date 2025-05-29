@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_title"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -21,6 +22,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_subtitle"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -31,6 +33,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_about"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -51,6 +54,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_about_events"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -73,6 +77,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_about_tasks"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Crear tareas"
@@ -94,6 +99,7 @@
 
     <TextView
         android:id="@+id/tv_create_team_about_members"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Gestionar miembros"
@@ -104,12 +110,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_team"
-        style="@style/Large_Button"
+        style="@style/Button.Primary"
+        android:layout_marginBottom="80dp"
         android:text="Crear equipo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_create_team_about_members" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

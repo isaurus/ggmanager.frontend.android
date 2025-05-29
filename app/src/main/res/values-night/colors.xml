@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores primarios -->
+    <color name="colorPrimary">#4DB6AC</color>           <!-- Teal 300: versión clara para modo oscuro -->
+    <color name="colorPrimaryVariant">#00796B</color>    <!-- Teal 700: variante oscura para contraste -->
+    <color name="colorOnPrimary">#000000</color>         <!-- Texto negro sobre colorPrimary claro -->
+
+    <!-- Colores secundarios -->
+    <color name="colorSecondary">#81D4FA</color>         <!-- Azul claro (Light Blue 300) -->
+    <color name="colorSecondaryVariant">#039BE5</color>  <!-- Azul (Light Blue 600) -->
+    <color name="colorOnSecondary">#000000</color>       <!-- Texto negro sobre colorSecondary -->
+
+    <!-- Fondos y superficies -->
+    <color name="colorBackground">#121212</color>        <!-- Fondo oscuro profundo -->
+    <color name="colorOnBackground">#E0E0E0</color>      <!-- Texto claro sobre fondo oscuro -->
+
+    <color name="colorSurface">#1E1E1E</color>           <!-- Superficie ligeramente más clara que fondo -->
+    <color name="colorOnSurface">#E0E0E0</color>         <!-- Texto claro sobre superficies -->
+
+    <!-- Colores de error -->
+    <color name="colorError">#CF6679</color>             <!-- Rojo rosado suave para modo oscuro -->
+    <color name="colorOnError">#000000</color>           <!-- Texto negro sobre colorError -->
+
+    <!-- Separadores y sombras -->
+    <color name="colorDivider">#33FFFFFF</color>         <!-- Divisor blanco semi-transparente -->
+
+    <!-- Colores de texto -->
+    <color name="textPrimary">#E0E0E0</color>            <!-- Texto principal claro -->
+    <color name="textSecondary">#B0B0B0</color>          <!-- Texto secundario gris claro -->
+    <color name="textDisabled">#757575</color>           <!-- Texto deshabilitado gris oscuro -->
+
+    <!-- Colores personalizados -->
+    <color name="brandTealLight">#80CBC4</color>         <!-- Teal 200 para acentos suaves -->
+    <color name="brandBlueAccent">#4FC3F7</color>        <!-- Azul acento claro -->
+
+    <color name="input_box_stroke">#80CBC4</color> <!-- teal más claro -->
+    <color name="input_box_background">#1E1E1E</color>
+
+    <color name="icon_color">#FFFFFF</color> <!-- Blanco -->
+</resources>

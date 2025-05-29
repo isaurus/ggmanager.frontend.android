@@ -30,7 +30,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_team"
-        style="@style/Large_Button"
+        style="@style/Button.Primary"
         android:text="Crear equipo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_join_team"
-        style="@style/Large_Button"
+        style="@style/Button.Secondary"
         android:text="Unirse a equipo"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"

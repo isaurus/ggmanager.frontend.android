@@ -9,6 +9,7 @@
 
     <TextView
         android:id="@+id/tv_set_up_team"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -20,6 +21,7 @@
 
     <TextView
         android:id="@+id/tv_set_up_team_subtitle"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -30,7 +32,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_team_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -48,7 +50,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_team_description"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -66,13 +68,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_team"
-        style="@style/Large_Button"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        style="@style/Button.Primary"
         android:layout_marginBottom="80dp"
         android:text="Crear equipo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/til_team_description"
+        app:layout_constraintStart_toStartOf="@+id/til_team_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

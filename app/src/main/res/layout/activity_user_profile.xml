@@ -18,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:src="@drawable/ic_back"/>
+            android:src="@drawable/ic_back"
+            app:tint="@color/icon_color"/>
     </LinearLayout>
 
 
@@ -34,7 +35,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_user_name_title"
-        style="@style/Identificator"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -47,7 +48,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_user_name"
-        style="@style/Profile_User_Data"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -59,7 +60,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_email_title"
-        style="@style/Identificator"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -70,7 +71,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_email"
-        style="@style/Profile_User_Data"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -81,7 +82,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_user_birthdate_title"
-        style="@style/Identificator"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -92,7 +93,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_user_birthdate"
-        style="@style/Profile_User_Data"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -103,7 +104,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_country_title"
-        style="@style/Identificator"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -114,7 +115,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_country"
-        style="@style/Profile_User_Data"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -125,13 +126,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit_profile"
-        style="@style/Large_Button"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
+        style="@style/Button.Primary"
+        android:layout_marginBottom="50dp"
         android:text="Editar Perfil"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_country"
+        app:layout_constraintStart_toStartOf="@+id/tv_country" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

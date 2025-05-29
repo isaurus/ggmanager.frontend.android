@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_user_profile" />
+            android:src="@drawable/ic_user_profile"
+            app:tint="@color/icon_color" />
 
         <Space
             android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_logout" />
+            android:src="@drawable/ic_logout"
+            app:tint="@color/icon_color" />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
