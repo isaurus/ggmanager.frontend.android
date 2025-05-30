@@ -54,7 +54,6 @@ public class CreateTeamViewModel extends ViewModel {
                         }
                     });
 
-                    //createTeamViewState.setValue(CreateTeamViewState.success());
                     break;
                 case LOADING:
                     createTeamViewState.setValue(CreateTeamViewState.loading());

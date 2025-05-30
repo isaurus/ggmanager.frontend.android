@@ -37,4 +37,7 @@
     <color name="input_box_background">#1E1E1E</color>
 
     <color name="icon_color">#FFFFFF</color> <!-- Blanco -->
+
+    <color name="fab_background">#80CBC4</color> <!-- Teal claro -->
+    <color name="fab_icon_tint">#000000</color>   <!-- Negro para mejor contraste -->
 </resources>

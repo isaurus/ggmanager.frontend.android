@@ -13,7 +13,7 @@ import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.AssignTeamToUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.InviteUserToTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
@@ -158,7 +158,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static AssignTeamToUserUseCase provideAssignTeamToUserUseCase(FirestoreUserRepository firestoreUserRepository){
-        return new AssignTeamToUserUseCase(firestoreUserRepository);
+    public static InviteUserToTeamUseCase provideInviteUserToTeamUseCase(FirestoreTeamRepository firestoreTeamRepository){
+        return new InviteUserToTeamUseCase(firestoreTeamRepository);
     }
 }

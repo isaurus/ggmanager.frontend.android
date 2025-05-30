@@ -3,6 +3,8 @@ package com.isaac.ggmanager.data.remote;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
@@ -41,7 +43,6 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
         teamModel.setAdminUid(userUid);
         teamModel.setMembers(new ArrayList<>(Arrays.asList(userUid)));
 
-
         firestore.collection("teams")
                 .document(teamId)
                 .set(teamModel)
@@ -52,7 +53,38 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
     }
 
     @Override
-    public LiveData<Resource<Boolean>> inviteUserToTeam(String teamId, String userId) {
-        return null;
+    public LiveData<Resource<Boolean>> inviteUserToTeam(String teamId, String email) {
+        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        firestore.collection("users")
+                .whereEqualTo("email", email)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(userQuery -> {
+                    if (!userQuery.isEmpty()) {
+                        DocumentSnapshot userDoc = userQuery.getDocuments().get(0);
+                        String userId = userDoc.getId();
+
+                        firestore.collection("teams")
+                                .document(teamId)
+                                .update("members", FieldValue.arrayUnion(userId))
+                                .addOnSuccessListener(aVoid -> {
+
+                                    firestore.collection("users")
+                                            .document(userId)
+                                            .update("teamId", teamId)
+                                            .addOnSuccessListener(v -> result.setValue(Resource.success(true)))
+                                            .addOnFailureListener(e -> result.setValue(Resource.error("No se pudo asignar el equipo al usuario")));
+                                                result.setValue(Resource.error("No se pudo asignar el equipo al usuario"));
+                                })
+                                .addOnFailureListener(e -> result.setValue(Resource.error("No se pudo añadir al usuario al equipo")));
+                    } else {
+                        result.setValue(Resource.error("El usuario no existe"));
+                    }
+                })
+                .addOnFailureListener(e -> result.setValue(Resource.error("Error al buscar el usuario")));
+
+        return result;
     }
 }
