@@ -6,18 +6,20 @@ import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-public class CreateTeamUseCase {
+public class GetAllTeamsUseCase {
 
     private final TeamRepository teamRepository;
 
     @Inject
-    public CreateTeamUseCase(TeamRepository teamRepository){
+    public GetAllTeamsUseCase(TeamRepository teamRepository){
         this.teamRepository = teamRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(TeamModel teamModel){
-        return teamRepository.create(teamModel);
+    public LiveData<Resource<List<TeamModel>>> execute(){
+        return teamRepository.getAll();
     }
 }

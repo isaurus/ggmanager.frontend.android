@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 
 import javax.inject.Inject;
 
@@ -15,25 +15,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LaunchViewModel extends ViewModel {
 
     private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;  // Para lanzar a login o directamente a la app
-    private final GetCurrentUserUseCase getCurrentUserUseCase;  // Para lanzar al Home o al Edit
+    private final GetUserByIdUseCase getUserByIdUseCase;  // Para lanzar al Home o al Edit
 
     public final MutableLiveData<LaunchViewState> launchViewState = new MutableLiveData<>();
 
     @Inject
     public LaunchViewModel(CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase,
-                           GetCurrentUserUseCase getCurrentUserUseCase){
+                           GetUserByIdUseCase getUserByIdUseCase){
         this.checkAuthenticatedUserUseCase = checkAuthenticatedUserUseCase;
-        this.getCurrentUserUseCase = getCurrentUserUseCase;
+        this.getUserByIdUseCase = getUserByIdUseCase;
     }
 
     public LiveData<LaunchViewState> getLaunchViewState() { return launchViewState; }
 
-
-
-
-
     public void isUserPersisted(){
-        getCurrentUserUseCase.execute().observeForever(resource -> {
+        getUserByIdUseCase.execute().observeForever(resource -> {
             switch (resource.getStatus()){
                 case SUCCESS:
                     launchViewState.setValue(LaunchViewState.success(resource.getData()));
@@ -45,7 +41,6 @@ public class LaunchViewModel extends ViewModel {
 
         });
     }
-
 
     public boolean isUserAuthenticated() { return checkAuthenticatedUserUseCase.execute(); }
 

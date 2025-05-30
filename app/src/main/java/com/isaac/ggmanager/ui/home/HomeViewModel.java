@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.isaac.ggmanager.domain.usecase.home.CheckUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 
 import javax.inject.Inject;

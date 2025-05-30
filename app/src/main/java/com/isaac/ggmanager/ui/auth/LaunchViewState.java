@@ -5,9 +5,11 @@ import com.isaac.ggmanager.core.Resource;
 public class LaunchViewState {
 
     private final Resource<?> resource;
+    private final boolean isUserAuthenticated;
 
-    public LaunchViewState(Resource<?> resource){
+    public LaunchViewState(Resource<?> resource, boolean isUserAuthenticated){
         this.resource = resource;
+        this.isUserAuthenticated = isUserAuthenticated;
     }
 
     public static <T> LaunchViewState success(T data){

@@ -1,6 +1,6 @@
 package com.isaac.ggmanager.domain.usecase.home;
 
-import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
+import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 
 import javax.inject.Inject;
 

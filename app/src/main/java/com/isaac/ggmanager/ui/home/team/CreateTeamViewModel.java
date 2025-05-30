@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.SaveUserProfileUseCase;
 
 import javax.inject.Inject;
 

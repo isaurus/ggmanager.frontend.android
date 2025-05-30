@@ -1,10 +1,9 @@
-package com.isaac.ggmanager.domain.repository;
+package com.isaac.ggmanager.domain.repository.auth;
 
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.isaac.ggmanager.core.Resource;
-import com.isaac.ggmanager.domain.model.UserModel;
 
 
 /**
@@ -14,25 +13,7 @@ import com.isaac.ggmanager.domain.model.UserModel;
 public interface FirebaseAuthRepository {
 
     /**
-     * Registro del usuario con email y contraseña. Méto-do tradicional.
-     *
-     * @param email El correo del usuario.
-     * @param password La contraseña del usuario.
-     * @return true o false según si la operación es o no exitosa encapsulado en un Resource
-     */
-    LiveData<Resource<Boolean>> registerWithEmail(String email, String password);
-
-    /**
-     * Login del usuario con email y contraseña. Méto-do tradicional.
-     *
-     * @param email El correo del usuario.
-     * @param password La contraseña del usuario.
-     * @return true o false según si la operación es o no exitosa encapsulado en un Resource.
-     */
-    LiveData<Resource<Boolean>> loginWithEmail(String email, String password);
-
-    /**
-     * Registro del usuario con email y contraseña. Méto-do tradicional.
+     * Registro/Login del usuario con Google.
      *
      * @param idToken El token recibido de Google para el proceso de autenticación en Firebase.
      * @return true o false según si la operación es o no exitosa encapsulado en un Resource.

@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.isaac.ggmanager.core.Resource;
-import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
+import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,30 +21,6 @@ public class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
     @Inject
     public FirebaseAuthRepositoryImpl(FirebaseAuth firebaseAuth) {
         this.firebaseAuth = firebaseAuth;
-    }
-
-    @Override
-    public LiveData<Resource<Boolean>> registerWithEmail(String email, String password) {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
-        result.setValue(Resource.loading());
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> result.setValue(Resource.success(true)))
-                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
-
-        return result;
-    }
-
-    @Override
-    public LiveData<Resource<Boolean>> loginWithEmail(String email, String password) {
-        MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
-        result.setValue(Resource.loading());
-
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> result.setValue(Resource.success(true)))
-                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
-
-        return result;
     }
 
     @Override

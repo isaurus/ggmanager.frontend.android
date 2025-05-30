@@ -78,9 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                 case SUCCESS:
                     binding.progressBar.setVisibility(View.GONE);
 
-                    System.out.println("Usuario: " + loginViewState.getData());
-
-                    if (loginViewState.getData() != null) {
+                    if (loginViewState.isUserHasProfile()) {
                         startActivity(new Intent(this, HomeActivity.class));
                     }
                     else {
