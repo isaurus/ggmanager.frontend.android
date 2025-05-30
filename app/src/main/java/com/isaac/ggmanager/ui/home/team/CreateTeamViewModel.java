@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.model.UserModel;
+import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 
 import javax.inject.Inject;
 
@@ -15,23 +18,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class CreateTeamViewModel extends ViewModel {
 
+
     private final CreateTeamUseCase createTeamUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
-    private final SaveUserProfileUseCase saveUserProfileUseCase;
+    private final UpdateUserTeamUseCase updateUserTeamUseCase;
+
+
 
     private final MutableLiveData<CreateTeamViewState> createTeamViewState = new MutableLiveData<>();
 
     @Inject
     public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase,
                                GetCurrentUserUseCase getCurrentUserUseCase,
-                               SaveUserProfileUseCase saveUserProfileUseCase){
+                               UpdateUserTeamUseCase updateUserTeamUseCase){
         this.createTeamUseCase = createTeamUseCase;
         this.getCurrentUserUseCase = getCurrentUserUseCase;
-        this.saveUserProfileUseCase = saveUserProfileUseCase;
+        this.updateUserTeamUseCase = updateUserTeamUseCase;
     }
 
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
 
+    /*
     public void createTeam(String teamName, String teamDescription){
         TeamModel teamModel = new TeamModel(null, teamName, teamDescription, null, null);
 
@@ -82,4 +89,6 @@ public class CreateTeamViewModel extends ViewModel {
     private boolean isValidTeamDescription(String teamDescription){
         return teamDescription != null && !teamDescription.isEmpty();
     }
+
+     */
 }

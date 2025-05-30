@@ -13,13 +13,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class MemberViewModel extends ViewModel {
 
-    private final InviteUserToTeamUseCase inviteUserToTeamUseCase;
-
     private final MutableLiveData<MemberViewState> memberViewState = new MutableLiveData<>();
 
     @Inject
-    public MemberViewModel(InviteUserToTeamUseCase inviteUserToTeamUseCase){
-        this.inviteUserToTeamUseCase = inviteUserToTeamUseCase;
+    public MemberViewModel(){
     }
 
     public LiveData<MemberViewState> getMemberViewState() { return memberViewState; }
@@ -45,7 +42,7 @@ public class MemberViewModel extends ViewModel {
     public void validateEmail(String email){
         boolean isEmailValid = isValidEmail(email);
 
-        memberViewState.setValue(MemberViewState.validating(isEmailValid));
+        //memberViewState.setValue(MemberViewState.validating(isEmailValid));
 
         if (isEmailValid){
             memberViewState.setValue(MemberViewState.loading());

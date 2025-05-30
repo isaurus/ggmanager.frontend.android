@@ -1,6 +1,5 @@
 package com.isaac.ggmanager.core.utils;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 public class UserPreferencesUtils {
@@ -9,8 +8,8 @@ public class UserPreferencesUtils {
 
     private final SharedPreferences sharedPreferences;
 
-    public UserPreferencesUtils(Context context) {
-        this.sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    public UserPreferencesUtils(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
     }
 
     public void saveUserId(String userId) {

@@ -72,14 +72,21 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private void observeViewModel() {
         editUserProfileViewModel.getEditUserProfileViewState().observe(this, editUserProfileViewState ->  {
-            switch (editUserProfileViewState.getStatus()) {
-                case VALIDATING:
-                    binding.btnSaveProfile.setEnabled(false);
 
-                    // VALIDACIÓN DE AVATAR
+            switch (editUserProfileViewState.getValidationState()){     // CASOS PARA LA VALIDACIÓN DE INPUTS
+                case VALIDATING:
+                    // ¿VALIDACIÓN DE AVATAR?
                     binding.tilName.setError(editUserProfileViewState.isNameValid() ? null : "Nombre no permitido");
                     binding.tilBirthdate.setError(editUserProfileViewState.isBirthdateValid() ? null : "Fecha errónea");
                     binding.tilCountry.setError(editUserProfileViewState.isCountryValid() ? null : "País erróneo");
+                    break;
+                case IDLE:
+                    binding.tilName.setError(null);
+                    binding.tilBirthdate.setError(null);
+                    binding.tilCountry.setError(null);
+                    break;
+            }
+            switch (editUserProfileViewState.getStatus()) {     // CASOS PARA EL RESULTADO DE LA OPERACIÓN ASÍNCRONA
                 case LOADING:
                     binding.btnSaveProfile.setEnabled(false);
                     break;

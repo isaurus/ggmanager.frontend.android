@@ -24,9 +24,12 @@ public class MemberViewState {
         return new MemberViewState(Resource.error(message), false);
     }
 
+    /*
     public static MemberViewState validating(boolean isEmailValid){
         return new MemberViewState(Resource.validating(), isEmailValid);
     }
+
+     */
 
     public Resource.Status getStatus() { return resource.getStatus(); }
 

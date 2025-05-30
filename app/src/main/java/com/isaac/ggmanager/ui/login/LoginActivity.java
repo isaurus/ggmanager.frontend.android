@@ -67,10 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     private void observeViewModel() {
         loginViewModel.getLoginViewState().observe(this, loginViewState -> {
             switch(loginViewState.getStatus()){
-                case VALIDATING:
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.btnGoogleSignIn.setEnabled(false);
-                    break;
                 case LOADING:
                     binding.progressBar.setVisibility(View.VISIBLE);
                     binding.btnGoogleSignIn.setEnabled(false);

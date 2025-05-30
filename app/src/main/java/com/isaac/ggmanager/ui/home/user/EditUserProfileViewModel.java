@@ -1,10 +1,14 @@
 package com.isaac.ggmanager.ui.home.user;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
+import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,23 +24,36 @@ public class EditUserProfileViewModel extends ViewModel {
 
     private static final int MAX_NAME_LENGTH = 20;
 
-    private final SaveUserProfileUseCase saveUserProfileUseCase;
+    private final CreateUserUseCase createUserUseCase;
+    private final UpdateUserUseCase updateUserUseCase;
+    private final GetCurrentUserUseCase getCurrentUserUseCase;
 
-    public final MutableLiveData<EditUserProfileViewState> editUserProfileViewState = new MutableLiveData<>();
+    public final MediatorLiveData<EditUserProfileViewState> editUserProfileViewState = new MediatorLiveData<>();
 
     @Inject
-    public EditUserProfileViewModel(SaveUserProfileUseCase saveUserProfileUseCase){
-        this.saveUserProfileUseCase = saveUserProfileUseCase;
+    public EditUserProfileViewModel(CreateUserUseCase createUserUseCase,
+                                    UpdateUserUseCase updateUserUseCase,
+                                    GetCurrentUserUseCase getCurrentUserUseCase){
+        this.createUserUseCase = createUserUseCase;
+        this.updateUserUseCase = updateUserUseCase;
+        this.getCurrentUserUseCase = getCurrentUserUseCase;
     }
 
     public LiveData<EditUserProfileViewState> getEditUserProfileViewState() { return editUserProfileViewState; }
 
-    public void saveUserProfile(String avatar, String name, String birthdate, String country){
-        UserModel userModel = createUserModel(avatar, name, birthdate, country);
+    public void createUserProfile(String avatar, String name, String birthdate, String country){
+        UserModel user = createUserModel(avatar, name, birthdate, country);
 
-        saveUserProfileUseCase.execute(userModel).observeForever(resource -> {
-            switch (resource.getStatus()) {
+        editUserProfileViewState.setValue(EditUserProfileViewState.loading());
+
+        LiveData<Resource<Boolean>> editUserProfileResult = createUserUseCase.execute(user);
+
+        editUserProfileViewState.addSource(editUserProfileResult, resource -> {
+            if (resource == null) return;
+
+            switch (resource.getStatus()){
                 case SUCCESS:
+                    editUserProfileViewState.removeSource(editUserProfileResult);
                     editUserProfileViewState.setValue(EditUserProfileViewState.success());
                     break;
                 case LOADING:
@@ -49,12 +66,15 @@ public class EditUserProfileViewModel extends ViewModel {
         });
     }
 
+    public void updateUserProfile(){}   // TODO ¿CÓMO LO GESTIONO?
+
+
     public void validateEditUserForm(String avatar, String name, String birthdate, String country) {
         boolean isNameValid = isValidName(name);
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
-        if (!isValidAvatar(avatar)) {   // ESTA CONDICIÓN GESTIONA PROPORCIONA UN AVATAR PREDETERMINADO SI EL USUARIO NO SELECCIONA UNO, EVITANDO EL NULL
+        if (!isValidAvatar(avatar)) {   // ESTA CONDICIÓN PROPORCIONA UN AVATAR PREDETERMINADO SI EL USUARIO NO SELECCIONA UNO, EVITANDO EL NULL
             avatar = "ic_avatar_avocado";
         }
 
@@ -67,14 +87,9 @@ public class EditUserProfileViewModel extends ViewModel {
 
         if (isNameValid && isBirthdateValid && isCountryValid) {
             editUserProfileViewState.setValue(EditUserProfileViewState.loading());
-            saveUserProfile(avatar, name, birthdate, country);
+            createUserProfile(avatar, name, birthdate, country);
         }
     }
-
-
-
-
-
 
     private boolean isValidAvatar(String avatar){
         return avatar != null;

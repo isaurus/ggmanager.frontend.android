@@ -1,12 +1,13 @@
 package com.isaac.ggmanager.ui.login;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
-import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase; // Caso de uso para obtener user de Firestore
+import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
+import com.isaac.ggmanager.core.Resource;
 
 import javax.inject.Inject;
 
@@ -16,15 +17,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LoginViewModel extends ViewModel {
 
     private final LoginWithGoogleUseCase loginWithGoogleUseCase;
-    private final GetUserByIdUseCase getUserByIdUseCase;
+    private final GetCurrentUserUseCase getCurrentUserUseCase;
 
-    public final MutableLiveData<LoginViewState> loginViewState = new MutableLiveData<>();
+    private final MediatorLiveData<LoginViewState> loginViewState = new MediatorLiveData<>();
 
     @Inject
     public LoginViewModel(LoginWithGoogleUseCase loginWithGoogleUseCase,
-                          GetUserByIdUseCase getUserByIdUseCase) {
+                          GetCurrentUserUseCase getCurrentUserUseCase) {
         this.loginWithGoogleUseCase = loginWithGoogleUseCase;
-        this.getUserByIdUseCase = getUserByIdUseCase;
+        this.getCurrentUserUseCase = getCurrentUserUseCase;
     }
 
     public LiveData<LoginViewState> getLoginViewState() {
@@ -33,14 +34,19 @@ public class LoginViewModel extends ViewModel {
 
     public void loginWithGoogle(String tokenId) {
         loginViewState.setValue(LoginViewState.loading());
-        loginWithGoogleUseCase.execute(tokenId).observeForever(resource -> {
+
+        LiveData<Resource<Boolean>> loginResult = loginWithGoogleUseCase.execute(tokenId);
+
+        loginViewState.addSource(loginResult, resource -> {
             if (resource == null) return;
             switch (resource.getStatus()) {
                 case SUCCESS:
+                    loginViewState.removeSource(loginResult);
                     fetchUserProfile();
                     break;
                 case ERROR:
                     loginViewState.setValue(LoginViewState.error(resource.getMessage()));
+                    loginViewState.removeSource(loginResult);
                     break;
                 case LOADING:
                     loginViewState.setValue(LoginViewState.loading());
@@ -49,22 +55,29 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
-    private void fetchUserProfile(){
-        getUserByIdUseCase.execute().observeForever(resource -> {
-            switch (resource.getStatus()){
+    private void fetchUserProfile() {
+        LiveData<Resource<UserModel>> userResult = getCurrentUserUseCase.execute();
+
+        loginViewState.addSource(userResult, resource -> {
+            if (resource == null) return;
+
+            switch (resource.getStatus()) {
                 case SUCCESS:
+                    loginViewState.removeSource(userResult);
                     UserModel user = resource.getData();
-                    if (user != null){
+                    if (user != null) {
                         loginViewState.setValue(LoginViewState.userHasProfile());
                     } else {
                         loginViewState.setValue(LoginViewState.userHasNoProfile());
                     }
                     break;
+                case ERROR:
+                    loginViewState.setValue(LoginViewState.error(resource.getMessage()));
+                    loginViewState.removeSource(userResult);
+                    break;
                 case LOADING:
                     loginViewState.setValue(LoginViewState.loading());
                     break;
-                case ERROR:
-                    loginViewState.setValue(LoginViewState.error(resource.getMessage()));
             }
         });
     }

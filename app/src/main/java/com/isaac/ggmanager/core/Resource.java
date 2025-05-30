@@ -19,8 +19,7 @@ public class Resource<T> {
     public enum Status {
         LOADING,
         SUCCESS,
-        ERROR,
-        VALIDATING
+        ERROR
     }
 
     private final Status status;    // Estado actual de la operación
@@ -75,15 +74,6 @@ public class Resource<T> {
         return new Resource<>(Status.ERROR, null, msg);
     }
 
-    /**
-     * Crea un Resource que representa un estado de validación en curso.
-     *
-     * @param <T> Tipo del dato esperado
-     * @return instancia Resource en estado VALIDATING
-     */
-    public static <T> Resource<T> validating() {
-        return new Resource<>(Status.VALIDATING, null, null);
-    }
 
     //--- Getters ---//
 

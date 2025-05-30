@@ -1,6 +1,7 @@
 package com.isaac.ggmanager.di;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,7 +13,7 @@ import com.isaac.ggmanager.domain.repository.team.TeamRepository;
 import com.isaac.ggmanager.domain.repository.user.UserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
-import com.isaac.ggmanager.data.remote.FirebaseAuthRepositoryImpl;
+import com.isaac.ggmanager.data.repository.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.AddUserToTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
@@ -24,6 +25,7 @@ import com.isaac.ggmanager.domain.usecase.home.team.UpdateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.DeleteUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetAllUsersUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
@@ -54,9 +56,16 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static UserPreferencesUtils provideUserPreferences(@ApplicationContext Context context){
-        return new UserPreferencesUtils(context);
+    public static SharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
+        return context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
     }
+
+    @Provides
+    @Singleton
+    public static UserPreferencesUtils provideUserPreferences(SharedPreferences sharedPreferences) {
+        return new UserPreferencesUtils(sharedPreferences);
+    }
+
 
     //-----------------------------------------//
     //----DEPENDENCIAS PARA FIREBASE AUTH------//
@@ -216,8 +225,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static GetUserByIdUseCase provideGetUserByIdUseCase(UserRepository userRepository, UserPreferencesUtils userPreferencesUtils) {
-        return new GetUserByIdUseCase(userRepository, userPreferencesUtils);
+    public static GetUserByIdUseCase provideGetUserByIdUseCase(UserRepository userRepository) {
+        return new GetUserByIdUseCase(userRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository, UserPreferencesUtils userPreferencesUtils){
+        return new GetCurrentUserUseCase(userRepository, userPreferencesUtils);
     }
 
     @Provides

@@ -2,27 +2,25 @@ package com.isaac.ggmanager.ui.login;
 
 import com.isaac.ggmanager.core.Resource;
 
+import javax.annotation.Nullable;
+
 public class LoginViewState {
 
-    private final Resource<?> resource;
+    @Nullable private final Resource<?> resource;
     private final boolean userHasProfile;
 
 
-    public LoginViewState(Resource<?> resource, boolean userHasProfile) {
+    public LoginViewState(@Nullable Resource<?> resource, boolean userHasProfile) {
         this.resource = resource;
         this.userHasProfile = userHasProfile;
     }
 
     public static LoginViewState userHasProfile(){
-        return new LoginViewState(Resource.success(true), true);
+        return new LoginViewState(null, true);
     }
 
     public static LoginViewState userHasNoProfile(){
-        return new LoginViewState(Resource.success(false), false);
-    }
-
-    public static LoginViewState validating(boolean userHasProfile){
-        return new LoginViewState(Resource.validating(), userHasProfile);
+        return new LoginViewState(null, false);
     }
 
 
@@ -44,16 +42,13 @@ public class LoginViewState {
     }
 
 
-    public Resource<?> getResource() {
-        return resource;
+    public Resource.Status getStatus() {
+        return resource != null ? resource.getStatus() : null;
     }
 
-    public Resource.Status getStatus() {
-        return resource.getStatus();
-    }
 
     public String getMessage() {
-        return resource.getMessage();
+        return resource != null ? resource.getMessage() : "Error desconocido";
     }
 
     public <T> T getData() {

@@ -51,15 +51,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-        homeViewModel.checkUserHasTeam();
+        homeViewModel.getUserTeam();
 
         homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
-            switch (homeViewState.getStatus()) {
+            switch (homeViewState.getStatus()){
                 case SUCCESS:
                     if (navController != null && navController.getCurrentDestination() != null
                             && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
                         navController.navigate(R.id.teamContainerFragment);
                     }
+                    break;
+                case LOADING:
+                    // PONER PROGRESS BAR
                     break;
                 case ERROR:
                     Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();

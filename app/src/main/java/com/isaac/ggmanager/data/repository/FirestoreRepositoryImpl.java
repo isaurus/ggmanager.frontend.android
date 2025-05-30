@@ -29,6 +29,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     @Override
     public LiveData<Resource<T>> getById(String id) {
         MutableLiveData<Resource<T>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
         getCollection().document(id).get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()){
@@ -46,6 +48,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     @Override
     public LiveData<Resource<List<T>>> getAll() {
         MutableLiveData<Resource<List<T>>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
         getCollection().get()
                 .addOnSuccessListener(snapshot -> {
                     List<T> items = new ArrayList<>();
@@ -63,6 +67,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     @Override
     public LiveData<Resource<Boolean>> create(T model) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
         String id = getDocumentId(model);
         if (id == null || id.isEmpty()) {
             getCollection().add(model)
@@ -80,6 +86,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     @Override
     public LiveData<Resource<Boolean>> update(T model) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
         String id = getDocumentId(model);
         if (id == null || id.isEmpty()) {
             result.setValue(Resource.error("ID inválido"));
@@ -95,6 +103,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     @Override
     public LiveData<Resource<Boolean>> delete(String id) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
         getCollection().document(id).delete()
                 .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
                 .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));

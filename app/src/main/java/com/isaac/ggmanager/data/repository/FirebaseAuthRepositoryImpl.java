@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.data.remote;
+package com.isaac.ggmanager.data.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -34,6 +34,7 @@ public class TeamRepositoryImpl extends FirestoreRepositoryImpl<TeamModel> imple
     @Override
     public LiveData<Resource<Boolean>> addUserToTeam(String teamId, String userId) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
 
         getCollection()
                 .document(teamId)
@@ -48,6 +49,7 @@ public class TeamRepositoryImpl extends FirestoreRepositoryImpl<TeamModel> imple
     @Override
     public LiveData<Resource<Boolean>> removeUserFromTeam(String teamId, String userId) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
 
         getCollection()
                 .document(teamId)

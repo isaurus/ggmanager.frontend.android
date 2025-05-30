@@ -39,6 +39,7 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
     @Override
     public LiveData<Resource<UserModel>> getUserByEmail(String email) {
         MutableLiveData<Resource<UserModel>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
 
         getCollection()
                 .whereEqualTo("email", email)
@@ -60,6 +61,7 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
     @Override
     public LiveData<Resource<Boolean>> updateUserTeam(String userId, String teamId) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
 
         getCollection()
                 .document(userId)
@@ -73,6 +75,7 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
     @Override
     public LiveData<Resource<List<UserModel>>> getUsersByTeam(String teamId) {
         MutableLiveData<Resource<List<UserModel>>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
 
         getCollection()
                 .whereEqualTo("teamId", teamId)
