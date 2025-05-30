@@ -3,6 +3,7 @@ package com.isaac.ggmanager.data.remote;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.isaac.ggmanager.core.Resource;
@@ -108,6 +109,35 @@ public class FirestoreUserRepositoryImpl implements FirestoreUserRepository {
                 })
                 .addOnFailureListener(e -> result.setValue(Resource.error("Error al consultar el equipo al que pertenece el usuario: " + e.getMessage())));
 
+        return result;
+    }
+
+
+    @Override
+    public LiveData<Resource<UserModel>> getUserByEmail(String email){
+        MutableLiveData<Resource<UserModel>> result = new MutableLiveData<>();
+
+        result.postValue(Resource.loading());
+
+        firestore.collection("users")
+                .whereEqualTo("email", email)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(query -> {
+                    if (!query.isEmpty()){
+                        DocumentSnapshot doc = query.getDocuments().get(0);
+                        UserModel user = doc.toObject(UserModel.class);
+                        if (user != null){
+                            user.setFirebaseUid(user.getFirebaseUid());
+                            result.postValue(Resource.success(user));
+                        } else {
+                            result.postValue(Resource.error("No se pudo convertir el documento a usuario."));
+                        }
+                    } else {
+                        result.postValue(Resource.error("No existe un usuario con ese correo."));
+                    }
+                })
+                .addOnFailureListener(e -> result.postValue(Resource.error("Error al obtener usuario: " + e.getMessage())));
         return result;
     }
 }

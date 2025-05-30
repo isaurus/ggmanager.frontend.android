@@ -33,4 +33,9 @@ public interface FirestoreUserRepository {
      * @return LiveData observable por la Activity.
      */
     LiveData<Resource<Boolean>> saveUserProfile(UserModel userModel);
+
+
+
+    LiveData<Resource<UserModel>> getUserByEmail(String email);
+
 }

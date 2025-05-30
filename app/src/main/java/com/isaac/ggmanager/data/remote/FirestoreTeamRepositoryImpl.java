@@ -52,6 +52,7 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
         return result;
     }
 
+
     @Override
     public LiveData<Resource<Boolean>> inviteUserToTeam(String teamId, String email) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
@@ -87,4 +88,6 @@ public class FirestoreTeamRepositoryImpl implements FirestoreTeamRepository {
 
         return result;
     }
+
+
 }
