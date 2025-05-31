@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.isaac.ggmanager.core.Resource;
-import com.isaac.ggmanager.core.utils.UserPreferencesUtils;
 import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 
 import javax.inject.Inject;
@@ -12,13 +11,10 @@ import javax.inject.Inject;
 public class LoginWithGoogleUseCase {
 
     private final FirebaseAuthRepository firebaseAuthRepository;
-    private final UserPreferencesUtils userPreferencesUtils;
 
     @Inject
-    public LoginWithGoogleUseCase(FirebaseAuthRepository firebaseAuthRepository,
-                                  UserPreferencesUtils userPreferencesUtils) {
+    public LoginWithGoogleUseCase(FirebaseAuthRepository firebaseAuthRepository) {
         this.firebaseAuthRepository = firebaseAuthRepository;
-        this.userPreferencesUtils = userPreferencesUtils;
     }
 
     public LiveData<Resource<Boolean>> execute(String tokenId) {
@@ -37,7 +33,6 @@ public class LoginWithGoogleUseCase {
                 case SUCCESS:
                     String userId = firebaseAuthRepository.getAuthenticatedUser().getUid();
 
-                    userPreferencesUtils.saveUserId(userId);
                     result.setValue(Resource.success(true));
                     break;
                 case ERROR:

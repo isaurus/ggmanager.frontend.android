@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.isaac.ggmanager.core.utils.UserPreferencesUtils;
 import com.isaac.ggmanager.data.repository.TeamRepositoryImpl;
 import com.isaac.ggmanager.data.repository.UserRepositoryImpl;
 import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
@@ -51,23 +50,6 @@ import dagger.hilt.components.SingletonComponent;
 public class AppModule {
 
     //-----------------------------------------//
-    //----DEPENDENCIAS PARA SHARED PREFERENCES------//
-
-
-    @Provides
-    @Singleton
-    public static SharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
-        return context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    @Singleton
-    public static UserPreferencesUtils provideUserPreferences(SharedPreferences sharedPreferences) {
-        return new UserPreferencesUtils(sharedPreferences);
-    }
-
-
-    //-----------------------------------------//
     //----DEPENDENCIAS PARA FIREBASE AUTH------//
 
     /**
@@ -102,10 +84,9 @@ public class AppModule {
     @Provides
     @Singleton
     public static LoginWithGoogleUseCase provideLoginWithGoogleUseCase(
-            FirebaseAuthRepository firebaseAuthRepository,
-            UserPreferencesUtils userPreferencesUtils
+            FirebaseAuthRepository firebaseAuthRepository
     ) {
-        return new LoginWithGoogleUseCase(firebaseAuthRepository, userPreferencesUtils);
+        return new LoginWithGoogleUseCase(firebaseAuthRepository);
     }
 
     /**
@@ -231,8 +212,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository, UserPreferencesUtils userPreferencesUtils){
-        return new GetCurrentUserUseCase(userRepository, userPreferencesUtils);
+    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository){
+        return new GetCurrentUserUseCase(userRepository);
     }
 
     @Provides
