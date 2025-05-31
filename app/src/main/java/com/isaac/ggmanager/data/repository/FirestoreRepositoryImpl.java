@@ -31,13 +31,15 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
         MutableLiveData<Resource<T>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        getCollection().document(id).get()
+        getCollection()
+                .document(id)
+                .get()
                 .addOnSuccessListener(snapshot -> {
                     if (snapshot.exists()){
                         T model = snapshot.toObject(getModelClass());
                         result.setValue(Resource.success(model));
                     } else {
-                        result.setValue(Resource.error("Documento no encontrado"));
+                        result.setValue(Resource.success(null));
                     }
                 })
                 .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
@@ -69,16 +71,12 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
-        String id = getDocumentId(model);
-        if (id == null || id.isEmpty()) {
-            getCollection().add(model)
-                    .addOnSuccessListener(docRef -> result.setValue(Resource.success(true)))
-                    .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
-        } else {
-            getCollection().document(id).set(model)
+
+            getCollection()
+                    .document()
+                    .set(model)
                     .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
                     .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
-        }
 
         return result;
     }

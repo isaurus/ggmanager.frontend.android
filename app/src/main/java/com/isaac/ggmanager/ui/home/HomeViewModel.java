@@ -2,7 +2,6 @@ package com.isaac.ggmanager.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.core.Resource;
@@ -30,7 +29,7 @@ public class HomeViewModel extends ViewModel {
         this.getCurrentUserUseCase = getCurrentUserUseCase;
     }
 
-    public LiveData<HomeViewState> getHomeViewstate() { return homeViewState; }
+    public LiveData<HomeViewState> getHomeViewState() { return homeViewState; }
 
     public void getUserTeam(){
         homeViewState.setValue(HomeViewState.loading());
@@ -42,13 +41,13 @@ public class HomeViewModel extends ViewModel {
 
             switch (resource.getStatus()){
                 case SUCCESS:
-                    homeViewState.removeSource(userResult);
                     UserModel user = resource.getData();
                     if (user.getTeamId() != null && !user.getTeamId().isEmpty()) {
                         homeViewState.setValue(HomeViewState.userHasTeam());
                     } else {
                         homeViewState.setValue(HomeViewState.userHasNoTeam());
                     }
+                    homeViewState.removeSource(userResult);
                     break;
                 case ERROR:
                     homeViewState.setValue(HomeViewState.error(resource.getMessage()));
@@ -60,32 +59,6 @@ public class HomeViewModel extends ViewModel {
             }
         });
     }
-
-
-
-
-    /*
-    public void checkUserHasTeam(){
-        checkUserHasTeamUseCase.execute().observeForever(resource -> {
-            switch (resource.getStatus()){
-                case SUCCESS:
-                    if(resource.getData()){
-                        homeViewState.setValue(HomeViewState.userHasTeam());
-                    } else{
-                        homeViewState.setValue(HomeViewState.userHasNoTeam());
-                    }
-                    break;
-                case LOADING:
-                    homeViewState.setValue(HomeViewState.loading());
-                    break;
-                case ERROR:
-                    homeViewState.setValue(HomeViewState.error(resource.getMessage()));
-                    break;
-            }
-        });
-    }
-
-     */
 
     public void signOut(){
         signoutUseCase.execute();

@@ -56,6 +56,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     private void fetchUserProfile() {
+
         LiveData<Resource<UserModel>> userResult = getCurrentUserUseCase.execute();
 
         loginViewState.addSource(userResult, resource -> {
@@ -63,13 +64,13 @@ public class LoginViewModel extends ViewModel {
 
             switch (resource.getStatus()) {
                 case SUCCESS:
-                    loginViewState.removeSource(userResult);
                     UserModel user = resource.getData();
                     if (user != null) {
                         loginViewState.setValue(LoginViewState.userHasProfile());
                     } else {
                         loginViewState.setValue(LoginViewState.userHasNoProfile());
                     }
+                    loginViewState.removeSource(userResult);
                     break;
                 case ERROR:
                     loginViewState.setValue(LoginViewState.error(resource.getMessage()));

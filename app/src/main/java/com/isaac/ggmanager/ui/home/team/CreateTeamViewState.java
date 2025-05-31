@@ -11,12 +11,12 @@ public class CreateTeamViewState {
         VALIDATING
     }
 
-    @Nullable private final Resource<?> resource;
+    private final Resource<?> resource;
     private final ValidationState validationState;
     private final boolean isTeamNameValid;
     private final boolean isTeamDescriptionValid;
 
-    public CreateTeamViewState(@Nullable Resource<?> resource,
+    public CreateTeamViewState(Resource<?> resource,
                                ValidationState validationState,
                                boolean isTeamNameValid,
                                boolean isTeamDescriptionValid){
@@ -28,7 +28,7 @@ public class CreateTeamViewState {
 
     public static CreateTeamViewState success(){
         return new CreateTeamViewState(
-                null,
+                Resource.success(null),
                 ValidationState.IDLE,
                 true,
                 true);
@@ -53,7 +53,7 @@ public class CreateTeamViewState {
     public static CreateTeamViewState validating(boolean isTeamNameValid,
                                                  boolean isTeamDescriptionValid){
         return new CreateTeamViewState(
-                null,
+                Resource.loading(),
                 ValidationState.VALIDATING,
                 isTeamNameValid,
                 isTeamDescriptionValid);

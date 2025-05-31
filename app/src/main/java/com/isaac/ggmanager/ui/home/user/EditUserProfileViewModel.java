@@ -53,8 +53,8 @@ public class EditUserProfileViewModel extends ViewModel {
 
             switch (resource.getStatus()){
                 case SUCCESS:
-                    editUserProfileViewState.removeSource(editUserProfileResult);
                     editUserProfileViewState.setValue(EditUserProfileViewState.success());
+                    editUserProfileViewState.removeSource(editUserProfileResult);
                     break;
                 case LOADING:
                     editUserProfileViewState.setValue(EditUserProfileViewState.loading());

@@ -38,13 +38,14 @@ public class LaunchViewModel extends ViewModel {
         launchViewState.addSource(userResult, resource -> {
             switch (resource.getStatus()){
                 case SUCCESS:
-                    launchViewState.removeSource(userResult);
                     UserModel user = resource.getData();
                     if (user != null) {
                         launchViewState.setValue(LaunchViewState.userHasProfile());
                     } else {
                         launchViewState.setValue(LaunchViewState.userHasNoProfile());
                     }
+                    launchViewState.removeSource(userResult);
+                    break;
             }
         });
     }

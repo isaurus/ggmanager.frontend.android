@@ -46,18 +46,19 @@ public class HomeActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
         }
 
+        homeViewModel.getUserTeam();
+
         observeViewModel();
         setUpToolbar();
     }
 
     private void observeViewModel() {
-        homeViewModel.getUserTeam();
+        //homeViewModel.getUserTeam();
 
-        homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
+        homeViewModel.getHomeViewState().observe(this, homeViewState -> {
             switch (homeViewState.getStatus()){
                 case SUCCESS:
-                    if (navController != null && navController.getCurrentDestination() != null
-                            && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
+                    if (navController != null && navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
                         navController.navigate(R.id.teamContainerFragment);
                     }
                     break;

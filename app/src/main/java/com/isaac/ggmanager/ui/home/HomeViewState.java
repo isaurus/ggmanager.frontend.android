@@ -2,24 +2,22 @@ package com.isaac.ggmanager.ui.home;
 
 import com.isaac.ggmanager.core.Resource;
 
-import javax.annotation.Nullable;
-
 public class HomeViewState {
 
-    @Nullable private final Resource<?> resource;
+    private final Resource<?> resource;
     private final boolean userHasTeam;
 
-    public HomeViewState(@Nullable Resource<?> resource, boolean userHasTeam) {
+    public HomeViewState(Resource<?> resource, boolean userHasTeam) {
         this.resource = resource;
         this.userHasTeam = userHasTeam;
     }
 
     public static HomeViewState userHasTeam(){
-        return new HomeViewState(null, true);
+        return new HomeViewState(Resource.success(null), true);
     }
 
     public static HomeViewState userHasNoTeam(){
-        return new HomeViewState(null, false);
+        return new HomeViewState(Resource.success(null), false);
     }
 
     public static <T> HomeViewState success(T data, boolean userHasTeam) {

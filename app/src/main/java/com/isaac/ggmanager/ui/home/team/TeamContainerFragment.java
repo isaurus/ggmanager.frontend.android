@@ -39,10 +39,10 @@ public class TeamContainerFragment extends Fragment {
     }
 
     private void observeViewModel(){
-        homeViewModel.getHomeViewstate().observe(getViewLifecycleOwner(), homeViewState -> {
+        homeViewModel.getHomeViewState().observe(getViewLifecycleOwner(), homeViewState -> {
             switch (homeViewState.getStatus()){
                 case SUCCESS:
-                    if (homeViewState.getData()){
+                    if (homeViewState.isUserHasTeam()){
                         showTeamContent();
                     } else {
                         showCreateTeam();

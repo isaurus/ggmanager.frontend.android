@@ -25,4 +25,13 @@ public interface TeamRepository extends FirestoreRepository<TeamModel> {
      * @return LiveData con Resource del éxito o fracaso de la operación.
      */
     LiveData<Resource<Boolean>> removeUserFromTeam(String teamId, String userId);
+
+    /**
+     * Crea un equipo añadiendo en la primera posición de la lista de miembros el ID del
+     * usuario creador. Sobreescribe el metodo genérico de create.
+     *
+     * @param team Equipo que crear.
+     * @return LiveData con Resource del éxito o fracaso de la operación.
+     */
+    LiveData<Resource<String>> createTeam(TeamModel team);
 }

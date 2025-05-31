@@ -35,7 +35,7 @@ public class EditUserProfileViewState {
 
     public static EditUserProfileViewState success(){   // TODO ¿ME INTERESA RECOGER LOS DATOS PARA IMPRIMIR LOS QUE YA TIENE, NO?
         return new EditUserProfileViewState(
-               null,
+               Resource.success(null),
                 ValidationState.IDLE,
                 true,
                 true,
@@ -71,7 +71,7 @@ public class EditUserProfileViewState {
                                                           boolean isBirthdateValid,
                                                           boolean isCountryValid) {
         return new EditUserProfileViewState(
-                null,
+                Resource.loading(),
                 ValidationState.VALIDATING,
                 isAvatarValid,
                 isNameValid,

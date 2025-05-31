@@ -16,11 +16,11 @@ public class LaunchViewState {
     }
 
     public static LaunchViewState userHasProfile(){
-        return new LaunchViewState(null, true);
+        return new LaunchViewState(Resource.success(null), true);
     }
 
     public static LaunchViewState userHasNoProfile(){
-        return new LaunchViewState(null, false);
+        return new LaunchViewState(Resource.success(null), false);
     }
 
     public static <T> LaunchViewState success(T data){  // TODO ¿ME PODRÍA INTERESAR ESA DATA PARA ALGO? AHORA MISMO NO LA USO

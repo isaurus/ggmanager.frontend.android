@@ -144,8 +144,10 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static CreateTeamUseCase provideCreateTeamUseCase(TeamRepository teamRepository) {
-        return new CreateTeamUseCase(teamRepository);
+    public static CreateTeamUseCase provideCreateTeamUseCase(TeamRepository teamRepository,
+                                                             UserRepository userRepository,
+                                                             FirebaseAuthRepository authRepository) {
+        return new CreateTeamUseCase(teamRepository, userRepository, authRepository);
     }
 
     @Provides
@@ -182,8 +184,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static CreateUserUseCase provideCreateUserUseCase(UserRepository userRepository) {
-        return new CreateUserUseCase(userRepository);
+    public static CreateUserUseCase provideCreateUserUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository) {
+        return new CreateUserUseCase(userRepository, authRepository);
     }
 
     @Provides
@@ -212,8 +214,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository){
-        return new GetCurrentUserUseCase(userRepository);
+    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository){
+        return new GetCurrentUserUseCase(userRepository, authRepository);
     }
 
     @Provides
@@ -230,8 +232,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static UpdateUserTeamUseCase provideUpdateUserTeamUseCase(UserRepository userRepository) {
-        return new UpdateUserTeamUseCase(userRepository);
+    public static UpdateUserTeamUseCase provideUpdateUserTeamUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository) {
+        return new UpdateUserTeamUseCase(userRepository, authRepository);
     }
 
     @Provides

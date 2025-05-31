@@ -1,6 +1,7 @@
 package com.isaac.ggmanager.ui.home.team;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,7 +26,7 @@ public class CreateTeamViewModel extends ViewModel {
 
 
 
-    private final MutableLiveData<CreateTeamViewState> createTeamViewState = new MutableLiveData<>();
+    private final MediatorLiveData<CreateTeamViewState> createTeamViewState = new MediatorLiveData<>();
 
     @Inject
     public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase,
@@ -38,32 +39,45 @@ public class CreateTeamViewModel extends ViewModel {
 
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
 
-    /*
     public void createTeam(String teamName, String teamDescription){
-        TeamModel teamModel = new TeamModel(null, teamName, teamDescription, null, null);
+        TeamModel team = createTeamModel(teamName, teamDescription);
 
-        createTeamUseCase.execute(teamModel).observeForever(resource -> {
-            switch (resource.getStatus()){
+        createTeamViewState.setValue(CreateTeamViewState.loading());
+
+        LiveData<Resource<String>> createTeamResult = createTeamUseCase.execute(team);
+
+        createTeamViewState.addSource(createTeamResult, stringResource -> {
+            if (stringResource == null) return;
+
+            switch (stringResource.getStatus()){
                 case SUCCESS:
-                    String teamId = resource.getData();
-
-                    getCurrentUserUseCase.execute().observeForever(userResource -> {
-                        if (userResource.getStatus() == Resource.Status.SUCCESS){
-                            UserModel currentUser = userResource.getData();
-                            currentUser.setTeamId(teamId);
-
-                            saveUserProfileUseCase.execute(currentUser).observeForever(updatedResource -> {
-                                if (updatedResource.getStatus() == Resource.Status.SUCCESS) createTeamViewState.setValue(CreateTeamViewState.success());
-                            });
-                        }
-                    });
-
+                    String teamId = stringResource.getData();
+                    updateUserTeam(teamId);
+                    createTeamViewState.removeSource(createTeamResult);
                     break;
                 case LOADING:
                     createTeamViewState.setValue(CreateTeamViewState.loading());
                     break;
                 case ERROR:
-                    createTeamViewState.setValue(CreateTeamViewState.error(resource.getMessage()));
+                    createTeamViewState.setValue(CreateTeamViewState.error(stringResource.getMessage()));
+                    break;
+            }
+        });
+    }
+
+    public void updateUserTeam(String teamId){
+        LiveData<Resource<Boolean>> updateUserTeamResult = updateUserTeamUseCase.execute(teamId);
+
+        createTeamViewState.addSource(updateUserTeamResult, booleanResource -> {
+            if (booleanResource == null) return;
+            switch (booleanResource.getStatus()){
+                case SUCCESS:
+                    createTeamViewState.setValue(CreateTeamViewState.success());
+                    createTeamViewState.removeSource(updateUserTeamResult);
+                    break;
+                case ERROR:
+                    createTeamViewState.setValue(CreateTeamViewState.error(booleanResource.getMessage()));
+                    createTeamViewState.removeSource(updateUserTeamResult);
                     break;
             }
         });
@@ -82,6 +96,10 @@ public class CreateTeamViewModel extends ViewModel {
         }
     }
 
+    private TeamModel createTeamModel(String teamName, String teamDescription){
+        return new TeamModel(teamName, teamDescription);
+    }
+
     private boolean isValidTeamName(String teamName){
         return teamName != null && !teamName.isEmpty();
     }
@@ -89,6 +107,4 @@ public class CreateTeamViewModel extends ViewModel {
     private boolean isValidTeamDescription(String teamDescription){
         return teamDescription != null && !teamDescription.isEmpty();
     }
-
-     */
 }

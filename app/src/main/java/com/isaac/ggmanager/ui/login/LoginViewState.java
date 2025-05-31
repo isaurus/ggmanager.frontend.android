@@ -16,11 +16,11 @@ public class LoginViewState {
     }
 
     public static LoginViewState userHasProfile(){
-        return new LoginViewState(null, true);
+        return new LoginViewState(Resource.success(null), true);
     }
 
     public static LoginViewState userHasNoProfile(){
-        return new LoginViewState(null, false);
+        return new LoginViewState(Resource.success(null), false);
     }
 
 

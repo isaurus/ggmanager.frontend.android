@@ -28,6 +28,15 @@ public interface UserRepository extends FirestoreRepository<UserModel> {
     LiveData<Resource<Boolean>> updateUserTeam(String userId, String teamId);
 
     /**
+     * Crea un nuevo usuario asignándole el ID obtenido de Firebase Authentication.
+     *
+     * @param user Usuario a crear.
+     * @param userId Identificador del usuario de Firebase Authentication.
+     * @return LiveData con Resource del éxito o fracaso de la operación.
+     */
+    LiveData<Resource<Boolean>> create(UserModel user, String userId);
+
+    /**
      * Obtiene la lista de usuarios pertenecientes a un equipo.
      *
      * @param teamId Identificador del equipo.
