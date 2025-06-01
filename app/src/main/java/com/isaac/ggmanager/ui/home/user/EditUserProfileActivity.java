@@ -16,6 +16,7 @@ import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.ActivityEditUserProfileBinding;
+import com.isaac.ggmanager.domain.model.Avatar;
 import com.isaac.ggmanager.ui.home.HomeActivity;
 
 import java.util.Calendar;
@@ -57,7 +58,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         });
 
         binding.btnSaveProfile.setOnClickListener(v -> {
-            String avatar = avatarSelected;
+            String avatar = editUserProfileViewModel.getSelectedAvatar();
             String name = binding.etName.getText().toString().trim();
             String birthdate = binding.etBirthdate.getText().toString().trim();
             String country = binding.atvCountry.getText().toString().trim();
@@ -131,21 +132,22 @@ public class EditUserProfileActivity extends AppCompatActivity {
     // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"
 
     // TODO ECHAR UN OJO A ESTE MÉTODO PARA CAMBIAR EL AVATAR
-    private void launchAvatarPickDialog(){
-        String[] avatarNames = {"ic_avatar_avocado", "ic_avatar_batman", "ic_avatar_cactus", "ic_avatar_sheep", "ic_avatar_sloth", "ic_avatar_zombie"};
+    private void launchAvatarPickDialog() {
+        Avatar[] avatars = Avatar.values();
+        String[] avatarNames = new String[avatars.length];
+
+        for (int i = 0; i < avatars.length; i++) {
+            avatarNames[i] = avatars[i].name();
+        }
 
         new AlertDialog.Builder(this)
                 .setTitle("Selecciona avatar")
                 .setItems(avatarNames, (dialog, which) -> {
-                    String selectedAvatar = avatarNames[which];
+                    Avatar selected = avatars[which];
+                    editUserProfileViewModel.setSelectedAvatar(selected.getKey());
 
-                    avatarSelected = selectedAvatar;
-
-                    int resId = getResources().getIdentifier(selectedAvatar,"drawable", getPackageName());
-                    binding.imgProfilePic.setImageResource(resId);
+                    binding.imgProfilePic.setImageResource(selected.getDrawableResId());
                 })
                 .show();
     }
-
-    public String avatarSelected;
 }

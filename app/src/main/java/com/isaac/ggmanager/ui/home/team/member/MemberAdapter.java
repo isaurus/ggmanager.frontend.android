@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.isaac.ggmanager.databinding.ItemMemberBinding;
+import com.isaac.ggmanager.domain.model.Avatar;
 import com.isaac.ggmanager.domain.model.UserModel;
 
 import java.util.List;
@@ -52,7 +53,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         }
 
         public void bind(UserModel user) {
-            //binding.ivProfileAvatar.setImageResource(user.getAvatar());
+            Avatar avatar = Avatar.fromKey(user.getAvatar());
+            binding.ivProfileAvatar.setImageResource(avatar.getDrawableResId());
             binding.tvMemberName.setText(user.getName());
             binding.tvUserRole.setText(user.getName());
         }
