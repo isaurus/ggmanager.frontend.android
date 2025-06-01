@@ -29,6 +29,7 @@ import com.isaac.ggmanager.domain.usecase.home.user.GetUserByEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.IsUserHasTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.login.LoginWithGoogleUseCase;
@@ -138,8 +139,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static AddUserToTeamUseCase provideAddUserToTeamUseCase(TeamRepository teamRepository) {
-        return new AddUserToTeamUseCase(teamRepository);
+    public static AddUserToTeamUseCase provideAddUserToTeamUseCase(TeamRepository teamRepository, UserRepository userRepository) {
+        return new AddUserToTeamUseCase(teamRepository, userRepository);
     }
 
     @Provides
@@ -232,8 +233,15 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static UpdateUserTeamUseCase provideUpdateUserTeamUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository) {
-        return new UpdateUserTeamUseCase(userRepository, authRepository);
+    public static UpdateUserTeamUseCase provideUpdateUserTeamUseCase(UserRepository userRepository) {
+        return new UpdateUserTeamUseCase(userRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static UpdateAdminTeamUseCase provideUpdateAdminTeamUseCase(UserRepository userRepository,
+                                                                       FirebaseAuthRepository authRepository){
+        return new UpdateAdminTeamUseCase(userRepository, authRepository);
     }
 
     @Provides

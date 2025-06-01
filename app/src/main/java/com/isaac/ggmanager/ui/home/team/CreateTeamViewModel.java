@@ -10,6 +10,7 @@ import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 
 import javax.inject.Inject;
@@ -21,8 +22,7 @@ public class CreateTeamViewModel extends ViewModel {
 
 
     private final CreateTeamUseCase createTeamUseCase;
-    private final GetCurrentUserUseCase getCurrentUserUseCase;
-    private final UpdateUserTeamUseCase updateUserTeamUseCase;
+    private final UpdateAdminTeamUseCase updateAdminTeamUseCase;
 
 
 
@@ -30,11 +30,9 @@ public class CreateTeamViewModel extends ViewModel {
 
     @Inject
     public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase,
-                               GetCurrentUserUseCase getCurrentUserUseCase,
-                               UpdateUserTeamUseCase updateUserTeamUseCase){
+                               UpdateAdminTeamUseCase updateAdminTeamUseCase){
         this.createTeamUseCase = createTeamUseCase;
-        this.getCurrentUserUseCase = getCurrentUserUseCase;
-        this.updateUserTeamUseCase = updateUserTeamUseCase;
+        this.updateAdminTeamUseCase = updateAdminTeamUseCase;
     }
 
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
@@ -66,7 +64,7 @@ public class CreateTeamViewModel extends ViewModel {
     }
 
     public void updateUserTeam(String teamId){
-        LiveData<Resource<Boolean>> updateUserTeamResult = updateUserTeamUseCase.execute(teamId);
+        LiveData<Resource<Boolean>> updateUserTeamResult = updateAdminTeamUseCase.execute(teamId);
 
         createTeamViewState.addSource(updateUserTeamResult, booleanResource -> {
             if (booleanResource == null) return;

@@ -12,10 +12,10 @@ public interface TeamRepository extends FirestoreRepository<TeamModel> {
      * Añade un nuevo usuario el equipo.
      *
      * @param teamId Identificador del equipo al que añadir un nuevo usuario.
-     * @param userId Identificador del usuario a añadir.
+     * @param userEmail Email del usuario a añadir.
      * @return LiveData con Resource del éxito o fracaso de la operación.
      */
-    LiveData<Resource<Boolean>> addUserToTeam(String teamId, String userId);
+    LiveData<Resource<Boolean>> addUserToTeam(String teamId, String userEmail);
 
     /**
      * Elimina un usuario del equipo.

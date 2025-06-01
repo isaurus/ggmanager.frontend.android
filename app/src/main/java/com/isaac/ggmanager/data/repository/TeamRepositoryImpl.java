@@ -1,5 +1,7 @@
 package com.isaac.ggmanager.data.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -44,7 +46,10 @@ public class TeamRepositoryImpl extends FirestoreRepositoryImpl<TeamModel> imple
                 .document(teamId)
                 .update("members", FieldValue.arrayUnion(userId))
                 .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
-                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
+                .addOnFailureListener(e -> {
+                    result.setValue(Resource.error(e.getMessage()));
+                    Log.e("PRUEBA", "Error Firestore en addUserToTeam." + e.getMessage());
+                });
 
         return result;
     }

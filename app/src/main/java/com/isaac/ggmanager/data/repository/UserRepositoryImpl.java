@@ -1,5 +1,7 @@
 package com.isaac.ggmanager.data.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -81,7 +83,10 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
                 .document(userId)
                 .update("teamId", teamId)
                 .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
-                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
+                .addOnFailureListener(e -> {
+                    result.setValue(Resource.error(e.getMessage()));
+                    Log.e("PRUEBA", "Error Firestore en updateUserTeam." + e.getMessage());
+                });
 
         return result;
     }

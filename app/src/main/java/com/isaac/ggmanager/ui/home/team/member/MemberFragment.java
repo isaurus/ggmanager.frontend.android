@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
+import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.DialogEmailInputBinding;
 import com.isaac.ggmanager.databinding.FragmentCreateTeamBinding;
 import com.isaac.ggmanager.databinding.FragmentMemberBinding;
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MemberFragment extends Fragment {
 
     private FragmentMemberBinding binding;
+    private DialogEmailInputBinding bindingDialog;
     private MemberViewModel memberViewModel;
 
     @Override
@@ -49,7 +51,29 @@ public class MemberFragment extends Fragment {
     }
 
     private void observeViewModel() {
+        memberViewModel.getMemberViewState().observe(getViewLifecycleOwner(), memberViewState -> {
 
+            switch (memberViewState.getValidationState()){
+                case VALIDATING:
+                    bindingDialog.tilEmail.setError(memberViewState.isEmailValid() ? null : "Email no permitido");
+                    break;
+                case IDLE:
+                    bindingDialog.tilEmail.setError(null);
+                    break;
+            }
+
+            switch (memberViewState.getStatus()){
+                case LOADING:
+                    bindingDialog.btnSend.setEnabled(false);
+                    break;
+                case SUCCESS:
+                    // COSAS
+                    break;
+                case ERROR:
+                    Toast.makeText(getContext(), memberViewState.getMessage(), Toast.LENGTH_LONG).show();
+                    break;
+            }
+        });
     }
 
     private void setUpListeners() {
@@ -58,28 +82,28 @@ public class MemberFragment extends Fragment {
         });
     }
 
-    private void showAlertDialog(){
-        DialogEmailInputBinding binding = DialogEmailInputBinding.inflate(getLayoutInflater());
+    private void showAlertDialog() {
+        bindingDialog = DialogEmailInputBinding.inflate(getLayoutInflater());
 
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setView(binding.getRoot())
+                .setView(bindingDialog.getRoot())
                 .create();
 
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
 
-        binding.btnCancel.setOnClickListener(v -> dialog.dismiss());
+        TextWatcherUtils.enableViewOnTextChange(
+                bindingDialog.etEmail,
+                bindingDialog.btnSend,
+                bindingDialog.tilEmail
+        );
 
-        binding.btnSend.setOnClickListener(v -> {
-            String email = binding.etEmail.getText().toString().trim();
-            if (!email.isEmpty()) {
+        bindingDialog.btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-                Toast.makeText(getContext(), "Correo enviado: " + email, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            } else {
-                binding.tilEmail.setError("Campo obligatorio");
-            }
+        bindingDialog.btnSend.setOnClickListener(v -> {
+            String email = bindingDialog.etEmail.getText().toString().trim();
+            memberViewModel.validateEmail(email);
         });
 
         dialog.show();
