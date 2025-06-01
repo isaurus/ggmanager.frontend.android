@@ -1,8 +1,5 @@
 package com.isaac.ggmanager.di;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.data.repository.TeamRepositoryImpl;
@@ -28,7 +25,6 @@ import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.IsUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
@@ -39,7 +35,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
 /**
@@ -223,12 +218,6 @@ public class AppModule {
     @Singleton
     public static GetUsersByTeamUseCase provideGetUsersByIdUseCase(UserRepository userRepository) {
         return new GetUsersByTeamUseCase(userRepository);
-    }
-
-    @Provides
-    @Singleton
-    public static IsUserHasTeamUseCase provideIsUserHasTeamUseCase(UserRepository userRepository) {
-        return new IsUserHasTeamUseCase(userRepository);
     }
 
     @Provides

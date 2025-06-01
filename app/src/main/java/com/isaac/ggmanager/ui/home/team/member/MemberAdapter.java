@@ -9,10 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.isaac.ggmanager.databinding.ItemMemberBinding;
 import com.isaac.ggmanager.domain.model.UserModel;
 
+import java.util.List;
+
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
+
+    private List<UserModel> members;
+
+    public MemberAdapter(List<UserModel> members){
+        this.members = members;
+    }
+
     @NonNull
     @Override
     public MemberAdapter.MemberViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemMemberBinding binding = ItemMemberBinding.inflate(inflater, parent, false);
         return new MemberViewHolder(binding);
@@ -20,12 +30,17 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
 
     @Override
     public void onBindViewHolder(@NonNull MemberAdapter.MemberViewHolder holder, int position) {
-
+        holder.bind(members.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return members.size();
+    }
+
+    public void updateData(List<UserModel> newMembers){
+        this.members = newMembers;
+        notifyDataSetChanged();
     }
 
     public static class MemberViewHolder extends RecyclerView.ViewHolder {
@@ -37,9 +52,9 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         }
 
         public void bind(UserModel user) {
-            //binding.ivProfileAvatar.setImageResource(?);
+            //binding.ivProfileAvatar.setImageResource(user.getAvatar());
             binding.tvMemberName.setText(user.getName());
-            binding.tvUserRole.setText("Member");
+            binding.tvUserRole.setText(user.getName());
         }
     }
 }

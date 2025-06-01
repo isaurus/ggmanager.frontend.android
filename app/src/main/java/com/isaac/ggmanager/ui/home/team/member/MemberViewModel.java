@@ -11,7 +11,10 @@ import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.home.team.AddUserToTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,16 +26,20 @@ public class MemberViewModel extends ViewModel {
     private final GetCurrentUserUseCase getCurrentUserUseCase;
     private final AddUserToTeamUseCase addUserToTeamUseCase;
     private final UpdateUserTeamUseCase updateUserTeamUseCase;
+    private final GetUsersByTeamUseCase getUsersByTeamUseCase;
 
     private final MediatorLiveData<MemberViewState> memberViewState = new MediatorLiveData<>();
+
 
     @Inject
     public MemberViewModel(GetCurrentUserUseCase getCurrentUserUseCase,
                            AddUserToTeamUseCase addUserToTeamUseCase,
-                           UpdateUserTeamUseCase updateUserTeamUseCase){
+                           UpdateUserTeamUseCase updateUserTeamUseCase,
+                           GetUsersByTeamUseCase getUsersByTeamUseCase){
         this.getCurrentUserUseCase = getCurrentUserUseCase;
         this.addUserToTeamUseCase = addUserToTeamUseCase;
         this.updateUserTeamUseCase = updateUserTeamUseCase;
+        this.getUsersByTeamUseCase = getUsersByTeamUseCase;
     }
 
     public LiveData<MemberViewState> getMemberViewState() { return memberViewState; }
@@ -48,6 +55,7 @@ public class MemberViewModel extends ViewModel {
                 case SUCCESS:
                     String teamId = userModelResource.getData().getTeamId();
                     addUserToTeam(teamId, email);
+
                     memberViewState.removeSource(getCurrentUserResult);
                     break;
                 case LOADING:
@@ -83,11 +91,62 @@ public class MemberViewModel extends ViewModel {
             if (booleanResource == null) return;
             switch (booleanResource.getStatus()){
                 case SUCCESS:
-                    memberViewState.setValue(MemberViewState.success());
+                    updateMembers(teamId);
                     memberViewState.removeSource(addTeamToUserResult);
                     break;
                 case ERROR:
                     memberViewState.setValue(MemberViewState.error(booleanResource.getMessage()));
+                    break;
+            }
+        });
+    }
+
+    private void updateMembers(String teamId){
+        LiveData<Resource<List<UserModel>>> getMembersResult = getUsersByTeamUseCase.execute(teamId);
+
+        memberViewState.addSource(getMembersResult, listResource -> {
+            if (listResource == null) return;
+            switch (listResource.getStatus()){
+                case SUCCESS:
+                    memberViewState.setValue(MemberViewState.success(listResource.getData()));
+                    break;
+                case ERROR:
+                    memberViewState.setValue(MemberViewState.error(listResource.getMessage()));
+            }
+        });
+    }
+
+    public void loadMembersOnStart(){
+        LiveData<Resource<UserModel>> getCurrentUserResult = getCurrentUserUseCase.execute();
+        memberViewState.setValue(MemberViewState.loading());
+
+        memberViewState.addSource(getCurrentUserResult, userModelResource -> {
+            if (userModelResource == null) return;
+
+            switch (userModelResource.getStatus()){
+                case SUCCESS:
+                    String teamId = userModelResource.getData().getTeamId();
+                    LiveData<Resource<List<UserModel>>> getMembersResult = getUsersByTeamUseCase.execute(teamId);
+                    memberViewState.removeSource(getCurrentUserResult);
+
+                    memberViewState.addSource(getMembersResult, listResource -> {
+                        if (listResource == null) return;
+                        switch (listResource.getStatus()){
+                            case SUCCESS:
+                                memberViewState.setValue(MemberViewState.success(listResource.getData()));
+                                memberViewState.removeSource(getMembersResult);
+                                break;
+                            case ERROR:
+                                memberViewState.setValue(MemberViewState.error(listResource.getMessage()));
+                        }
+                    });
+                    memberViewState.removeSource(getCurrentUserResult);
+                    break;
+                case LOADING:
+                    memberViewState.setValue(MemberViewState.loading());
+                    break;
+                case ERROR:
+                    memberViewState.setValue(MemberViewState.error(userModelResource.getMessage()));
                     break;
             }
         });
