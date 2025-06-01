@@ -2,145 +2,70 @@ package com.isaac.ggmanager.ui.login;
 
 import com.isaac.ggmanager.core.Resource;
 
+import javax.annotation.Nullable;
+
 public class LoginViewState {
 
-    private final Resource<?> resource;
-    private final boolean isEmailValid;
-    private final boolean isPasswordValid;
+    @Nullable private final Resource<?> resource;
+    private final boolean userHasProfile;
 
-    /**
-     * Constructor privado que inicializa el estado de la vista con un recurso y
-     * la validez de los campos de email y contraseña.
-     *
-     * @param resource recurso que representa el estado asíncrono actual
-     * @param isEmailValid indica si el email es válido
-     * @param isPasswordValid indica si la contraseña es válida
-     */
-    public LoginViewState(Resource<?> resource, boolean isEmailValid, boolean isPasswordValid) {
+
+    public LoginViewState(@Nullable Resource<?> resource, boolean userHasProfile) {
         this.resource = resource;
-        this.isEmailValid = isEmailValid;
-        this.isPasswordValid = isPasswordValid;
+        this.userHasProfile = userHasProfile;
     }
 
-    /**
-     * Crea un estado de validación con la información sobre la validez de email y contraseña.
-     *
-     * @param isEmailValid validez del email
-     * @param isPasswordValid validez de la contraseña
-     * @return instancia de LoginViewState en estado VALIDATING
-     */
-    public static LoginViewState validating(boolean isEmailValid, boolean isPasswordValid){
-        return new LoginViewState(Resource.validating(), isEmailValid, isPasswordValid);
+    public static LoginViewState userHasProfile(){
+        return new LoginViewState(Resource.success(null), true);
     }
 
-    /**
-     * Crea un estado que indica que la operación de login está en proceso (cargando).
-     * Los campos se asumen válidos para no mostrar errores durante la carga.
-     *
-     * @return instancia de LoginViewState en estado LOADING
-     */
+    public static LoginViewState userHasNoProfile(){
+        return new LoginViewState(Resource.success(null), false);
+    }
+
+
     public static LoginViewState loading(){
-        return new LoginViewState(Resource.loading(), true, true);
+        return new LoginViewState(Resource.loading(), false);
     }
 
-    /**
-     * Crea un estado que indica que la operación de login fue exitosa.
-     *
-     * @param <T> tipo de dato que se puede retornar (en este caso, un booleano verdadero)
-     * @return instancia de LoginViewState en estado SUCCESS
-     */
     public static <T> LoginViewState success(T data){
-        return new LoginViewState(Resource.success(data), true, true);
+        return new LoginViewState(Resource.success(data), true);
     }
 
-    /**
-     * Crea un estado que indica que la operación de login falló con un mensaje de error.
-     *
-     * @param message mensaje de error para mostrar en la UI
-     * @return instancia de LoginViewState en estado ERROR
-     */
+
     public static LoginViewState error(String message){
-        return new LoginViewState(Resource.error(message), true, true);
+        return new LoginViewState(Resource.error(message), false);
     }
 
-    /**
-     * Obtiene el recurso que representa el estado asíncrono actual.
-     *
-     * @return recurso asociado a este estado
-     */
-    public Resource<?> getResource() {
-        return resource;
+    public boolean isUserHasProfile(){
+        return userHasProfile;
     }
 
-    /**
-     * Obtiene el estado enumerado actual (VALIDATING, LOADING, SUCCESS, ERROR).
-     *
-     * @return estado actual del recurso
-     */
+
     public Resource.Status getStatus() {
-        return resource.getStatus();
+        return resource != null ? resource.getStatus() : null;
     }
 
-    /**
-     * Obtiene el mensaje asociado al recurso, generalmente usado para mensajes de error.
-     *
-     * @return mensaje del recurso o null si no hay mensaje
-     */
+
     public String getMessage() {
-        return resource.getMessage();
+        return resource != null ? resource.getMessage() : "Error desconocido";
     }
 
-    /**
-     * Obtiene el dato contenido en el recurso, si existe.
-     *
-     * @param <T> tipo esperado del dato
-     * @return dato contenido en el recurso o null
-     */
     public <T> T getData() {
         return (T) resource.getData();
     }
 
-    /**
-     * Indica si el email es válido según la última validación.
-     *
-     * @return true si el email es válido, false en caso contrario
-     */
-    public boolean isEmailValid() {
-        return isEmailValid;
-    }
 
-    /**
-     * Indica si la contraseña es válida según la última validación.
-     *
-     * @return true si la contraseña es válida, false en caso contrario
-     */
-    public boolean isPasswordValid() {
-        return isPasswordValid;
-    }
-
-    /**
-     * Indica si el estado actual corresponde a una carga en proceso.
-     *
-     * @return true si está cargando, false en caso contrario
-     */
     public boolean isLoading() {
         return resource.getStatus() == Resource.Status.LOADING;
     }
 
-    /**
-     * Indica si el estado actual corresponde a una operación exitosa.
-     *
-     * @return true si la operación fue exitosa, false en caso contrario
-     */
+
     public boolean isSuccess() {
         return resource.getStatus() == Resource.Status.SUCCESS;
     }
 
-    /**
-     * Indica si el estado actual corresponde a un error.
-     *
-     * @return true si hay un error, false en caso contrario
-     */
+
     public boolean isError() {
         return resource.getStatus() == Resource.Status.ERROR;
     }

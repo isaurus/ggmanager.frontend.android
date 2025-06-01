@@ -15,10 +15,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.isaac.ggmanager.databinding.FragmentTeamContainerBinding;
 import com.isaac.ggmanager.ui.home.HomeViewModel;
-import com.isaac.ggmanager.ui.home.team.calendar.CalendarFragment;
 import com.isaac.ggmanager.ui.home.team.member.MemberFragment;
 import com.isaac.ggmanager.ui.home.team.task.TaskFragment;
-import com.isaac.ggmanager.ui.home.team.CreateTeamContainerFragment;
 
 public class TeamContainerFragment extends Fragment {
 
@@ -41,10 +39,10 @@ public class TeamContainerFragment extends Fragment {
     }
 
     private void observeViewModel(){
-        homeViewModel.getHomeViewstate().observe(getViewLifecycleOwner(), homeViewState -> {
+        homeViewModel.getHomeViewState().observe(getViewLifecycleOwner(), homeViewState -> {
             switch (homeViewState.getStatus()){
                 case SUCCESS:
-                    if (homeViewState.getData()){
+                    if (homeViewState.isUserHasTeam()){
                         showTeamContent();
                     } else {
                         showCreateTeam();
@@ -72,12 +70,9 @@ public class TeamContainerFragment extends Fragment {
                     (tab, position) -> {
                         switch (position) {
                             case 0:
-                                tab.setText("Calendar");
-                                break;
-                            case 1:
                                 tab.setText("Tasks");
                                 break;
-                            case 2:
+                            case 1:
                                 tab.setText("Members");
                                 break;
                         }
@@ -118,10 +113,8 @@ public class TeamContainerFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new CalendarFragment();
-                case 1:
                     return new TaskFragment();
-                case 2:
+                case 1:
                     return new MemberFragment();
                 default:
                     throw new IllegalArgumentException("Invalid position");
@@ -130,7 +123,7 @@ public class TeamContainerFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
     }
 }

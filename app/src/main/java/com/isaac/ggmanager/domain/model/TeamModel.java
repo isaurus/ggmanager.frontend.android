@@ -6,16 +6,21 @@ public class TeamModel {
     private String id;
     private String teamName;
     private String teamDescription;
-    private String adminUid;
     private List<String> members;
 
     public TeamModel(){}
 
-    public TeamModel(String id, String teamName, String teamDescription, String adminUid, List<String> members) {
+    public TeamModel(String teamName, String teamDescription){
+        this.id = null;
+        this.teamName = teamName;
+        this.teamDescription = teamDescription;
+        this.members = null;
+    }
+
+    public TeamModel(String id, String teamName, String teamDescription, List<String> members) {
         this.id = id;
         this.teamName = teamName;
         this.teamDescription = teamDescription;
-        this.adminUid = adminUid;
         this.members = members;
     }
 
@@ -41,14 +46,6 @@ public class TeamModel {
 
     public void setTeamDescription(String teamDescription) {
         this.teamDescription = teamDescription;
-    }
-
-    public String getAdminUid() {
-        return adminUid;
-    }
-
-    public void setAdminUid(String adminUid) {
-        this.adminUid = adminUid;
     }
 
     public List<String> getMembers() {

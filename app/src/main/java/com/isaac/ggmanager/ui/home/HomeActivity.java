@@ -46,20 +46,24 @@ public class HomeActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
         }
 
+        homeViewModel.getUserTeam();
+
         observeViewModel();
         setUpToolbar();
     }
 
     private void observeViewModel() {
-        homeViewModel.checkUserHasTeam();
+        //homeViewModel.getUserTeam();
 
-        homeViewModel.getHomeViewstate().observe(this, homeViewState -> {
-            switch (homeViewState.getStatus()) {
+        homeViewModel.getHomeViewState().observe(this, homeViewState -> {
+            switch (homeViewState.getStatus()){
                 case SUCCESS:
-                    if (navController != null && navController.getCurrentDestination() != null
-                            && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
+                    if (navController != null && navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() != R.id.teamContainerFragment) {
                         navController.navigate(R.id.teamContainerFragment);
                     }
+                    break;
+                case LOADING:
+                    // PONER PROGRESS BAR
                     break;
                 case ERROR:
                     Toast.makeText(this, homeViewState.getMessage(), Toast.LENGTH_SHORT).show();

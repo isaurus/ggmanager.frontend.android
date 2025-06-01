@@ -39,4 +39,7 @@
 
     <color name="icon_color">#000000</color> <!-- Negro -->
 
+    <color name="fab_background">#009688</color> <!-- Teal 500 -->
+    <color name="fab_icon_tint">#FFFFFF</color>   <!-- Blanco -->
+
 </resources>

@@ -1,6 +1,7 @@
 package com.isaac.ggmanager.ui.home.team;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,7 +10,8 @@ import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.SaveUserProfileUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 
 import javax.inject.Inject;
 
@@ -18,49 +20,62 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class CreateTeamViewModel extends ViewModel {
 
-    private final CreateTeamUseCase createTeamUseCase;
-    private final GetCurrentUserUseCase getCurrentUserUseCase;
-    private final SaveUserProfileUseCase saveUserProfileUseCase;
 
-    private final MutableLiveData<CreateTeamViewState> createTeamViewState = new MutableLiveData<>();
+    private final CreateTeamUseCase createTeamUseCase;
+    private final UpdateAdminTeamUseCase updateAdminTeamUseCase;
+
+
+
+    private final MediatorLiveData<CreateTeamViewState> createTeamViewState = new MediatorLiveData<>();
 
     @Inject
     public CreateTeamViewModel(CreateTeamUseCase createTeamUseCase,
-                               GetCurrentUserUseCase getCurrentUserUseCase,
-                               SaveUserProfileUseCase saveUserProfileUseCase){
+                               UpdateAdminTeamUseCase updateAdminTeamUseCase){
         this.createTeamUseCase = createTeamUseCase;
-        this.getCurrentUserUseCase = getCurrentUserUseCase;
-        this.saveUserProfileUseCase = saveUserProfileUseCase;
+        this.updateAdminTeamUseCase = updateAdminTeamUseCase;
     }
 
     public LiveData<CreateTeamViewState> getCreateTeamViewState() { return createTeamViewState; }
 
     public void createTeam(String teamName, String teamDescription){
-        TeamModel teamModel = new TeamModel(null, teamName, teamDescription, null, null);
+        TeamModel team = createTeamModel(teamName, teamDescription);
 
-        createTeamUseCase.execute(teamModel).observeForever(resource -> {
-            switch (resource.getStatus()){
+        createTeamViewState.setValue(CreateTeamViewState.loading());
+
+        LiveData<Resource<String>> createTeamResult = createTeamUseCase.execute(team);
+
+        createTeamViewState.addSource(createTeamResult, stringResource -> {
+            if (stringResource == null) return;
+
+            switch (stringResource.getStatus()){
                 case SUCCESS:
-                    String teamId = resource.getData();
-
-                    getCurrentUserUseCase.execute().observeForever(userResource -> {
-                        if (userResource.getStatus() == Resource.Status.SUCCESS){
-                            UserModel currentUser = userResource.getData();
-                            currentUser.setTeamId(teamId);
-
-                            saveUserProfileUseCase.execute(currentUser).observeForever(updatedResource -> {
-                                if (updatedResource.getStatus() == Resource.Status.SUCCESS) createTeamViewState.setValue(CreateTeamViewState.success());
-                            });
-                        }
-                    });
-
-                    //createTeamViewState.setValue(CreateTeamViewState.success());
+                    String teamId = stringResource.getData();
+                    updateUserTeam(teamId);
+                    createTeamViewState.removeSource(createTeamResult);
                     break;
                 case LOADING:
                     createTeamViewState.setValue(CreateTeamViewState.loading());
                     break;
                 case ERROR:
-                    createTeamViewState.setValue(CreateTeamViewState.error(resource.getMessage()));
+                    createTeamViewState.setValue(CreateTeamViewState.error(stringResource.getMessage()));
+                    break;
+            }
+        });
+    }
+
+    public void updateUserTeam(String teamId){
+        LiveData<Resource<Boolean>> updateUserTeamResult = updateAdminTeamUseCase.execute(teamId);
+
+        createTeamViewState.addSource(updateUserTeamResult, booleanResource -> {
+            if (booleanResource == null) return;
+            switch (booleanResource.getStatus()){
+                case SUCCESS:
+                    createTeamViewState.setValue(CreateTeamViewState.success());
+                    createTeamViewState.removeSource(updateUserTeamResult);
+                    break;
+                case ERROR:
+                    createTeamViewState.setValue(CreateTeamViewState.error(booleanResource.getMessage()));
+                    createTeamViewState.removeSource(updateUserTeamResult);
                     break;
             }
         });
@@ -77,6 +92,10 @@ public class CreateTeamViewModel extends ViewModel {
 
             createTeam(teamName, teamDescription);
         }
+    }
+
+    private TeamModel createTeamModel(String teamName, String teamDescription){
+        return new TeamModel(teamName, teamDescription);
     }
 
     private boolean isValidTeamName(String teamName){

@@ -2,8 +2,7 @@ package com.isaac.ggmanager.domain.usecase.auth;
 
 
 import com.google.firebase.auth.FirebaseUser;
-import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.repository.FirebaseAuthRepository;
+import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 
 import javax.inject.Inject;
 

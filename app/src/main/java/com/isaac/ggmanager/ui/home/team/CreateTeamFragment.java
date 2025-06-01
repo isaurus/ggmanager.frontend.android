@@ -59,12 +59,19 @@ public class CreateTeamFragment extends Fragment {
 
     private void observeViewModel() {
         createTeamViewModel.getCreateTeamViewState().observe(getViewLifecycleOwner(), createTeamViewState -> {
-            switch (createTeamViewState.getStatus()){
+
+            switch (createTeamViewState.getValidationState()){
                 case VALIDATING:
-                    binding.btnCreateTeam.setEnabled(false);
                     binding.tilTeamName.setError(createTeamViewState.isTeamNameValid() ? null : "Nombre no permitido");
-                    binding.tilTeamDescription.setError(createTeamViewState.isTeamDescriptionValid() ? null : "Descripción no permitido");
+                    binding.tilTeamDescription.setError(createTeamViewState.isTeamDescriptionValid() ? null : "Descripción no permitida");
                     break;
+                case IDLE:
+                    binding.tilTeamName.setError(null);
+                    binding.tilTeamDescription.setError(null);
+                    break;
+            }
+
+            switch (createTeamViewState.getStatus()){
                 case SUCCESS:
                     // Lanzamos HomeActivity nuevamente, que al observar que el usuario ya tiene equipo, navegará a TeamContainerFragment
                     Intent intent = new Intent(requireContext(), HomeActivity.class);

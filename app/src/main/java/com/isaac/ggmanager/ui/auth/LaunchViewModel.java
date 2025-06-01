@@ -1,11 +1,15 @@
 package com.isaac.ggmanager.ui.auth;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.isaac.ggmanager.core.Resource;
+import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 
 import javax.inject.Inject;
 
@@ -17,7 +21,7 @@ public class LaunchViewModel extends ViewModel {
     private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;  // Para lanzar a login o directamente a la app
     private final GetCurrentUserUseCase getCurrentUserUseCase;  // Para lanzar al Home o al Edit
 
-    public final MutableLiveData<LaunchViewState> launchViewState = new MutableLiveData<>();
+    public final MediatorLiveData<LaunchViewState> launchViewState = new MediatorLiveData<>();
 
     @Inject
     public LaunchViewModel(CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase,
@@ -28,24 +32,23 @@ public class LaunchViewModel extends ViewModel {
 
     public LiveData<LaunchViewState> getLaunchViewState() { return launchViewState; }
 
+    public void fetchUserProfile(){
+        LiveData<Resource<UserModel>> userResult = getCurrentUserUseCase.execute();
 
-
-
-
-    public void isUserPersisted(){
-        getCurrentUserUseCase.execute().observeForever(resource -> {
+        launchViewState.addSource(userResult, resource -> {
             switch (resource.getStatus()){
                 case SUCCESS:
-                    launchViewState.setValue(LaunchViewState.success(resource.getData()));
-                    break;
-                case ERROR:
-                    launchViewState.setValue(LaunchViewState.error(resource.getMessage()));
+                    UserModel user = resource.getData();
+                    if (user != null) {
+                        launchViewState.setValue(LaunchViewState.userHasProfile());
+                    } else {
+                        launchViewState.setValue(LaunchViewState.userHasNoProfile());
+                    }
+                    launchViewState.removeSource(userResult);
                     break;
             }
-
         });
     }
-
 
     public boolean isUserAuthenticated() { return checkAuthenticatedUserUseCase.execute(); }
 

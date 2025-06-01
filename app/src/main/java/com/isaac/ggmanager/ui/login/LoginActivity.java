@@ -67,10 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     private void observeViewModel() {
         loginViewModel.getLoginViewState().observe(this, loginViewState -> {
             switch(loginViewState.getStatus()){
-                case VALIDATING:
-                    binding.progressBar.setVisibility(View.GONE);
-                    binding.btnGoogleSignIn.setEnabled(false);
-                    break;
                 case LOADING:
                     binding.progressBar.setVisibility(View.VISIBLE);
                     binding.btnGoogleSignIn.setEnabled(false);
@@ -78,9 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 case SUCCESS:
                     binding.progressBar.setVisibility(View.GONE);
 
-                    System.out.println("Usuario: " + loginViewState.getData());
-
-                    if (loginViewState.getData() != null) {
+                    if (loginViewState.isUserHasProfile()) {
                         startActivity(new Intent(this, HomeActivity.class));
                     }
                     else {

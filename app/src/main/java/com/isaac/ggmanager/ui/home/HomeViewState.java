@@ -3,6 +3,7 @@ package com.isaac.ggmanager.ui.home;
 import com.isaac.ggmanager.core.Resource;
 
 public class HomeViewState {
+
     private final Resource<?> resource;
     private final boolean userHasTeam;
 
@@ -12,45 +13,46 @@ public class HomeViewState {
     }
 
     public static HomeViewState userHasTeam(){
-        return new HomeViewState(Resource.success(true), true);
+        return new HomeViewState(Resource.success(null), true);
     }
 
     public static HomeViewState userHasNoTeam(){
-        return new HomeViewState(Resource.success(false), false);
-    }
-
-    public static HomeViewState loading() {
-        return new HomeViewState(Resource.loading(), false); // false por defecto
+        return new HomeViewState(Resource.success(null), false);
     }
 
     public static <T> HomeViewState success(T data, boolean userHasTeam) {
-        return new HomeViewState(Resource.success(data), userHasTeam);
+        return new HomeViewState(
+                Resource.success(data),
+                userHasTeam);
     }
+
+    public static HomeViewState loading() {
+        return new HomeViewState(
+                Resource.loading(),
+                false);
+    }
+
 
     public static HomeViewState error(String message) {
-        return new HomeViewState(Resource.error(message), false);
+        return new HomeViewState(
+                Resource.error(message),
+                false);
     }
 
-    public static HomeViewState validating(boolean userHasTeam) {
-        return new HomeViewState(Resource.validating(), userHasTeam);
-    }
-
-    // Getters
     public Resource<?> getResource() {
         return resource;
     }
 
     public Resource.Status getStatus() {
-        return resource.getStatus();
+        return resource != null ? resource.getStatus() : null;
     }
 
-    public String getMessage() {
-        return resource.getMessage();
-    }
+    public String getMessage() { return resource != null ? resource.getMessage() : "Error desconocido"; }
 
     public <T> T getData() {
-        return (T) resource.getData();
+        return resource != null ? (T) resource.getData() : null;
     }
+
 
     public boolean isUserHasTeam() {
         return userHasTeam;

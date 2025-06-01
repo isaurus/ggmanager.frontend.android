@@ -30,28 +30,25 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        // Inflamos el layout con el binding y lo seteamos
         binding = ActivityLaunchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Iniciamos el AuthViewModel
         launchViewModel = new ViewModelProvider(this).get(LaunchViewModel.class);
 
         observeViewModel();
     }
 
     private void observeViewModel(){
-
         if (!launchViewModel.isUserAuthenticated()){
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
-            launchViewModel.isUserPersisted();
+            launchViewModel.fetchUserProfile();
 
             launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
                 switch (launchViewState.getStatus()){
                     case SUCCESS:
-                        if (launchViewState.getData() != null){
+                        if (launchViewState.isUserHasProfile()){
                             startActivity(new Intent(this, HomeActivity.class));
                         } else {
                             startActivity(new Intent(this, EditUserProfileActivity.class));

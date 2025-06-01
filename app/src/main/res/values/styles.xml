@@ -63,6 +63,7 @@
         <item name="android:fontFamily">@font/roboto_italic</item>
     </style>
 
+    <!-- Estilo para cajas de texto (TextInputLayout) -->
     <style name="Input.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/input_box_stroke</item>
         <item name="boxBackgroundColor">@color/input_box_background</item>
@@ -72,6 +73,7 @@
         <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
+    <!-- Estilo para caja de texto con desplegable (Dropdown) -->
     <style name="Input.OutlinedBox.Dropdown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/input_box_stroke</item>
         <item name="boxBackgroundColor">@color/input_box_background</item>
@@ -79,6 +81,20 @@
         <item name="boxCornerRadiusTopEnd">12dp</item>
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+    <!-- Estilo para Floating Action Button -->
+    <style name="Widget.App.FAB" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">@color/fab_background</item>
+        <item name="tint">@color/fab_icon_tint</item>
+        <item name="elevation">6dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.SmallComponent</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="srcCompat">@drawable/ic_add</item>
     </style>
 
 </resources>
