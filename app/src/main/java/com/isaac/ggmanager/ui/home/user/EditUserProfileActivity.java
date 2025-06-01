@@ -131,7 +131,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"
 
-    // TODO ECHAR UN OJO A ESTE MÉTODO PARA CAMBIAR EL AVATAR
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
         String[] avatarNames = new String[avatars.length];

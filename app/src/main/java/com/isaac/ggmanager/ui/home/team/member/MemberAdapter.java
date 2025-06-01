@@ -56,7 +56,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
             Avatar avatar = Avatar.fromKey(user.getAvatar());
             binding.ivProfileAvatar.setImageResource(avatar.getDrawableResId());
             binding.tvMemberName.setText(user.getName());
-            binding.tvUserRole.setText(user.getName());
+            binding.tvUserRole.setText(user.getTeamRole());
         }
     }
 }

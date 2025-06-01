@@ -15,6 +15,7 @@ public class UserModel {
     private Date birthdate;
     private String country;
     private String teamId;
+    private String teamRole;
 
     /**
      * Constructor para deserialización automática con Firestore.
@@ -36,6 +37,7 @@ public class UserModel {
         this.name = "Por definir";
         this.birthdate = null;
         this.country = "Por definir";
+        this.teamRole = null;
     }
 
     /**
@@ -46,12 +48,13 @@ public class UserModel {
      * @param birthdate
      * @param country
      */
-    public UserModel(String avatar, String name, Date birthdate, String country, String teamId) {
+    public UserModel(String avatar, String name, Date birthdate, String country, String teamId, String teamRole) {
         this.avatar = avatar;
         this.name = name;
         this.birthdate = birthdate;
         this.country = country;
         this.teamId = teamId;
+        this.teamRole = teamRole;
     }
 
     public String getFirebaseUid() {
@@ -108,5 +111,13 @@ public class UserModel {
 
     public void setTeamId(String teamId) {
         this.teamId = teamId;
+    }
+
+    public String getTeamRole() {
+        return teamRole;
+    }
+
+    public void setTeamRole(String teamRole) {
+        this.teamRole = teamRole;
     }
 }

@@ -75,18 +75,17 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
     }
 
     @Override
-    public LiveData<Resource<Boolean>> updateUserTeam(String userId, String teamId) {
+    public LiveData<Resource<Boolean>> updateUserTeam(String userId, String teamId, String teamRole) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
         getCollection()
                 .document(userId)
-                .update("teamId", teamId)
+                .update(
+                        "teamId", teamId,
+                        "teamRole", teamRole)
                 .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
-                .addOnFailureListener(e -> {
-                    result.setValue(Resource.error(e.getMessage()));
-                    Log.e("PRUEBA", "Error Firestore en updateUserTeam." + e.getMessage());
-                });
+                .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
 
         return result;
     }
