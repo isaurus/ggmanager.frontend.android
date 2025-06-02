@@ -12,13 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.DialogEmailInputBinding;
-import com.isaac.ggmanager.databinding.FragmentCreateTeamBinding;
 import com.isaac.ggmanager.databinding.FragmentMemberBinding;
 import com.isaac.ggmanager.domain.model.UserModel;
 
@@ -37,7 +34,7 @@ public class MemberFragment extends Fragment {
     private MemberAdapter memberAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMemberBinding.inflate(inflater, container, false);
 
@@ -59,9 +56,7 @@ public class MemberFragment extends Fragment {
     }
 
     private void setUpListeners() {
-        binding.fabAddMember.setOnClickListener(v -> {
-            showAlertDialog();
-        });
+        binding.fabAddMember.setOnClickListener(v -> showAlertDialog());
     }
 
     private void observeViewModel() {

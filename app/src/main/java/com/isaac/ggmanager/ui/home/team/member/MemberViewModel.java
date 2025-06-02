@@ -1,6 +1,5 @@
 package com.isaac.ggmanager.ui.home.team.member;
 
-import android.util.Log;
 import android.util.Patterns;
 
 import androidx.lifecycle.LiveData;
@@ -9,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.usecase.home.team.AddUserToTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.AddUserToTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;

@@ -1,8 +1,7 @@
 package com.isaac.ggmanager.domain.model;
 
 import java.util.Date;
-
-import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Modelo de dominio para un usuario.
@@ -16,6 +15,7 @@ public class UserModel {
     private String country;
     private String teamId;
     private String teamRole;
+    private List<String> teamTasksId;
 
     /**
      * Constructor para deserialización automática con Firestore.
@@ -38,6 +38,7 @@ public class UserModel {
         this.birthdate = null;
         this.country = "Por definir";
         this.teamRole = null;
+        this.teamTasksId = null;
     }
 
     /**
@@ -48,13 +49,14 @@ public class UserModel {
      * @param birthdate
      * @param country
      */
-    public UserModel(String avatar, String name, Date birthdate, String country, String teamId, String teamRole) {
+    public UserModel(String avatar, String name, Date birthdate, String country, String teamId, String teamRole, List<String> teamTasksId) {
         this.avatar = avatar;
         this.name = name;
         this.birthdate = birthdate;
         this.country = country;
         this.teamId = teamId;
         this.teamRole = teamRole;
+        this.teamTasksId = teamTasksId;
     }
 
     public String getFirebaseUid() {
@@ -119,5 +121,13 @@ public class UserModel {
 
     public void setTeamRole(String teamRole) {
         this.teamRole = teamRole;
+    }
+
+    public List<String> getTeamTasksId() {
+        return teamTasksId;
+    }
+
+    public void setTeamTasksId(List<String> teamTasksId) {
+        this.teamTasksId = teamTasksId;
     }
 }

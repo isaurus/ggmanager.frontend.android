@@ -2,16 +2,12 @@ package com.isaac.ggmanager.ui.home.team;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
-import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.CreateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 
 import javax.inject.Inject;
 

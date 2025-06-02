@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.team.CreateTeamFragment"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_set_up_team"
+        style="@style/Text.Headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Crea tareas para tu equipo"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_set_up_team_subtitle"
+        style="@style/Text.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="¡Crea y asigna tareas a los miembros de tu equipo!"
+        app:layout_constraintEnd_toEndOf="@+id/tv_set_up_team"
+        app:layout_constraintStart_toStartOf="@+id/tv_set_up_team"
+        app:layout_constraintTop_toBottomOf="@+id/tv_set_up_team" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_task_title"
+        style="@style/Input.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="Título de la tarea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_set_up_team_subtitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_team_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_task_description"
+        style="@style/Input.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Descripción"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_task_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_team_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_deadline"
+        style="@style/Input.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Fecha máxima de cumplimiento"
+        app:layout_constraintEnd_toEndOf="@+id/til_task_description"
+        app:layout_constraintStart_toStartOf="@+id/til_task_description"
+        app:layout_constraintTop_toBottomOf="@+id/til_task_description"
+        app:startIconDrawable="@drawable/ic_calendar"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="none"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:paddingStart="50dp"
+            android:fontFamily="@font/roboto_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_priority"
+        style="@style/Input.OutlinedBox.Dropdown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Prioridad"
+        app:layout_constraintEnd_toEndOf="@+id/til_deadline"
+        app:layout_constraintStart_toStartOf="@+id/til_deadline"
+        app:layout_constraintTop_toBottomOf="@+id/til_deadline"
+        app:startIconDrawable="@drawable/ic_flag">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/atv_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:paddingStart="50dp"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_member"
+        style="@style/Input.OutlinedBox.Dropdown"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Miembro"
+        app:layout_constraintEnd_toEndOf="@+id/til_priority"
+        app:layout_constraintStart_toStartOf="@+id/til_priority"
+        app:layout_constraintTop_toBottomOf="@+id/til_priority"
+        app:startIconDrawable="@drawable/ic_user_profile">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/atv_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:cursorVisible="false"
+            android:focusable="true"
+            android:paddingStart="50dp"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_task"
+        style="@style/Button.Primary"
+        android:text="Crear tarea"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/til_task_description"
+        app:layout_constraintStart_toStartOf="@+id/til_task_description"
+        app:layout_constraintTop_toBottomOf="@+id/til_member" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

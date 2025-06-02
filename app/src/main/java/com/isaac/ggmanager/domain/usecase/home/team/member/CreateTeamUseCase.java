@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.domain.usecase.home.team;
+package com.isaac.ggmanager.domain.usecase.home.team.member;
 
 import androidx.lifecycle.LiveData;
 
@@ -7,7 +7,6 @@ import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
 import com.isaac.ggmanager.domain.repository.user.UserRepository;
-import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
