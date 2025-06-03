@@ -56,12 +56,9 @@ public class TeamContainerFragment extends Fragment {
     }
 
     private void showTeamContent() {
-        // Ocultar contenedor creación equipo
         binding.createTeamContainer.setVisibility(View.GONE);
-        // Mostrar ViewPager + Tabs
         binding.teamContentContainer.setVisibility(View.VISIBLE);
 
-        // Configurar ViewPager si no está ya configurado
         if (binding.viewPager.getAdapter() == null) {
             TeamPagerAdapter adapter = new TeamPagerAdapter(this);
             binding.viewPager.setAdapter(adapter);
@@ -81,12 +78,9 @@ public class TeamContainerFragment extends Fragment {
     }
 
     private void showCreateTeam() {
-        // Ocultar contenido equipo
         binding.teamContentContainer.setVisibility(View.GONE);
-        // Mostrar contenedor creación equipo
         binding.createTeamContainer.setVisibility(View.VISIBLE);
 
-        // Insertar el fragmento de creación solo si no está ya cargado
         Fragment existing = getChildFragmentManager().findFragmentById(binding.createTeamContainer.getId());
         if (!(existing instanceof CreateTeamContainerFragment)) {
             getChildFragmentManager().beginTransaction()
@@ -101,7 +95,6 @@ public class TeamContainerFragment extends Fragment {
         binding = null;
     }
 
-    // Adaptador para los fragments del equipo
     private static class TeamPagerAdapter extends FragmentStateAdapter {
 
         public TeamPagerAdapter(@NonNull Fragment fragment) {

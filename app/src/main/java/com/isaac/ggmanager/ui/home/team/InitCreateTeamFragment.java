@@ -36,7 +36,6 @@ public class InitCreateTeamFragment extends Fragment {
     }
 
     private void setUpListeners(){
-        // Acción para continuar al siguiente fragmento
         binding.btnCreateTeam.setOnClickListener(v -> {
             Navigation.findNavController(v)
                     .navigate(R.id.action_initCreateTeamFragment_to_infoCreateTeamFragment);

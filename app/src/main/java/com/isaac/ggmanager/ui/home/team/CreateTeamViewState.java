@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 public class CreateTeamViewState {
 
     public enum ValidationState {
-        IDLE,        // No está validando, estado inicial
+        IDLE,
         VALIDATING
     }
 

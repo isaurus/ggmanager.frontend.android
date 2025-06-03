@@ -68,7 +68,7 @@ public class EditUserProfileViewModel extends ViewModel {
         });
     }
 
-    public void updateUserProfile(){}   // TODO ¿CÓMO LO GESTIONO?
+    public void updateUserProfile(){}
 
 
     public void validateEditUserForm(String avatar, String name, String birthdate, String country) {
@@ -76,7 +76,7 @@ public class EditUserProfileViewModel extends ViewModel {
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
-        if (!isValidAvatar(avatar)) {   // ESTA CONDICIÓN PROPORCIONA UN AVATAR PREDETERMINADO SI EL USUARIO NO SELECCIONA UNO, EVITANDO EL NULL
+        if (!isValidAvatar(avatar)) {
             avatar = "ic_avatar_avocado";
         }
 

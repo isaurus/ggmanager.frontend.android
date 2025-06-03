@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 public class EditUserProfileViewState {
 
     public enum ValidationState {
-        IDLE,        // No está validando, estado inicial
+        IDLE,
         VALIDATING
     }
 
@@ -33,7 +33,7 @@ public class EditUserProfileViewState {
         this.isCountryValid = isCountryValid;
     }
 
-    public static EditUserProfileViewState success(){   // TODO ¿ME INTERESA RECOGER LOS DATOS PARA IMPRIMIR LOS QUE YA TIENE, NO?
+    public static EditUserProfileViewState success(){
         return new EditUserProfileViewState(
                Resource.success(null),
                 ValidationState.IDLE,

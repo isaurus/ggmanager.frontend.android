@@ -80,7 +80,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private void observeViewModel() {
         editUserProfileViewModel.getEditUserProfileViewState().observe(this, editUserProfileViewState ->  {
 
-            switch (editUserProfileViewState.getValidationState()){     // CASOS PARA LA VALIDACIÓN DE INPUTS
+            switch (editUserProfileViewState.getValidationState()){
                 case VALIDATING:
                     // ¿VALIDACIÓN DE AVATAR?
                     binding.tilName.setError(editUserProfileViewState.isNameValid() ? null : "Nombre no permitido");
@@ -93,7 +93,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     binding.tilCountry.setError(null);
                     break;
             }
-            switch (editUserProfileViewState.getStatus()) {     // CASOS PARA EL RESULTADO DE LA OPERACIÓN ASÍNCRONA
+            switch (editUserProfileViewState.getStatus()) {
                 case LOADING:
                     binding.btnSaveProfile.setEnabled(false);
                     break;
@@ -134,8 +134,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
         TextWatcherUtils.enableViewOnTextChange(binding.etBirthdate, binding.btnSaveProfile,binding.tilBirthdate);
         TextWatcherUtils.enableViewOnTextChange(binding.atvCountry, binding.btnSaveProfile,binding.tilCountry);
     }
-
-    // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"
 
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
