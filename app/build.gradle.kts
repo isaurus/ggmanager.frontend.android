@@ -46,6 +46,10 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     // Testing
     testImplementation(libs.junit)
+    // Mockito
+    testImplementation(libs.mockito.core)
+    // Testing con LiveData
+    testImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     // Constraint
