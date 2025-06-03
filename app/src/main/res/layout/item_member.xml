@@ -5,8 +5,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
-    app:cardElevation="16dp"
-    android:layout_margin="5dp">
+    app:cardElevation="8dp"
+    android:layout_margin="5dp"
+    android:id="@+id/cv_member_container">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +22,7 @@
             android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_avatar_batman" />
+            tools:srcCompat="@drawable/ic_avatar_batman" />
 
         <TextView
             android:id="@+id/tv_member_name"
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="John Doe"
+            tools:text="John Doe"
             app:layout_constraintBottom_toBottomOf="@+id/iv_profile_avatar"
             app:layout_constraintStart_toEndOf="@+id/iv_profile_avatar"
             app:layout_constraintTop_toTopOf="@+id/iv_profile_avatar" />
@@ -39,7 +40,7 @@
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Member"
+            tools:text="Member"
             app:layout_constraintBottom_toBottomOf="@+id/tv_member_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_member_name" />

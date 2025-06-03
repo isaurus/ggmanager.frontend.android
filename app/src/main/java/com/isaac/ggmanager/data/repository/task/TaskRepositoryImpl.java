@@ -41,7 +41,7 @@ public class TaskRepositoryImpl extends FirestoreRepositoryImpl<TaskModel> imple
         result.setValue(Resource.loading());
 
         if (tasksListId == null || tasksListId.isEmpty()) {
-            result.setValue(Resource.success(List.of())); // o Collections.emptyList()
+            result.setValue(Resource.success(List.of()));
             return result;
         }
 

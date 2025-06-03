@@ -15,14 +15,12 @@ public class DatePickerUtils {
     private final static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 
     public static void setupDatePicker(final Context context, final View triggerView, final TextView outputView) {
-        // Crear calendario con la fecha actual
+
         final Calendar calendar = Calendar.getInstance();
 
-        // Mostrar la fecha actual al iniciar
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT, Locale.getDefault());
         outputView.setText(sdf.format(calendar.getTime()));
 
-        // MI LISTENER
         triggerView.setOnClickListener(v -> {
             new DatePickerDialog(context,
                     (view, year, month, dayOfMonth) -> {

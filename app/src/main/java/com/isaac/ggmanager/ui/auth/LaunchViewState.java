@@ -23,7 +23,7 @@ public class LaunchViewState {
         return new LaunchViewState(Resource.success(null), false);
     }
 
-    public static <T> LaunchViewState success(T data){  // TODO ¿ME PODRÍA INTERESAR ESA DATA PARA ALGO? AHORA MISMO NO LA USO
+    public static <T> LaunchViewState success(T data){
         return new LaunchViewState(Resource.success(data), true);
     }
 

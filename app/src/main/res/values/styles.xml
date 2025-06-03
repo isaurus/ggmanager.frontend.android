@@ -57,6 +57,12 @@
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
+    <!-- Estilo para identificadores de columnas -->
+    <style name="Text.Column" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
     <!-- Estilo para textos de ayuda o hint -->
     <style name="Text.Hint" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">@color/textDisabled</item>

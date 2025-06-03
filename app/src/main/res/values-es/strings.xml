@@ -37,4 +37,8 @@
     <string name="tv_item_task_assigned_to">Asignado a:</string>
     <string name="tv_info_subtitle_about">Con un Equipo podrás:</string>
     <string name="tv_unlock_feature">¡Desbloquea esta funcionalidad con el pase Premium!</string>
+    <string name="tv_column_member_list">Miembro</string>
+    <string name="tv_column_member_role">Rol</string>
+    <string name="tv_column_task">Tarea</string>
+    <string name="tv_column_priority">Prioridad</string>
 </resources>

@@ -22,9 +22,9 @@ public class Resource<T> {
         ERROR
     }
 
-    private final Status status;    // Estado actual de la operación
-    private final T data;           // Datos retornados (solo si es exitosa)
-    private final String message;   // Mensaje de error (solo si hay fallo)
+    private final Status status;
+    private final T data;
+    private final String message;
 
     /**
      * Constructor privado para asegurar la creación mediante métodos estáticos
@@ -39,8 +39,6 @@ public class Resource<T> {
         this.data = data;
         this.message = message;
     }
-
-    //--- Métodos estáticos factory (patrón factory) ---//
 
     /**
      * Crea un Resource que representa una operación en progreso (loading).
@@ -73,9 +71,6 @@ public class Resource<T> {
     public static <T> Resource<T> error(String msg) {
         return new Resource<>(Status.ERROR, null, msg);
     }
-
-
-    //--- Getters ---//
 
     /**
      * Obtiene el estado actual de la operación.
