@@ -35,8 +35,8 @@
                 style="@style/Text.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Assigned to:"
+                android:layout_marginTop="5dp"
+                android:text="@string/tv_item_task_assigned_to"
                 app:layout_constraintStart_toStartOf="@+id/tv_task_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_task_title" />
 
@@ -75,9 +75,9 @@
         style="@style/Text.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_weight="0.5"
         android:text="Priority"
-        android:layout_gravity="center_vertical"
-        android:textAlignment="center"
-        android:layout_weight="0.5"/>
+        android:textAlignment="center" />
 
 </LinearLayout>

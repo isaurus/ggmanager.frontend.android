@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Configura tu equipo"
+        android:text="@string/tv_title_create_team"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="¡Crea tu equipo y comienza a añadir miembros!"
+        android:text="@string/tv_subtitle_create_team"
         app:layout_constraintEnd_toEndOf="@+id/tv_set_up_team"
         app:layout_constraintStart_toStartOf="@+id/tv_set_up_team"
         app:layout_constraintTop_toBottomOf="@+id/tv_set_up_team" />
@@ -35,8 +35,8 @@
         style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:hint="Nombre del equipo"
+        android:layout_marginTop="60dp"
+        android:hint="@string/hint_team_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_set_up_team_subtitle">
@@ -52,9 +52,11 @@
         android:id="@+id/til_team_description"
         style="@style/Input.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:hint="Descripción"
+        android:layout_marginBottom="80dp"
+        android:hint="@string/hint_team_description"
+        app:layout_constraintBottom_toTopOf="@+id/btn_create_team"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_team_name">
@@ -62,7 +64,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_team_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +72,7 @@
         android:id="@+id/btn_create_team"
         style="@style/Button.Primary"
         android:layout_marginBottom="80dp"
-        android:text="Crear equipo"
+        android:text="@string/btn_create_team"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/til_team_description"
         app:layout_constraintStart_toStartOf="@+id/til_team_description" />

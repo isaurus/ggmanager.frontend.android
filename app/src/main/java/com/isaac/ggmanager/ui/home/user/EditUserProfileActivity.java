@@ -2,15 +2,23 @@ package com.isaac.ggmanager.ui.home.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.CountryProviderUtils;
 import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
@@ -53,9 +61,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        binding.btnPickAvatar.setOnClickListener(v -> {
-            launchAvatarPickDialog();
-        });
+        binding.imgProfilePic.setOnClickListener(v -> launchAvatarPickDialog());
 
         binding.btnSaveProfile.setOnClickListener(v -> {
             String avatar = editUserProfileViewModel.getSelectedAvatar();
@@ -133,20 +139,55 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
-        String[] avatarNames = new String[avatars.length];
 
+        // Crear un array con los recursos de imagen de los avatares
+        Integer[] avatarImages = new Integer[avatars.length];
         for (int i = 0; i < avatars.length; i++) {
-            avatarNames[i] = avatars[i].name();
+            avatarImages[i] = avatars[i].getDrawableResId();
         }
 
-        new AlertDialog.Builder(this)
-                .setTitle("Selecciona avatar")
-                .setItems(avatarNames, (dialog, which) -> {
-                    Avatar selected = avatars[which];
-                    editUserProfileViewModel.setSelectedAvatar(selected.getKey());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                    binding.imgProfilePic.setImageResource(selected.getDrawableResId());
-                })
-                .show();
+        // Crear un adaptador personalizado para mostrar las imágenes
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.avatar_grid_item, avatarImages) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(EditUserProfileActivity.this)
+                            .inflate(R.layout.avatar_grid_item, parent, false);
+                }
+
+                ImageView imageView = convertView.findViewById(R.id.avatar_image);
+                imageView.setImageResource(avatarImages[position]);
+
+                GradientDrawable border = new GradientDrawable();
+                border.setShape(GradientDrawable.RECTANGLE);
+                border.setStroke(1, Color.GRAY); // 4px de ancho, color rojo
+                border.setCornerRadius(16f); // Bordes redondeados 16px
+
+                imageView.setBackground(border);
+                imageView.setPadding(4, 4, 4, 4); // Espacio interno
+
+                return convertView;
+            }
+        };
+
+        // Crear un GridView para mostrar los avatares en una cuadrícula
+        GridView gridView = new GridView(this);
+        gridView.setNumColumns(3); // Número de columnas
+        gridView.setAdapter(adapter);
+
+        builder.setView(gridView);
+
+        final AlertDialog dialog = builder.create();
+
+        gridView.setOnItemClickListener((parent, view, position, id) -> {
+            Avatar selected = avatars[position];
+            editUserProfileViewModel.setSelectedAvatar(selected.getKey());
+            binding.imgProfilePic.setImageResource(selected.getDrawableResId());
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

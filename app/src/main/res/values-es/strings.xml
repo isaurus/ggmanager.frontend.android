@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_login_subtitle">Gestión de equipos de esports</string>
+    <string name="btn_google_sign_in">Iniciar sesión con Google</string>
+    <string name="tv_title_edit_profile">¡Edita tu perfil!</string>
+    <string name="tv_subtitle_edit_profile">¡Construye tu perfil y disfruta!</string>
+    <string name="et_user_name">Nombre</string>
+    <string name="et_user_birthdate">Fecha de nacimiento</string>
+    <string name="et_user_country">País</string>
+    <string name="btn_save_profile">Guardar Perfil</string>
+    <string name="item_teams">Equipos</string>
+    <string name="item_achievements">Logros</string>
+    <string name="tv_profile_user_name">Nombre</string>
+    <string name="tv_profile_birthdate">Fecha de nacimiento</string>
+    <string name="tv_profile_user_country">País</string>
+    <string name="hint_profile_setup_user_name">Establecer nombre de usuario</string>
+    <string name="hint_profile_user_birthdate">Establecer fecha de nacimiento</string>
+    <string name="hint_profile_user_country">Establecer país</string>
+    <string name="btn_edit_profile">Editar Perfil</string>
+    <string name="tv_dialog_insert_email">Inserta el correo de usuario</string>
+    <string name="btn_dialog_cancel">Cancelar</string>
+    <string name="btn_dialog_send">Enviar</string>
+    <string name="tv_title_create_team">Crea tu equipo</string>
+    <string name="tv_subtitle_create_team">¡Crea tu equipo y comienza a añadir miembros!</string>
+    <string name="hint_team_name">Nombre del equipo</string>
+    <string name="hint_team_description">Descripción</string>
+    <string name="btn_create_team">Crear Equipo</string>
+    <string name="tv_title_create_team_init">Crea un nuevo equipo</string>
+    <string name="tv_subtitle_create_team_init_second">Los Equipos son miembros agrupados y gestionados por un administrador, es decir, el creador del equipo.</string>
+    <string name="tv_title_create_team_info_init_second">Empieza tu aventura</string>
+    <string name="tv_info_create_tasks">Crear tareas</string>
+    <string name="tv_info_manage_members">Gestionar miembros</string>
+    <string name="tv_info_group_people">Agrupar personas en un solo lugar</string>
+    <string name="tv_title_create_team_info_init">¡Agrupémonos!</string>
+    <string name="tv_subtitle_create_team_info_init">Para usar las funciones de Equipos necesitas unirte a uno o crear uno propio.</string>
+    <string name="btn_join_team">Unirse a equipo</string>
+    <string name="tv_item_task_assigned_to">Asignado a:</string>
+    <string name="tv_info_subtitle_about">Con un Equipo podrás:</string>
+    <string name="tv_unlock_feature">¡Desbloquea esta funcionalidad con el pase Premium!</string>
+</resources>

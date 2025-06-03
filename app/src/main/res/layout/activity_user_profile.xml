@@ -41,7 +41,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="16dp"
-        android:text="Nombre"
+        android:text="@string/tv_profile_user_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_profile_pic" />
@@ -52,8 +52,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Establecer nombre de usuario"
-        android:text="Nombre de usuario"
         app:layout_constraintEnd_toEndOf="@+id/tv_user_name_title"
         app:layout_constraintStart_toStartOf="@+id/tv_user_name_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name_title" />
@@ -64,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Email"
+        android:text="@string/tv_profile_user_email"
         app:layout_constraintEnd_toEndOf="@+id/tv_user_name"
         app:layout_constraintStart_toStartOf="@+id/tv_user_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
@@ -75,7 +73,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="isaacmartin.pro@gmail.com"
         app:layout_constraintEnd_toEndOf="@+id/tv_email_title"
         app:layout_constraintStart_toStartOf="@+id/tv_email_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_email_title" />
@@ -86,7 +83,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Fecha de nacimiento"
+        android:text="@string/tv_profile_birthdate"
         app:layout_constraintEnd_toEndOf="@+id/tv_email"
         app:layout_constraintStart_toStartOf="@+id/tv_email"
         app:layout_constraintTop_toBottomOf="@+id/tv_email" />
@@ -97,7 +94,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="28 de Febrero de 1995"
         app:layout_constraintEnd_toEndOf="@+id/tv_user_birthdate_title"
         app:layout_constraintStart_toStartOf="@+id/tv_user_birthdate_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_birthdate_title" />
@@ -108,7 +104,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="País"
+        android:text="@string/tv_profile_user_country"
         app:layout_constraintEnd_toEndOf="@+id/tv_user_birthdate"
         app:layout_constraintStart_toStartOf="@+id/tv_user_birthdate"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_birthdate" />
@@ -119,7 +115,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="España"
         app:layout_constraintEnd_toEndOf="@+id/tv_country_title"
         app:layout_constraintStart_toStartOf="@+id/tv_country_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_country_title" />
@@ -128,7 +123,7 @@
         android:id="@+id/btn_edit_profile"
         style="@style/Button.Primary"
         android:layout_marginBottom="50dp"
-        android:text="Editar Perfil"
+        android:text="@string/btn_edit_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_country"
         app:layout_constraintStart_toStartOf="@+id/tv_country" />
