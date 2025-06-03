@@ -2,7 +2,7 @@ package com.isaac.ggmanager.domain.model;
 
 import java.util.Date;
 
-public class TeamTaskModel {
+public class TaskModel {
     private String id;
     private String taskTitle;
     private String taskDescription;
@@ -13,9 +13,9 @@ public class TeamTaskModel {
     private String teamId;
     private String memberId;
 
-    public TeamTaskModel(){}
+    public TaskModel(){}
 
-    public TeamTaskModel(String id, String taskTitle, String taskDescription, Date taskDeadLine, String priority, boolean isComplete, String teamId, String memberId) {
+    public TaskModel(String id, String taskTitle, String taskDescription, Date taskDeadLine, String priority, boolean isComplete, String teamId, String memberId) {
         this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;

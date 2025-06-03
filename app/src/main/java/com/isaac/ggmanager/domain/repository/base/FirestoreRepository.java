@@ -52,5 +52,5 @@ public interface FirestoreRepository<T> {
      * @param id ID del documento a eliminar
      * @return LiveData con Resource que indica éxito o error
      */
-    LiveData<Resource<Boolean>> delete(String id);
+    LiveData<Resource<Boolean>> deleteById(String id);
 }

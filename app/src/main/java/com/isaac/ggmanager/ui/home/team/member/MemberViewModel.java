@@ -29,6 +29,8 @@ public class MemberViewModel extends ViewModel {
 
     private final MediatorLiveData<MemberViewState> memberViewState = new MediatorLiveData<>();
 
+    private String teamId;
+
 
     @Inject
     public MemberViewModel(GetCurrentUserUseCase getCurrentUserUseCase,
@@ -52,7 +54,7 @@ public class MemberViewModel extends ViewModel {
 
             switch (userModelResource.getStatus()){
                 case SUCCESS:
-                    String teamId = userModelResource.getData().getTeamId();
+                    teamId = userModelResource.getData().getTeamId();
                     addUserToTeam(teamId, email);
 
                     memberViewState.removeSource(getCurrentUserResult);
@@ -116,36 +118,19 @@ public class MemberViewModel extends ViewModel {
     }
 
     public void loadMembersOnStart(){
-        LiveData<Resource<UserModel>> getCurrentUserResult = getCurrentUserUseCase.execute();
+        LiveData<Resource<List<UserModel>>> getMembersResult = getUsersByTeamUseCase.execute(teamId);
         memberViewState.setValue(MemberViewState.loading());
 
-        memberViewState.addSource(getCurrentUserResult, userModelResource -> {
-            if (userModelResource == null) return;
-
-            switch (userModelResource.getStatus()){
+        memberViewState.addSource(getMembersResult, listResource -> {
+            if (listResource == null) return;
+            switch (listResource.getStatus()){
                 case SUCCESS:
-                    String teamId = userModelResource.getData().getTeamId();
-                    LiveData<Resource<List<UserModel>>> getMembersResult = getUsersByTeamUseCase.execute(teamId);
-                    memberViewState.removeSource(getCurrentUserResult);
-
-                    memberViewState.addSource(getMembersResult, listResource -> {
-                        if (listResource == null) return;
-                        switch (listResource.getStatus()){
-                            case SUCCESS:
-                                memberViewState.setValue(MemberViewState.success(listResource.getData()));
-                                memberViewState.removeSource(getMembersResult);
-                                break;
-                            case ERROR:
-                                memberViewState.setValue(MemberViewState.error(listResource.getMessage()));
-                        }
-                    });
-                    memberViewState.removeSource(getCurrentUserResult);
-                    break;
-                case LOADING:
-                    memberViewState.setValue(MemberViewState.loading());
+                    memberViewState.setValue(MemberViewState.success(listResource.getData()));
+                    memberViewState.removeSource(getMembersResult);
                     break;
                 case ERROR:
-                    memberViewState.setValue(MemberViewState.error(userModelResource.getMessage()));
+                    memberViewState.setValue(MemberViewState.error(listResource.getMessage()));
+                    memberViewState.removeSource(getMembersResult);
                     break;
             }
         });

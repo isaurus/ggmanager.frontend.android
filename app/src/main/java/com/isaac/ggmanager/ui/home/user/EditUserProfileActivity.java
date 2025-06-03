@@ -140,7 +140,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
 
-        // Crear un array con los recursos de imagen de los avatares
         Integer[] avatarImages = new Integer[avatars.length];
         for (int i = 0; i < avatars.length; i++) {
             avatarImages[i] = avatars[i].getDrawableResId();
@@ -148,7 +147,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        // Crear un adaptador personalizado para mostrar las imágenes
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.avatar_grid_item, avatarImages) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -160,19 +158,12 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 ImageView imageView = convertView.findViewById(R.id.avatar_image);
                 imageView.setImageResource(avatarImages[position]);
 
-                GradientDrawable border = new GradientDrawable();
-                border.setShape(GradientDrawable.RECTANGLE);
-                border.setStroke(1, Color.GRAY); // 4px de ancho, color rojo
-                border.setCornerRadius(16f); // Bordes redondeados 16px
-
-                imageView.setBackground(border);
-                imageView.setPadding(4, 4, 4, 4); // Espacio interno
+                imageView.setPadding(3, 3, 3, 3);
 
                 return convertView;
             }
         };
 
-        // Crear un GridView para mostrar los avatares en una cuadrícula
         GridView gridView = new GridView(this);
         gridView.setNumColumns(3); // Número de columnas
         gridView.setAdapter(adapter);

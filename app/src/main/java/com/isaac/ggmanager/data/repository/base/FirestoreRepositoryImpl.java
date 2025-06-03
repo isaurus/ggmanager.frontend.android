@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.data.repository;
+package com.isaac.ggmanager.data.repository.base;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,8 +10,6 @@ import com.isaac.ggmanager.domain.repository.base.FirestoreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<T> {
 
@@ -99,7 +97,7 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
     }
 
     @Override
-    public LiveData<Resource<Boolean>> delete(String id) {
+    public LiveData<Resource<Boolean>> deleteById(String id) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 

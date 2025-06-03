@@ -1,6 +1,4 @@
-package com.isaac.ggmanager.data.repository;
-
-import android.util.Log;
+package com.isaac.ggmanager.data.repository.user;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.core.Resource;
+import com.isaac.ggmanager.data.repository.base.FirestoreRepositoryImpl;
 import com.isaac.ggmanager.domain.model.UserModel;
 import com.isaac.ggmanager.domain.repository.user.UserRepository;
 

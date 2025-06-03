@@ -17,6 +17,6 @@ public class DeleteTeamUseCase {
     }
 
     public LiveData<Resource<Boolean>> execute(String teamId){
-        return teamRepository.delete(teamId);
+        return teamRepository.deleteById(teamId);
     }
 }

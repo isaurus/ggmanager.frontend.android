@@ -17,6 +17,6 @@ public class DeleteUserUseCase {
     }
 
     public LiveData<Resource<Boolean>> execute(String userId){
-        return userRepository.delete(userId);
+        return userRepository.deleteById(userId);
     }
 }
