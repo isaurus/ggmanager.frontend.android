@@ -1,6 +1,9 @@
 package com.isaac.ggmanager.data.repository.task;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,6 +37,28 @@ public class TaskRepositoryImpl extends FirestoreRepositoryImpl<TaskModel> imple
 
     @Override
     public LiveData<Resource<List<TaskModel>>> getUserTasks(List<String> tasksListId) {
-        return null;
+        MutableLiveData<Resource<List<TaskModel>>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        if (tasksListId == null || tasksListId.isEmpty()) {
+            result.setValue(Resource.success(List.of())); // o Collections.emptyList()
+            return result;
+        }
+
+        getCollection()
+                .whereIn("id", tasksListId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<TaskModel> tasks = querySnapshot.toObjects(TaskModel.class);
+                    result.setValue(Resource.success(tasks));
+                    Log.i("FIRESTORE", "Tareas cargadas con éxito");
+                })
+                .addOnFailureListener(e -> {
+                    result.setValue(Resource.error(e.getMessage()));
+                    Log.e("FIRESTORE", "Error al obtener tareas por ID: " + e.getMessage());
+                });
+
+        return result;
     }
+
 }

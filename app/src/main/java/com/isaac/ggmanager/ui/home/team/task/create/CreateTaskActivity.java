@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.databinding.ActivityCreateTaskBinding;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -126,18 +127,22 @@ public class CreateTaskActivity extends AppCompatActivity {
             return;
         }
 
+        DocumentReference taskRef = db.collection("tasks").document(); // Crea ID pero no guarda aún
+        String taskId = taskRef.getId(); // Genera ID manualmente
+
         Map<String, Object> task = new HashMap<>();
-        task.put("title", title);
-        task.put("description", description);
-        task.put("deadline", deadline);
+        task.put("id", taskId);
+        task.put("taskTitle", title);
+        task.put("taskDescription", description);
+        task.put("taskDeadLine", formatDate(deadline));
         task.put("priority", priority);
         task.put("assignedTo", selectedMemberId);
         task.put("createdBy", auth.getUid());
         task.put("teamId", teamId);
         task.put("createdAt", new Date());
+        task.put("isCompleted", false);
 
-        db.collection("tasks").add(task).addOnSuccessListener(taskRef -> {
-            String taskId = taskRef.getId();
+        taskRef.set(task).addOnSuccessListener(unused -> {
             updateTeamWithTaskId(taskId);
             updateUserWithTaskId(taskId);
         }).addOnFailureListener(e -> {
@@ -159,5 +164,15 @@ public class CreateTaskActivity extends AppCompatActivity {
                     finish();
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Error al asignar tarea", Toast.LENGTH_SHORT).show());
+    }
+
+    private Date formatDate(String birthdate){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try{
+            return simpleDateFormat.parse(birthdate);
+        } catch (ParseException e){
+            e.getMessage();
+        }
+        return null;
     }
 }

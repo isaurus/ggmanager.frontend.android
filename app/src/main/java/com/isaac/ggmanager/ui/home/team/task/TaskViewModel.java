@@ -1,5 +1,7 @@
 package com.isaac.ggmanager.ui.home.team.task;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -68,6 +70,7 @@ public class TaskViewModel extends ViewModel {
             switch (taskModelResource.getStatus()){
                 case SUCCESS:
                     List<TaskModel> userTasksList = taskModelResource.getData();
+                    Log.i("IYO", "La lista en TaskViewModel: " + userTasksList.toString());
                     taskViewState.setValue(TaskViewState.success(userTasksList));
                     taskViewState.removeSource(getTasksAssignedToUserResult);
                     break;
@@ -99,7 +102,22 @@ public class TaskViewModel extends ViewModel {
     }
 
     public void loadTasksOnStart(){
+        LiveData<Resource<List<TaskModel>>> getTasksAssignedToUserResult = getUserTasksUseCase.execute(tasksAssigned);
+        taskViewState.setValue(TaskViewState.loading());
 
+        taskViewState.addSource(getTasksAssignedToUserResult, listResource -> {
+            if (listResource == null) return;
+            switch (listResource.getStatus()){
+                case SUCCESS:
+                    taskViewState.setValue(TaskViewState.success(listResource.getData()));
+                    taskViewState.removeSource(getTasksAssignedToUserResult);
+                    break;
+                case ERROR:
+                    taskViewState.setValue(TaskViewState.error(listResource.getMessage()));
+                    taskViewState.removeSource(getTasksAssignedToUserResult);
+                    break;
+            }
+        });
     }
 
 }

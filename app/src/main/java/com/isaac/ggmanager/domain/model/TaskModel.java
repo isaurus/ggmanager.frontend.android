@@ -8,20 +8,20 @@ public class TaskModel {
     private String taskDescription;
     private Date taskDeadLine;
     private String priority;
-    private boolean isComplete;
+    private boolean isCompleted;
 
     private String teamId;
     private String memberId;
 
     public TaskModel(){}
 
-    public TaskModel(String id, String taskTitle, String taskDescription, Date taskDeadLine, String priority, boolean isComplete, String teamId, String memberId) {
+    public TaskModel(String id, String taskTitle, String taskDescription, Date taskDeadLine, String priority, boolean isCompleted, String teamId, String memberId) {
         this.id = id;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.taskDeadLine = taskDeadLine;
         this.priority = priority;
-        this.isComplete = isComplete;
+        this.isCompleted = isCompleted;
         this.teamId = teamId;
         this.memberId = memberId;
     }
@@ -66,12 +66,12 @@ public class TaskModel {
         this.priority = priority;
     }
 
-    public boolean isComplete() {
-        return isComplete;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 
     public String getTeamId() {
