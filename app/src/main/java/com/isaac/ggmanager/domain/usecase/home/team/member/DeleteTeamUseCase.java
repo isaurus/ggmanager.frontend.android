@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.domain.usecase.home.team;
+package com.isaac.ggmanager.domain.usecase.home.team.member;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,6 +17,6 @@ public class DeleteTeamUseCase {
     }
 
     public LiveData<Resource<Boolean>> execute(String teamId){
-        return teamRepository.delete(teamId);
+        return teamRepository.deleteById(teamId);
     }
 }

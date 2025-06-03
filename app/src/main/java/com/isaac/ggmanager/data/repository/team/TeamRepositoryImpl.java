@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.data.repository;
+package com.isaac.ggmanager.data.repository.team;
 
 import android.util.Log;
 
@@ -10,11 +10,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.isaac.ggmanager.core.Resource;
+import com.isaac.ggmanager.data.repository.base.FirestoreRepositoryImpl;
 import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TeamRepositoryImpl extends FirestoreRepositoryImpl<TeamModel> implements TeamRepository {
 

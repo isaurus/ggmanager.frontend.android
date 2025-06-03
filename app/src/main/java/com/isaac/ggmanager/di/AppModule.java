@@ -1,26 +1,27 @@
 package com.isaac.ggmanager.di;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.isaac.ggmanager.data.repository.TeamRepositoryImpl;
-import com.isaac.ggmanager.data.repository.UserRepositoryImpl;
+import com.isaac.ggmanager.data.repository.task.TaskRepositoryImpl;
+import com.isaac.ggmanager.data.repository.team.TeamRepositoryImpl;
+import com.isaac.ggmanager.data.repository.user.UserRepositoryImpl;
 import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
+import com.isaac.ggmanager.domain.repository.task.TaskRepository;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
 import com.isaac.ggmanager.domain.repository.user.UserRepository;
 import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
-import com.isaac.ggmanager.data.repository.FirebaseAuthRepositoryImpl;
+import com.isaac.ggmanager.data.repository.auth.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.AddUserToTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.DeleteTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.GetAllTeamsUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.GetTeamByIdUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.RemoveUserFromTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.UpdateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.AddUserToTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.CreateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.DeleteTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.GetAllTeamsUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.GetTeamByIdUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.RemoveUserFromTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.member.UpdateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.task.DeleteTaskByIdUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.task.GetUserTasksUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.DeleteUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetAllUsersUseCase;
@@ -28,7 +29,6 @@ import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByEmailUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUserByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetUsersByTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.user.IsUserHasTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateAdminTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
@@ -39,7 +39,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 
 /**
@@ -135,7 +134,14 @@ public class AppModule {
         return new TeamRepositoryImpl(firestore);
     }
 
-    // CASOS DE USO - TEAM
+    @Provides
+    @Singleton
+    public static TaskRepository provideTaskRepository(FirebaseFirestore firestore){
+        return new TaskRepositoryImpl(firestore);
+    }
+
+    //--------------------------------------//
+    //-------CASOS DE USO - TEAM------------//
 
     @Provides
     @Singleton
@@ -181,7 +187,8 @@ public class AppModule {
         return new UpdateTeamUseCase(teamRepository);
     }
 
-    // CASOS DE USO - USER
+    //------------------------------------------//
+    //-----------CASOS DE USO - USER------------//
 
     @Provides
     @Singleton
@@ -227,12 +234,6 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static IsUserHasTeamUseCase provideIsUserHasTeamUseCase(UserRepository userRepository) {
-        return new IsUserHasTeamUseCase(userRepository);
-    }
-
-    @Provides
-    @Singleton
     public static UpdateUserTeamUseCase provideUpdateUserTeamUseCase(UserRepository userRepository) {
         return new UpdateUserTeamUseCase(userRepository);
     }
@@ -248,6 +249,21 @@ public class AppModule {
     @Singleton
     public static UpdateUserUseCase provideUpdateUserUseCase(UserRepository userRepository) {
         return new UpdateUserUseCase(userRepository);
+    }
+
+    //--------------------------------------//
+    //-------CASOS DE USO - TASK------------//
+
+    @Provides
+    @Singleton
+    public static DeleteTaskByIdUseCase provideDeleteTaskByIdUseCase(TaskRepository taskRepository){
+        return new DeleteTaskByIdUseCase(taskRepository);
+    }
+
+    @Provides
+    @Singleton
+    public static GetUserTasksUseCase provideGetUserTasksUseCase(TaskRepository taskRepository){
+        return new GetUserTasksUseCase(taskRepository);
     }
 
 }

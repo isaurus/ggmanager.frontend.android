@@ -9,10 +9,11 @@
 
     <TextView
         android:id="@+id/tv_create_team_title"
+        style="@style/Text.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="¡Agrupémonos!"
+        android:text="@string/tv_title_create_team_info_init"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +21,11 @@
 
     <TextView
         android:id="@+id/tv_create_team_subtitle"
+        style="@style/Text.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Para usar las funciones de Equipos necesitas unirte a uno o crear uno propio."
+        android:text="@string/tv_subtitle_create_team_info_init"
         app:layout_constraintEnd_toEndOf="@+id/tv_create_team_title"
         app:layout_constraintStart_toStartOf="@+id/tv_create_team_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_create_team_title" />
@@ -31,7 +33,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_team"
         style="@style/Button.Primary"
-        android:text="Crear equipo"
+        android:text="@string/btn_create_team"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_join_team"
         style="@style/Button.Secondary"
-        android:text="Unirse a equipo"
+        android:text="@string/btn_join_team"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

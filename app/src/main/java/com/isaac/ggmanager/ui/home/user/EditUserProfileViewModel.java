@@ -30,6 +30,8 @@ public class EditUserProfileViewModel extends ViewModel {
 
     public final MediatorLiveData<EditUserProfileViewState> editUserProfileViewState = new MediatorLiveData<>();
 
+    private String selectedAvatar;
+
     @Inject
     public EditUserProfileViewModel(CreateUserUseCase createUserUseCase,
                                     UpdateUserUseCase updateUserUseCase,
@@ -108,7 +110,7 @@ public class EditUserProfileViewModel extends ViewModel {
     }
 
     private UserModel createUserModel(String avatar, String name, String birthdate, String country){
-        return new UserModel(avatar, name, formatDate(birthdate), country, null);
+        return new UserModel(avatar, name, formatDate(birthdate), country, null, null, null);
     }
 
     private Date formatDate(String birthdate){
@@ -119,5 +121,13 @@ public class EditUserProfileViewModel extends ViewModel {
             e.getMessage();
         }
         return null;
+    }
+
+    public void setSelectedAvatar(String avatarKey) {
+        this.selectedAvatar = avatarKey;
+    }
+
+    public String getSelectedAvatar() {
+        return selectedAvatar;
     }
 }

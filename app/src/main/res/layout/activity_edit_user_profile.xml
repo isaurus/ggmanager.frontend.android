@@ -22,15 +22,41 @@
             app:tint="@color/icon_color" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_title_edit_profile"
+        style="@style/Text.Headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/tv_title_edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
+
+    <TextView
+        android:id="@+id/tv_subtitle_edit_profile"
+        style="@style/Text.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/tv_subtitle_edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_edit_profile" />
+
     <ImageView
         android:id="@+id/img_profile_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_avatar_avocado"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle_edit_profile" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
@@ -38,20 +64,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Nombre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/img_profile_pic"
+        android:hint="@string/et_user_name"
+        app:layout_constraintEnd_toEndOf="@+id/tv_subtitle_edit_profile"
+        app:layout_constraintStart_toStartOf="@+id/tv_subtitle_edit_profile"
         app:layout_constraintTop_toBottomOf="@+id/img_profile_pic">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
             android:inputType="textPersonName"
             android:textColor="@color/textPrimary"
-            android:textSize="16sp"
-            android:fontFamily="@font/roboto_regular" />
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Fecha de nacimiento"
+        android:hint="@string/et_user_birthdate"
         app:layout_constraintEnd_toEndOf="@+id/til_name"
         app:layout_constraintStart_toStartOf="@+id/til_name"
         app:layout_constraintTop_toBottomOf="@+id/til_name"
@@ -86,7 +111,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="País"
+        android:hint="@string/et_user_country"
         app:layout_constraintEnd_toEndOf="@+id/til_birthdate"
         app:layout_constraintStart_toStartOf="@+id/til_birthdate"
         app:layout_constraintTop_toBottomOf="@+id/til_birthdate"
@@ -111,19 +136,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="80dp"
-        android:text="Guardar Perfil"
+        android:text="@string/btn_save_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_pick_avatar"
-        style="@style/Button.Primary"
-        android:layout_marginStart="20dp"
-        android:text="Elegir Avatar"
-        app:layout_constraintBottom_toBottomOf="@+id/img_profile_pic"
-        app:layout_constraintEnd_toEndOf="@+id/til_name"
-        app:layout_constraintStart_toEndOf="@+id/img_profile_pic"
-        app:layout_constraintTop_toTopOf="@+id/img_profile_pic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

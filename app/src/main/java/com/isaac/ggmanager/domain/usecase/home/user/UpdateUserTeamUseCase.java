@@ -31,7 +31,7 @@ public class UpdateUserTeamUseCase {
                     UserModel user = userModelResource.getData();
                     if (user != null){
                         String userId = user.getFirebaseUid();
-                        userRepository.updateUserTeam(userId, teamId);
+                        userRepository.updateUserTeam(userId, teamId, "Member");
                         result.setValue(Resource.success(true));
                     } else {
                         result.setValue(Resource.error(userModelResource.getMessage()));

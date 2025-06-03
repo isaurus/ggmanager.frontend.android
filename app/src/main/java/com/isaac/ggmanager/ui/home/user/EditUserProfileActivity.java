@@ -2,20 +2,29 @@ package com.isaac.ggmanager.ui.home.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.CountryProviderUtils;
 import com.isaac.ggmanager.core.utils.DatePickerUtils;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.ActivityEditUserProfileBinding;
+import com.isaac.ggmanager.domain.model.Avatar;
 import com.isaac.ggmanager.ui.home.HomeActivity;
 
 import java.util.Calendar;
@@ -52,12 +61,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        binding.btnPickAvatar.setOnClickListener(v -> {
-            launchAvatarPickDialog();
-        });
+        binding.imgProfilePic.setOnClickListener(v -> launchAvatarPickDialog());
 
         binding.btnSaveProfile.setOnClickListener(v -> {
-            String avatar = avatarSelected;
+            String avatar = editUserProfileViewModel.getSelectedAvatar();
             String name = binding.etName.getText().toString().trim();
             String birthdate = binding.etBirthdate.getText().toString().trim();
             String country = binding.atvCountry.getText().toString().trim();
@@ -130,22 +137,48 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"
 
-    // TODO ECHAR UN OJO A ESTE MÉTODO PARA CAMBIAR EL AVATAR
-    private void launchAvatarPickDialog(){
-        String[] avatarNames = {"ic_avatar_avocado", "ic_avatar_batman", "ic_avatar_cactus", "ic_avatar_sheep", "ic_avatar_sloth", "ic_avatar_zombie"};
+    private void launchAvatarPickDialog() {
+        Avatar[] avatars = Avatar.values();
 
-        new AlertDialog.Builder(this)
-                .setTitle("Selecciona avatar")
-                .setItems(avatarNames, (dialog, which) -> {
-                    String selectedAvatar = avatarNames[which];
+        Integer[] avatarImages = new Integer[avatars.length];
+        for (int i = 0; i < avatars.length; i++) {
+            avatarImages[i] = avatars[i].getDrawableResId();
+        }
 
-                    avatarSelected = selectedAvatar;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                    int resId = getResources().getIdentifier(selectedAvatar,"drawable", getPackageName());
-                    binding.imgProfilePic.setImageResource(resId);
-                })
-                .show();
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.avatar_grid_item, avatarImages) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(EditUserProfileActivity.this)
+                            .inflate(R.layout.avatar_grid_item, parent, false);
+                }
+
+                ImageView imageView = convertView.findViewById(R.id.avatar_image);
+                imageView.setImageResource(avatarImages[position]);
+
+                imageView.setPadding(3, 3, 3, 3);
+
+                return convertView;
+            }
+        };
+
+        GridView gridView = new GridView(this);
+        gridView.setNumColumns(3); // Número de columnas
+        gridView.setAdapter(adapter);
+
+        builder.setView(gridView);
+
+        final AlertDialog dialog = builder.create();
+
+        gridView.setOnItemClickListener((parent, view, position, id) -> {
+            Avatar selected = avatars[position];
+            editUserProfileViewModel.setSelectedAvatar(selected.getKey());
+            binding.imgProfilePic.setImageResource(selected.getDrawableResId());
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
-
-    public String avatarSelected;
 }

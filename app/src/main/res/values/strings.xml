@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GG Manager</string>
+    <string name="app_name" translatable="false">GG Manager</string>
 
     <string-array name="countries_array">
         <item>Alemania</item>
@@ -50,8 +50,47 @@
         <item>Turquía</item>
         <item>Ucrania</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_login_subtitle">Esports team management</string>
+    <string name="btn_google_sign_in">Login with Google</string>
+    <string name="tv_title_edit_profile">Build your profile!</string>
+    <string name="tv_subtitle_edit_profile">Build your profile and enjoy!</string>
+    <string name="et_user_name">Name</string>
+    <string name="et_user_birthdate">Birthdate</string>
+    <string name="et_user_country">Country</string>
+    <string name="btn_save_profile">Save Profile</string>
+    <string name="item_soloq" translatable="false">SoloQ</string>
+    <string name="item_teams">Teams</string>
+    <string name="item_achievements">Achievements</string>
+    <string name="tv_profile_user_name">Name</string>
+    <string name="tv_profile_user_email" translatable="false">Email</string>
+    <string name="tv_profile_birthdate">Birthdate</string>
+    <string name="hint_profile_setup_user_name">Set up your name</string>
+    <string name="hint_profile_user_email" translatable="false">john.doe@example.es</string>
+    <string name="hint_profile_user_birthdate">Set up your birthdate</string>
+    <string name="tv_profile_user_country">Country</string>
+    <string name="hint_profile_user_country">Set up your country</string>
+    <string name="btn_edit_profile">Edit Profile</string>
+    <string name="tv_dialog_insert_email">Insert user email</string>
+    <string name="hint_dialog_email" translatable="false">john.doe@example.es</string>
+    <string name="btn_dialog_cancel">Cancel</string>
+    <string name="btn_dialog_send">Send</string>
+    <string name="tv_title_create_team">Create your team</string>
+    <string name="tv_subtitle_create_team">Create your team and start adding members!</string>
+    <string name="hint_team_name">Team\'s name</string>
+    <string name="hint_team_description">Description</string>
+    <string name="btn_create_team">Create Team</string>
+    <string name="tv_title_create_team_init">Create a new team</string>
+    <string name="tv_subtitle_create_team_init_second">Teams are a group of members managed by an administrator, which is the creator of the team.</string>
+    <string name="tv_title_create_team_info_init_second">Start your adventure</string>
+    <string name="tv_info_create_tasks">Create tasks</string>
+    <string name="tv_info_manage_members">Manage members</string>
+    <string name="tv_info_group_people">Group people in a single place</string>
+    <string name="tv_title_create_team_info_init">Join together!</string>
+    <string name="tv_subtitle_create_team_info_init">In order to use Team\'s functions you need either to join a team or create it yourself</string>
+    <string name="btn_join_team">Join team</string>
+    <string name="tv_item_task_assigned_to">Assigned to:</string>
+    <string name="tv_info_subtitle_about">Wiith a Team you can:</string>
+    <string name="tv_unlock_feature">Unlock this feature with Premium Pass!</string>
 
 
 </resources>

@@ -1,65 +1,93 @@
 package com.isaac.ggmanager.ui.home.team.task;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.isaac.ggmanager.R;
+import com.isaac.ggmanager.core.utils.InsetsUtils;
+import com.isaac.ggmanager.databinding.FragmentTaskBinding;
+import com.isaac.ggmanager.domain.model.TaskModel;
+import com.isaac.ggmanager.ui.home.team.task.create.CreateTaskActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TaskFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import dagger.hilt.android.AndroidEntryPoint;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+@AndroidEntryPoint
+public class TaskFragment extends Fragment{
 
-    public TaskFragment() {
-        // Required empty public constructor
-    }
+    private FragmentTaskBinding binding;
+    private TaskViewModel taskViewModel;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TaskFragment newInstance(String param1, String param2) {
-        TaskFragment fragment = new TaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    private TaskAdapter taskAdapter;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentTaskBinding.inflate(inflater, container, false);
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        InsetsUtils.applySystemWindowInsetsPadding(binding.getRoot());
+        return binding.getRoot();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setUpRecyclerView();
+        setUpListeners();
+        observeViewModel();
+
+        taskViewModel.getCurrentUser();
+    }
+
+    private void setUpListeners() {
+        binding.fabAddTask.setOnClickListener(v -> startActivity(new Intent(getContext(), CreateTaskActivity.class)));
+    }
+
+    private void observeViewModel(){
+        taskViewModel.getTaskViewState().observe(getViewLifecycleOwner(), taskViewState -> {
+
+            switch (taskViewState.getStatus()){
+                case SUCCESS:
+                    updateTasksList(taskViewState.getTaskList());
+                    Log.i("IYO", "Tengo la lista: " + taskViewState.getTaskList().toString());
+                    break;
+                case ERROR:
+                    Toast.makeText(getContext(), taskViewState.getMessage(), Toast.LENGTH_LONG).show();
+                    break;
+                case LOADING:
+                    // ProgressBar
+                    break;
+            }
+        });
+
+    }
+
+    private void updateTasksList(List<TaskModel> tasks){
+        if (tasks != null){
+            taskAdapter.updateData(tasks);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task, container, false);
+
+    private void setUpRecyclerView(){
+        taskAdapter = new TaskAdapter(new ArrayList<>(), (task, isChecked) -> {
+            if (isChecked){
+                taskViewModel.markTaskAsCompleted(task);
+            }
+        });
+        binding.rvTaskList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvTaskList.setAdapter(taskAdapter);
     }
 }

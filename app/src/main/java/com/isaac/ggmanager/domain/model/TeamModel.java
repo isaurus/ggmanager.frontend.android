@@ -7,6 +7,7 @@ public class TeamModel {
     private String teamName;
     private String teamDescription;
     private List<String> members;
+    private List<String> teamTasksId;
 
     public TeamModel(){}
 
@@ -15,6 +16,7 @@ public class TeamModel {
         this.teamName = teamName;
         this.teamDescription = teamDescription;
         this.members = null;
+        this.teamTasksId = null;
     }
 
     public TeamModel(String id, String teamName, String teamDescription, List<String> members) {
@@ -54,5 +56,13 @@ public class TeamModel {
 
     public void setMembers(List<String> members) {
         this.members = members;
+    }
+
+    public List<String> getTeamTasksId() {
+        return teamTasksId;
+    }
+
+    public void setTeamTasksId(List<String> teamTasksId) {
+        this.teamTasksId = teamTasksId;
     }
 }

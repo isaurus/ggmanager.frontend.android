@@ -22,6 +22,6 @@ public class UpdateAdminTeamUseCase {
     public LiveData<Resource<Boolean>> execute(String teamId){
         String userId = authRepository.getAuthenticatedUser().getUid();
 
-        return userRepository.updateUserTeam(userId, teamId);
+        return userRepository.updateUserTeam(userId, teamId, "Owner");
     }
 }

@@ -12,14 +12,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.isaac.ggmanager.R;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.TextWatcherUtils;
 import com.isaac.ggmanager.databinding.DialogEmailInputBinding;
-import com.isaac.ggmanager.databinding.FragmentCreateTeamBinding;
 import com.isaac.ggmanager.databinding.FragmentMemberBinding;
+import com.isaac.ggmanager.domain.model.UserModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -30,8 +31,10 @@ public class MemberFragment extends Fragment {
     private DialogEmailInputBinding bindingDialog;
     private MemberViewModel memberViewModel;
 
+    private MemberAdapter memberAdapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMemberBinding.inflate(inflater, container, false);
 
@@ -45,9 +48,15 @@ public class MemberFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setUpRecyclerView();
         setUpListeners();
         observeViewModel();
+
+        memberViewModel.loadMembersOnStart();
+    }
+
+    private void setUpListeners() {
+        binding.fabAddMember.setOnClickListener(v -> showAlertDialog());
     }
 
     private void observeViewModel() {
@@ -58,28 +67,41 @@ public class MemberFragment extends Fragment {
                     bindingDialog.tilEmail.setError(memberViewState.isEmailValid() ? null : "Email no permitido");
                     break;
                 case IDLE:
-                    bindingDialog.tilEmail.setError(null);
+                    if (bindingDialog != null) {
+                        bindingDialog.tilEmail.setError(null);
+                        bindingDialog.btnSend.setEnabled(true);
+                    }
                     break;
             }
 
             switch (memberViewState.getStatus()){
                 case LOADING:
-                    bindingDialog.btnSend.setEnabled(false);
+                    if (bindingDialog != null) bindingDialog.btnSend.setEnabled(false);
                     break;
                 case SUCCESS:
-                    // COSAS
+                    if (bindingDialog != null) {
+                        bindingDialog.btnSend.setEnabled(true);
+                    }
+                    updateMemberList(memberViewState.getMemberList());
                     break;
                 case ERROR:
+                    if (bindingDialog != null) bindingDialog.btnSend.setEnabled(true);
                     Toast.makeText(getContext(), memberViewState.getMessage(), Toast.LENGTH_LONG).show();
                     break;
             }
         });
     }
 
-    private void setUpListeners() {
-        binding.fabAddMember.setOnClickListener(v -> {
-            showAlertDialog();
-        });
+    private void updateMemberList(List<UserModel> members){
+        if (members != null){
+            memberAdapter.updateData(members);
+        }
+    }
+
+    private void setUpRecyclerView(){
+        memberAdapter = new MemberAdapter(new ArrayList<>());
+        binding.rvMemberList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.rvMemberList.setAdapter(memberAdapter);
     }
 
     private void showAlertDialog() {
