@@ -16,12 +16,4 @@ public class UIUserUtils {
         binding.tvUserBirthdate.setText(DateFormatUtils.dateToString(userModel.getBirthdate()));
         binding.tvCountry.setText(userModel.getCountry());
     }
-
-    public static void fillEditUserProfileUI(com.isaac.ggmanager.databinding.ActivityEditUserProfileBinding binding, UserModel userModel, Context context) {
-        int resId = context.getResources().getIdentifier(userModel.getAvatar(), "drawable", context.getPackageName());
-        binding.imgProfilePic.setImageResource(resId);
-        binding.etName.setText(userModel.getName());
-        binding.etBirthdate.setText(DateFormatUtils.dateToString(userModel.getBirthdate()));
-        binding.atvCountry.setText(userModel.getCountry());
-    }
 }

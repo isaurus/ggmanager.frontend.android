@@ -18,8 +18,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class LaunchViewModel extends ViewModel {
 
-    private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;  // Para lanzar a login o directamente a la app
-    private final GetCurrentUserUseCase getCurrentUserUseCase;  // Para lanzar al Home o al Edit
+    private final CheckAuthenticatedUserUseCase checkAuthenticatedUserUseCase;
+    private final GetCurrentUserUseCase getCurrentUserUseCase;
 
     public final MediatorLiveData<LaunchViewState> launchViewState = new MediatorLiveData<>();
 

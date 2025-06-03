@@ -91,6 +91,10 @@
     <string name="tv_item_task_assigned_to">Assigned to:</string>
     <string name="tv_info_subtitle_about">Wiith a Team you can:</string>
     <string name="tv_unlock_feature">Unlock this feature with Premium Pass!</string>
+    <string name="tv_column_member_role">Role</string>
+    <string name="tv_column_member_list">Member</string>
+    <string name="tv_column_task">Task</string>
+    <string name="tv_column_priority">Priority</string>
 
 
 </resources>
