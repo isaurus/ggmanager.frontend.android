@@ -44,7 +44,6 @@ public class LaunchActivity extends AppCompatActivity {
             finish();
         } else {
             launchViewModel.fetchUserProfile();
-
             launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
                 switch (launchViewState.getStatus()){
                     case SUCCESS:

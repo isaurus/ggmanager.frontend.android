@@ -10,18 +10,13 @@ import javax.inject.Inject;
 
 public class UpdateAdminTeamUseCase {
     private final UserRepository userRepository;
-    private final FirebaseAuthRepository authRepository;
 
     @Inject
-    public UpdateAdminTeamUseCase(UserRepository userRepository,
-                                 FirebaseAuthRepository authRepository){
+    public UpdateAdminTeamUseCase(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.authRepository = authRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(String teamId){
-        String userId = authRepository.getAuthenticatedUser().getUid();
-
+    public LiveData<Resource<Boolean>> execute(String userId, String teamId){
         return userRepository.updateUserTeam(userId, teamId, "Owner");
     }
 }

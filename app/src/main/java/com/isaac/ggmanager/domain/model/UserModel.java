@@ -49,7 +49,9 @@ public class UserModel {
      * @param birthdate
      * @param country
      */
-    public UserModel(String avatar, String name, Date birthdate, String country, String teamId, String teamRole, List<String> teamTasksId) {
+    public UserModel(String firebaseUid, String email, String avatar, String name, Date birthdate, String country, String teamId, String teamRole, List<String> teamTasksId) {
+        this.firebaseUid = firebaseUid;
+        this.email = email;
         this.avatar = avatar;
         this.name = name;
         this.birthdate = birthdate;

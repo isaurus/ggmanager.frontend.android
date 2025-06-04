@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
+import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.UpdateUserUseCase;
@@ -24,6 +25,7 @@ public class EditUserProfileViewModel extends ViewModel {
 
     private static final int MAX_NAME_LENGTH = 20;
 
+    private final GetAuthenticatedUserUseCase getAuthenticatedUserUseCase;
     private final CreateUserUseCase createUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
@@ -33,9 +35,11 @@ public class EditUserProfileViewModel extends ViewModel {
     private String selectedAvatar;
 
     @Inject
-    public EditUserProfileViewModel(CreateUserUseCase createUserUseCase,
+    public EditUserProfileViewModel(GetAuthenticatedUserUseCase getAuthenticatedUserUseCase,
+                                    CreateUserUseCase createUserUseCase,
                                     UpdateUserUseCase updateUserUseCase,
                                     GetCurrentUserUseCase getCurrentUserUseCase){
+        this.getAuthenticatedUserUseCase = getAuthenticatedUserUseCase;
         this.createUserUseCase = createUserUseCase;
         this.updateUserUseCase = updateUserUseCase;
         this.getCurrentUserUseCase = getCurrentUserUseCase;
@@ -43,23 +47,16 @@ public class EditUserProfileViewModel extends ViewModel {
 
     public LiveData<EditUserProfileViewState> getEditUserProfileViewState() { return editUserProfileViewState; }
 
-    public void createUserProfile(String avatar, String name, String birthdate, String country){
-        UserModel user = createUserModel(avatar, name, birthdate, country);
-
-        editUserProfileViewState.setValue(EditUserProfileViewState.loading());
-
+    public void createUserProfile(UserModel user){
         LiveData<Resource<Boolean>> editUserProfileResult = createUserUseCase.execute(user);
+        editUserProfileViewState.setValue(EditUserProfileViewState.loading());
 
         editUserProfileViewState.addSource(editUserProfileResult, resource -> {
             if (resource == null) return;
-
             switch (resource.getStatus()){
                 case SUCCESS:
                     editUserProfileViewState.setValue(EditUserProfileViewState.success());
                     editUserProfileViewState.removeSource(editUserProfileResult);
-                    break;
-                case LOADING:
-                    editUserProfileViewState.setValue(EditUserProfileViewState.loading());
                     break;
                 case ERROR:
                     editUserProfileViewState.setValue(EditUserProfileViewState.error(resource.getMessage()));
@@ -68,7 +65,7 @@ public class EditUserProfileViewModel extends ViewModel {
         });
     }
 
-    public void updateUserProfile(){}   // TODO ¿CÓMO LO GESTIONO?
+    public void updateUserProfile(){}
 
 
     public void validateEditUserForm(String avatar, String name, String birthdate, String country) {
@@ -76,7 +73,7 @@ public class EditUserProfileViewModel extends ViewModel {
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
-        if (!isValidAvatar(avatar)) {   // ESTA CONDICIÓN PROPORCIONA UN AVATAR PREDETERMINADO SI EL USUARIO NO SELECCIONA UNO, EVITANDO EL NULL
+        if (!isValidAvatar(avatar)) {
             avatar = "ic_avatar_avocado";
         }
 
@@ -89,7 +86,10 @@ public class EditUserProfileViewModel extends ViewModel {
 
         if (isNameValid && isBirthdateValid && isCountryValid) {
             editUserProfileViewState.setValue(EditUserProfileViewState.loading());
-            createUserProfile(avatar, name, birthdate, country);
+            String currentUserId = getAuthenticatedUserUseCase.execute().getUid();
+            String currentUserEmail = getAuthenticatedUserUseCase.execute().getEmail();
+            UserModel user = new UserModel(currentUserId, currentUserEmail, avatar, name, formatDate(birthdate), country, null, null, null);
+            createUserProfile(user);
         }
     }
 
@@ -107,10 +107,6 @@ public class EditUserProfileViewModel extends ViewModel {
 
     private boolean isValidBirthdate(String birthdate) {
         return !birthdate.isEmpty();
-    }
-
-    private UserModel createUserModel(String avatar, String name, String birthdate, String country){
-        return new UserModel(avatar, name, formatDate(birthdate), country, null, null, null);
     }
 
     private Date formatDate(String birthdate){

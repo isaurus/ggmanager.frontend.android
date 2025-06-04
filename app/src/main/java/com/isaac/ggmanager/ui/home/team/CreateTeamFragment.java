@@ -73,11 +73,9 @@ public class CreateTeamFragment extends Fragment {
 
             switch (createTeamViewState.getStatus()){
                 case SUCCESS:
-                    // Lanzamos HomeActivity nuevamente, que al observar que el usuario ya tiene equipo, navegará a TeamContainerFragment
                     Intent intent = new Intent(requireContext(), HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    requireActivity().finish(); // opcional pero recomendable para evitar volver a esta pantalla
+                    requireActivity().finish();
                     break;
                 case LOADING:
                     binding.btnCreateTeam.setEnabled(false);

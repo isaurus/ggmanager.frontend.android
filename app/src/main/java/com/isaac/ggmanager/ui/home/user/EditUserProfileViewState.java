@@ -7,19 +7,20 @@ import javax.annotation.Nullable;
 public class EditUserProfileViewState {
 
     public enum ValidationState {
-        IDLE,        // No está validando, estado inicial
+        IDLE,
         VALIDATING
     }
 
-    @Nullable private final Resource<?> resource;
+    private final Resource<?> resource;
     private final ValidationState validationState;
 
+    //private final boolean userHasProfile;
     private final boolean isAvatarValid;
     private final boolean isNameValid;
     private final boolean isBirthdateValid;
     private final boolean isCountryValid;
 
-    public EditUserProfileViewState(@Nullable Resource<?> resource,
+    public EditUserProfileViewState(Resource<?> resource,
                                     ValidationState validationState,
                                     boolean isAvatarValid,
                                     boolean isNameValid,
@@ -33,7 +34,7 @@ public class EditUserProfileViewState {
         this.isCountryValid = isCountryValid;
     }
 
-    public static EditUserProfileViewState success(){   // TODO ¿ME INTERESA RECOGER LOS DATOS PARA IMPRIMIR LOS QUE YA TIENE, NO?
+    public static EditUserProfileViewState success(){
         return new EditUserProfileViewState(
                Resource.success(null),
                 ValidationState.IDLE,

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -80,9 +81,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private void observeViewModel() {
         editUserProfileViewModel.getEditUserProfileViewState().observe(this, editUserProfileViewState ->  {
 
-            switch (editUserProfileViewState.getValidationState()){     // CASOS PARA LA VALIDACIÓN DE INPUTS
+            switch (editUserProfileViewState.getValidationState()){
                 case VALIDATING:
-                    // ¿VALIDACIÓN DE AVATAR?
                     binding.tilName.setError(editUserProfileViewState.isNameValid() ? null : "Nombre no permitido");
                     binding.tilBirthdate.setError(editUserProfileViewState.isBirthdateValid() ? null : "Fecha errónea");
                     binding.tilCountry.setError(editUserProfileViewState.isCountryValid() ? null : "País erróneo");
@@ -93,7 +93,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     binding.tilCountry.setError(null);
                     break;
             }
-            switch (editUserProfileViewState.getStatus()) {     // CASOS PARA EL RESULTADO DE LA OPERACIÓN ASÍNCRONA
+            switch (editUserProfileViewState.getStatus()) {
                 case LOADING:
                     binding.btnSaveProfile.setEnabled(false);
                     break;
@@ -135,8 +135,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
         TextWatcherUtils.enableViewOnTextChange(binding.atvCountry, binding.btnSaveProfile,binding.tilCountry);
     }
 
-    // TODO AÑADIR DIALOG DE "¿SEGUR QUE QUIERES VOLVER ATRÁS? TUS CAMBIOS NO SE APLICARÁN"
-
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
 
@@ -149,7 +147,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.avatar_grid_item, avatarImages) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 if (convertView == null) {
                     convertView = LayoutInflater.from(EditUserProfileActivity.this)
                             .inflate(R.layout.avatar_grid_item, parent, false);
@@ -165,7 +163,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         };
 
         GridView gridView = new GridView(this);
-        gridView.setNumColumns(3); // Número de columnas
+        gridView.setNumColumns(3);
         gridView.setAdapter(adapter);
 
         builder.setView(gridView);

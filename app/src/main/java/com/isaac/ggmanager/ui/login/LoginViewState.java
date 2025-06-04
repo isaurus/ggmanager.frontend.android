@@ -6,11 +6,11 @@ import javax.annotation.Nullable;
 
 public class LoginViewState {
 
-    @Nullable private final Resource<?> resource;
+    private final Resource<?> resource;
     private final boolean userHasProfile;
 
 
-    public LoginViewState(@Nullable Resource<?> resource, boolean userHasProfile) {
+    public LoginViewState(Resource<?> resource, boolean userHasProfile) {
         this.resource = resource;
         this.userHasProfile = userHasProfile;
     }

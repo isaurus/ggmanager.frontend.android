@@ -1,5 +1,7 @@
 package com.isaac.ggmanager.domain.usecase.home.user;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -19,31 +21,7 @@ public class UpdateUserTeamUseCase {
         this.userRepository = userRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(String teamId, String userEmail){
-        MediatorLiveData<Resource<Boolean>> result = new MediatorLiveData<>();
-        result.setValue(Resource.loading());
-
-        LiveData<Resource<UserModel>> userResult = userRepository.getUserByEmail(userEmail);
-        result.addSource(userResult, userModelResource -> {
-            if (userModelResource == null) return;
-            switch (userModelResource.getStatus()){
-                case SUCCESS:
-                    UserModel user = userModelResource.getData();
-                    if (user != null){
-                        String userId = user.getFirebaseUid();
-                        userRepository.updateUserTeam(userId, teamId, "Member");
-                        result.setValue(Resource.success(true));
-                    } else {
-                        result.setValue(Resource.error(userModelResource.getMessage()));
-                    }
-                    result.removeSource(userResult);
-                    break;
-                case ERROR:
-                    result.setValue(Resource.error(userModelResource.getMessage()));
-                    break;
-            }
-        });
-
-        return result;
+    public LiveData<Resource<Boolean>> execute(String userId, String teamId){
+        return userRepository.updateUserTeam(userId, teamId, "Member");
     }
 }
