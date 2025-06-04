@@ -9,9 +9,6 @@ public class TaskViewState {
     private final Resource<?> resource;
     private final List<TaskModel> taskList;
 
-    // private final List<UserModel> memberList;    --> PARA OBTENER LOS DATOS DEL USUARIO ASOCIADOS A LA LISTA
-    // private final boolean isUserOwner;   --> PARA MOSTRAR UNAS VIEWS U OTRAS
-
     public TaskViewState(Resource<?> resource, List<TaskModel> taskList){
         this.resource = resource;
         this.taskList = taskList;

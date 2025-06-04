@@ -13,16 +13,39 @@ import com.isaac.ggmanager.domain.repository.auth.FirebaseAuthRepository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Implementación del repositorio de autenticación usando Firebase Authentication.
+ * <p>
+ * Proporciona métodos para iniciar sesión con Google, obtener el usuario autenticado,
+ * comprobar el estado de autenticación y cerrar sesión.
+ * </p>
+ * Esta clase está anotada con @Singleton para asegurar una única instancia durante el ciclo de vida de la aplicación.
+ */
 @Singleton
 public class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
 
     private final FirebaseAuth firebaseAuth;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param firebaseAuth instancia de FirebaseAuth proporcionada por DI
+     */
     @Inject
     public FirebaseAuthRepositoryImpl(FirebaseAuth firebaseAuth) {
         this.firebaseAuth = firebaseAuth;
     }
 
+    /**
+     * Inicia sesión con Firebase Authentication usando un token de Google.
+     * <p>
+     * Devuelve un LiveData que emite estados de carga, éxito o error
+     * mediante la clase Resource<Boolean>.
+     * </p>
+     *
+     * @param idToken token de autenticación de Google obtenido desde el cliente
+     * @return LiveData<Resource<Boolean>> con el resultado de la operación de login
+     */
     @Override
     public LiveData<Resource<Boolean>> loginWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -38,28 +61,31 @@ public class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
     }
 
     /**
-     * Implementación para obtener el usuario autenticado mapeado a UserModel.
+     * Obtiene el usuario actualmente autenticado en Firebase.
      *
-     * @return El FirebaseUser mapeado a UserModel.
+     * @return instancia de FirebaseUser si hay un usuario autenticado,
+     *         o null si no hay sesión activa
      */
     @Override
     public FirebaseUser getAuthenticatedUser() {
-
         return firebaseAuth.getCurrentUser();
     }
 
     /**
-     * Implementación para comprobar si el usuario ya está autenticado.
+     * Comprueba si existe un usuario autenticado actualmente.
      *
-     * @return true si está autenticado, false en caso contrario.
+     * @return true si hay un usuario autenticado, false en caso contrario
      */
     @Override
-    public boolean isUserAuthenticated(){
+    public boolean isUserAuthenticated() {
         return firebaseAuth.getCurrentUser() != null;
     }
 
+    /**
+     * Cierra la sesión del usuario actual en Firebase Authentication.
+     */
     @Override
-    public void signOut(){
+    public void signOut() {
         firebaseAuth.signOut();
     }
 }
