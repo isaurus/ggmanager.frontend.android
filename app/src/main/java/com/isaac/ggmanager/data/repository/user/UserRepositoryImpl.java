@@ -1,5 +1,7 @@
 package com.isaac.ggmanager.data.repository.user;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -60,13 +62,13 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
     }
 
     @Override
-    public LiveData<Resource<Boolean>> create(UserModel model, String uid) {
+    public LiveData<Resource<Boolean>> create(UserModel user) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
         result.setValue(Resource.loading());
 
         getCollection()
-                .document(uid)
-                .set(model)
+                .document(user.getFirebaseUid())
+                .set(user)
                 .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
                 .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
 
@@ -83,7 +85,6 @@ public class UserRepositoryImpl extends FirestoreRepositoryImpl<UserModel> imple
                 .update(
                         "teamId", teamId,
                         "teamRole", teamRole)
-                .addOnSuccessListener(aVoid -> result.setValue(Resource.success(true)))
                 .addOnFailureListener(e -> result.setValue(Resource.error(e.getMessage())));
 
         return result;

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TaskModel;
 import com.isaac.ggmanager.domain.model.UserModel;
+import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.task.DeleteTaskByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.task.GetUserTasksUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
@@ -22,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class TaskViewModel extends ViewModel {
 
+    private final GetAuthenticatedUserUseCase getAuthenticatedUserUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
     private final DeleteTaskByIdUseCase deleteTaskByIdUseCase;
     private final GetUserTasksUseCase getUserTasksUseCase;
@@ -31,9 +33,11 @@ public class TaskViewModel extends ViewModel {
     private List<String> tasksAssigned;
 
     @Inject
-    public TaskViewModel(GetCurrentUserUseCase getCurrentUserUseCase,
+    public TaskViewModel(GetAuthenticatedUserUseCase getAuthenticatedUserUseCase,
+                         GetCurrentUserUseCase getCurrentUserUseCase,
                          DeleteTaskByIdUseCase deleteTaskByIdUseCase,
                          GetUserTasksUseCase getUserTasksUseCase){
+        this.getAuthenticatedUserUseCase = getAuthenticatedUserUseCase;
         this.getCurrentUserUseCase = getCurrentUserUseCase;
         this.deleteTaskByIdUseCase = deleteTaskByIdUseCase;
         this.getUserTasksUseCase = getUserTasksUseCase;
@@ -42,12 +46,12 @@ public class TaskViewModel extends ViewModel {
     public LiveData<TaskViewState> getTaskViewState() { return taskViewState; }
 
     public void getCurrentUser(){
-        LiveData<Resource<UserModel>> getCurrentUserResult = getCurrentUserUseCase.execute();
+        String currentUserId = getAuthenticatedUserUseCase.execute().getUid();
+        LiveData<Resource<UserModel>> getCurrentUserResult = getCurrentUserUseCase.execute(currentUserId);
         taskViewState.setValue(TaskViewState.loading());
 
         taskViewState.addSource(getCurrentUserResult, userModelResource -> {
             if (userModelResource == null) return;
-
             switch (userModelResource.getStatus()){
                 case SUCCESS:
                     tasksAssigned = userModelResource.getData().getTeamTasksId();
@@ -70,7 +74,6 @@ public class TaskViewModel extends ViewModel {
             switch (taskModelResource.getStatus()){
                 case SUCCESS:
                     List<TaskModel> userTasksList = taskModelResource.getData();
-                    Log.i("IYO", "La lista en TaskViewModel: " + userTasksList.toString());
                     taskViewState.setValue(TaskViewState.success(userTasksList));
                     taskViewState.removeSource(getTasksAssignedToUserResult);
                     break;
@@ -96,25 +99,6 @@ public class TaskViewModel extends ViewModel {
                 case ERROR:
                     taskViewState.setValue(TaskViewState.error(booleanResource.getMessage()));
                     taskViewState.removeSource(deleteTaskResult);
-                    break;
-            }
-        });
-    }
-
-    public void loadTasksOnStart(){
-        LiveData<Resource<List<TaskModel>>> getTasksAssignedToUserResult = getUserTasksUseCase.execute(tasksAssigned);
-        taskViewState.setValue(TaskViewState.loading());
-
-        taskViewState.addSource(getTasksAssignedToUserResult, listResource -> {
-            if (listResource == null) return;
-            switch (listResource.getStatus()){
-                case SUCCESS:
-                    taskViewState.setValue(TaskViewState.success(listResource.getData()));
-                    taskViewState.removeSource(getTasksAssignedToUserResult);
-                    break;
-                case ERROR:
-                    taskViewState.setValue(TaskViewState.error(listResource.getMessage()));
-                    taskViewState.removeSource(getTasksAssignedToUserResult);
                     break;
             }
         });

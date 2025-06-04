@@ -13,13 +13,13 @@ import com.isaac.ggmanager.domain.usecase.auth.CheckAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.data.repository.auth.FirebaseAuthRepositoryImpl;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.AddUserToTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.CreateTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.DeleteTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.GetAllTeamsUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.GetTeamByIdUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.RemoveUserFromTeamUseCase;
-import com.isaac.ggmanager.domain.usecase.home.team.member.UpdateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.AddUserToTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.CreateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.DeleteTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.GetAllTeamsUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.GetTeamByIdUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.RemoveUserFromTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.UpdateTeamUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.task.DeleteTaskByIdUseCase;
 import com.isaac.ggmanager.domain.usecase.home.team.task.GetUserTasksUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.CreateUserUseCase;
@@ -145,16 +145,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static AddUserToTeamUseCase provideAddUserToTeamUseCase(TeamRepository teamRepository, UserRepository userRepository) {
-        return new AddUserToTeamUseCase(teamRepository, userRepository);
+    public static AddUserToTeamUseCase provideAddUserToTeamUseCase(TeamRepository teamRepository) {
+        return new AddUserToTeamUseCase(teamRepository);
     }
 
     @Provides
     @Singleton
-    public static CreateTeamUseCase provideCreateTeamUseCase(TeamRepository teamRepository,
-                                                             UserRepository userRepository,
-                                                             FirebaseAuthRepository authRepository) {
-        return new CreateTeamUseCase(teamRepository, userRepository, authRepository);
+    public static CreateTeamUseCase provideCreateTeamUseCase(TeamRepository teamRepository) {
+        return new CreateTeamUseCase(teamRepository);
     }
 
     @Provides
@@ -192,8 +190,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static CreateUserUseCase provideCreateUserUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository) {
-        return new CreateUserUseCase(userRepository, authRepository);
+    public static CreateUserUseCase provideCreateUserUseCase(UserRepository userRepository) {
+        return new CreateUserUseCase(userRepository);
     }
 
     @Provides
@@ -222,8 +220,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository, FirebaseAuthRepository authRepository){
-        return new GetCurrentUserUseCase(userRepository, authRepository);
+    public static GetCurrentUserUseCase provideGetCurrentUserUseCase(UserRepository userRepository){
+        return new GetCurrentUserUseCase(userRepository);
     }
 
     @Provides
@@ -240,9 +238,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public static UpdateAdminTeamUseCase provideUpdateAdminTeamUseCase(UserRepository userRepository,
-                                                                       FirebaseAuthRepository authRepository){
-        return new UpdateAdminTeamUseCase(userRepository, authRepository);
+    public static UpdateAdminTeamUseCase provideUpdateAdminTeamUseCase(UserRepository userRepository){
+        return new UpdateAdminTeamUseCase(userRepository);
     }
 
     @Provides

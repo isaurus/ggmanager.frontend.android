@@ -11,14 +11,6 @@ public class TeamModel {
 
     public TeamModel(){}
 
-    public TeamModel(String teamName, String teamDescription){
-        this.id = null;
-        this.teamName = teamName;
-        this.teamDescription = teamDescription;
-        this.members = null;
-        this.teamTasksId = null;
-    }
-
     public TeamModel(String id, String teamName, String teamDescription, List<String> members) {
         this.id = id;
         this.teamName = teamName;

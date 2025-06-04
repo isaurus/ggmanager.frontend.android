@@ -35,7 +35,7 @@ public interface FirestoreRepository<T> {
      * @param model Entidad a crear
      * @return LiveData con Resource que indica éxito o error
      */
-    LiveData<Resource<Boolean>> create(T model);
+    //LiveData<Resource<Boolean>> create(T model);
 
     /**
      * Actualiza una entidad existente en Firestore.

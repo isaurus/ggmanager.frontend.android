@@ -46,10 +46,9 @@ public class HomeActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
         }
 
-        homeViewModel.getUserTeam();
-
         observeViewModel();
         setUpToolbar();
+        homeViewModel.getUserTeam();
     }
 
     private void observeViewModel() {

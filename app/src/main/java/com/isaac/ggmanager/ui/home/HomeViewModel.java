@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.UserModel;
+import com.isaac.ggmanager.domain.usecase.auth.GetAuthenticatedUserUseCase;
 import com.isaac.ggmanager.domain.usecase.home.SignOutUseCase;
 import com.isaac.ggmanager.domain.usecase.home.user.GetCurrentUserUseCase;
 
@@ -18,27 +19,29 @@ public class HomeViewModel extends ViewModel {
 
     private final SignOutUseCase signoutUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
+    private final GetAuthenticatedUserUseCase getAuthenticatedUserUseCase;
 
 
     private final MediatorLiveData<HomeViewState> homeViewState = new MediatorLiveData<>();
 
     @Inject
     public HomeViewModel(SignOutUseCase signoutUseCase,
-                         GetCurrentUserUseCase getCurrentUserUseCase) {
+                         GetCurrentUserUseCase getCurrentUserUseCase,
+                         GetAuthenticatedUserUseCase getAuthenticatedUserUseCase) {
         this.signoutUseCase = signoutUseCase;
         this.getCurrentUserUseCase = getCurrentUserUseCase;
+        this.getAuthenticatedUserUseCase = getAuthenticatedUserUseCase;
     }
 
     public LiveData<HomeViewState> getHomeViewState() { return homeViewState; }
 
     public void getUserTeam(){
+        String currentUserId = getAuthenticatedUserUseCase.execute().getUid();
+        LiveData<Resource<UserModel>> userResult = getCurrentUserUseCase.execute(currentUserId);
         homeViewState.setValue(HomeViewState.loading());
-
-        LiveData<Resource<UserModel>> userResult = getCurrentUserUseCase.execute();
 
         homeViewState.addSource(userResult, resource -> {
             if (resource == null) return;
-
             switch (resource.getStatus()){
                 case SUCCESS:
                     UserModel user = resource.getData();

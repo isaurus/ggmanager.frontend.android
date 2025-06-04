@@ -45,6 +45,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         setUpListeners();
         observeViewModel();
+        userProfileViewModel.getUserProfile();
     }
 
     private void setUpListeners() {
@@ -57,12 +58,10 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-        userProfileViewModel.getUserProfile();
-
         userProfileViewModel.getUserProfileViewState().observe(this, userProfileViewState -> {
             switch (userProfileViewState.getStatus()) {
                 case SUCCESS:
-                    UIUserUtils.fillUserProfileUI(binding, userProfileViewState.getData(), this);
+                    UIUserUtils.fillUserProfileUI(binding, userProfileViewState.getUser(), this);
                     break;
                 case LOADING:
                     // PROGRESS BAR

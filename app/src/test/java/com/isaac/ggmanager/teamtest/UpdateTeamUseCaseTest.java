@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.model.TeamModel;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
-import com.isaac.ggmanager.domain.usecase.home.team.member.UpdateTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.UpdateTeamUseCase;
 
 import org.junit.Before;
 import org.junit.Rule;

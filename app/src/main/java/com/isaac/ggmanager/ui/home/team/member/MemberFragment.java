@@ -52,7 +52,7 @@ public class MemberFragment extends Fragment {
         setUpListeners();
         observeViewModel();
 
-        memberViewModel.loadMembersOnStart();
+        memberViewModel.loadMembers();
     }
 
     private void setUpListeners() {

@@ -12,22 +12,14 @@ import javax.inject.Inject;
 public class CreateUserUseCase {
 
     private final UserRepository userRepository;
-    private final FirebaseAuthRepository authRepository;
 
     @Inject
-    public CreateUserUseCase(UserRepository userRepository,
-                             FirebaseAuthRepository authRepository){
+    public CreateUserUseCase(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.authRepository = authRepository;
     }
 
-    public LiveData<Resource<Boolean>> execute(UserModel userModel){
-        String userId = authRepository.getAuthenticatedUser().getUid();
-        String email = authRepository.getAuthenticatedUser().getEmail();
+    public LiveData<Resource<Boolean>> execute(UserModel user){
 
-        userModel.setFirebaseUid(userId);
-        userModel.setEmail(email);
-
-        return userRepository.create(userModel, userId);
+        return userRepository.create(user);
     }
 }

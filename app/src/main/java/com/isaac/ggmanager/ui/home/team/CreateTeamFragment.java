@@ -74,7 +74,6 @@ public class CreateTeamFragment extends Fragment {
             switch (createTeamViewState.getStatus()){
                 case SUCCESS:
                     Intent intent = new Intent(requireContext(), HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     requireActivity().finish();
                     break;

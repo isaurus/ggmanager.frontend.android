@@ -11,15 +11,16 @@ public class EditUserProfileViewState {
         VALIDATING
     }
 
-    @Nullable private final Resource<?> resource;
+    private final Resource<?> resource;
     private final ValidationState validationState;
 
+    //private final boolean userHasProfile;
     private final boolean isAvatarValid;
     private final boolean isNameValid;
     private final boolean isBirthdateValid;
     private final boolean isCountryValid;
 
-    public EditUserProfileViewState(@Nullable Resource<?> resource,
+    public EditUserProfileViewState(Resource<?> resource,
                                     ValidationState validationState,
                                     boolean isAvatarValid,
                                     boolean isNameValid,

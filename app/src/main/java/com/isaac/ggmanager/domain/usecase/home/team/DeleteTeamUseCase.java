@@ -1,4 +1,4 @@
-package com.isaac.ggmanager.domain.usecase.home.team.member;
+package com.isaac.ggmanager.domain.usecase.home.team;
 
 import androidx.lifecycle.LiveData;
 

@@ -64,6 +64,7 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
         return result;
     }
 
+    /*
     @Override
     public LiveData<Resource<Boolean>> create(T model) {
         MutableLiveData<Resource<Boolean>> result = new MutableLiveData<>();
@@ -78,6 +79,8 @@ public abstract class FirestoreRepositoryImpl<T> implements FirestoreRepository<
 
         return result;
     }
+
+     */
 
     @Override
     public LiveData<Resource<Boolean>> update(T model) {

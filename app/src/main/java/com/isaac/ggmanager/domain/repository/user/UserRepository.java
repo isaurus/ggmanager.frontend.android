@@ -31,10 +31,9 @@ public interface UserRepository extends FirestoreRepository<UserModel> {
      * Crea un nuevo usuario asignándole el ID obtenido de Firebase Authentication.
      *
      * @param user Usuario a crear.
-     * @param userId Identificador del usuario de Firebase Authentication.
      * @return LiveData con Resource del éxito o fracaso de la operación.
      */
-    LiveData<Resource<Boolean>> create(UserModel user, String userId);
+    LiveData<Resource<Boolean>> create(UserModel user);
 
     /**
      * Obtiene la lista de usuarios pertenecientes a un equipo.

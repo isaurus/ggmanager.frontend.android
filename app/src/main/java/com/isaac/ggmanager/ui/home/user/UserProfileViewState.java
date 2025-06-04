@@ -1,26 +1,31 @@
 package com.isaac.ggmanager.ui.home.user;
 
 import com.isaac.ggmanager.core.Resource;
+import com.isaac.ggmanager.domain.model.UserModel;
 
 public class UserProfileViewState {
 
     private final Resource<?> resource;
+    private final UserModel user;
 
-    public UserProfileViewState(Resource<?> resource){
+    public UserProfileViewState(Resource<?> resource, UserModel user){
         this.resource = resource;
+        this.user = user;
     }
 
-    public static <T> UserProfileViewState success(T data){
-        return new UserProfileViewState(Resource.success(data));
+    public static UserProfileViewState success(UserModel user){
+        return new UserProfileViewState(Resource.success(user), user);
     }
 
-    public static <T> UserProfileViewState loading(){
-        return new UserProfileViewState(Resource.loading());
+    public static UserProfileViewState loading(){
+        return new UserProfileViewState(Resource.loading(), null);
     }
 
-    public static <T> UserProfileViewState error(String message){
-        return new UserProfileViewState(Resource.error(message));
+    public static UserProfileViewState error(String message){
+        return new UserProfileViewState(Resource.error(message), null);
     }
+
+    public UserModel getUser() { return user;}
 
     public Resource.Status getStatus(){
         return resource.getStatus();

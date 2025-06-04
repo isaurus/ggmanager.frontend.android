@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.isaac.ggmanager.core.Resource;
 import com.isaac.ggmanager.domain.repository.team.TeamRepository;
-import com.isaac.ggmanager.domain.usecase.home.team.member.RemoveUserFromTeamUseCase;
+import com.isaac.ggmanager.domain.usecase.home.team.RemoveUserFromTeamUseCase;
 
 import org.junit.Before;
 import org.junit.Rule;
