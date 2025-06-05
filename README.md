@@ -1,5 +1,3 @@
-Aquí tienes un `README.md` completo y profesional en formato Markdown, listo para copiar y pegar directamente en tu repositorio de GitHub:
-
 ````markdown
 # GGManager - Android App
 
