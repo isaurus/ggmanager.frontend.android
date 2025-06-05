@@ -6,31 +6,36 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.isaac.ggmanager.R;
-import com.isaac.ggmanager.core.utils.DateFormatUtils;
+import com.isaac.ggmanager.databinding.ActivityUserProfileBinding;
+import com.isaac.ggmanager.ui.home.HomeActivity;
 import com.isaac.ggmanager.core.utils.InsetsUtils;
 import com.isaac.ggmanager.core.utils.UIUserUtils;
-import com.isaac.ggmanager.databinding.ActivityUserProfileBinding;
-import com.isaac.ggmanager.domain.model.UserModel;
-import com.isaac.ggmanager.ui.home.HomeActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Actividad que muestra el perfil del usuario actual.
+ * <p>
+ * Esta actividad observa el estado del perfil del usuario a través de un ViewModel,
+ * actualizando la interfaz de usuario con los datos recibidos.
+ * Permite navegar hacia la edición del perfil.
+ * </p>
+ */
 @AndroidEntryPoint
 public class UserProfileActivity extends AppCompatActivity {
 
     private ActivityUserProfileBinding binding;
     private UserProfileViewModel userProfileViewModel;
 
+    /**
+     * Método llamado al crear la actividad.
+     * Configura el layout, el sistema EdgeToEdge, aplica los márgenes de sistema
+     * y comienza la observación del ViewModel para cargar el perfil del usuario.
+     *
+     * @param savedInstanceState Estado guardado previamente (puede ser null).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,11 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfileViewModel.getUserProfile();
     }
 
+    /**
+     * Configura los listeners de la interfaz.
+     * - Botón de volver atrás finaliza la actividad.
+     * - Botón para editar el perfil finaliza la actividad y lanza la actividad de edición.
+     */
     private void setUpListeners() {
         binding.actionBack.setOnClickListener(v -> finish());
 
@@ -57,6 +67,12 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Observa el estado del ViewModel para actualizar la UI según el estado del perfil de usuario.
+     * - En éxito, rellena la UI con los datos del usuario.
+     * - En carga, podría mostrarse un indicador de progreso.
+     * - En error, muestra un Toast con el mensaje de error.
+     */
     private void observeViewModel() {
         userProfileViewModel.getUserProfileViewState().observe(this, userProfileViewState -> {
             switch (userProfileViewState.getStatus()) {
@@ -64,7 +80,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     UIUserUtils.fillUserProfileUI(binding, userProfileViewState.getUser(), this);
                     break;
                 case LOADING:
-                    // PROGRESS BAR
+                    // Aquí se puede mostrar un ProgressBar si se desea
                     break;
                 case ERROR:
                     Toast.makeText(this, userProfileViewState.getMessage(), Toast.LENGTH_SHORT).show();
@@ -73,8 +89,10 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Lanza la actividad para editar el perfil de usuario.
+     */
     private void launchEditProfileActivity(){
         startActivity(new Intent(this, EditUserProfileActivity.class));
-
     }
 }

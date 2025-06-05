@@ -32,6 +32,11 @@ import java.util.Calendar;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Actividad que permite al usuario editar su perfil, incluyendo la selección de avatar,
+ * nombre, fecha de nacimiento y país. Utiliza MVVM con ViewModel para gestionar
+ * la lógica de validación y persistencia de datos.
+ */
 @AndroidEntryPoint
 public class EditUserProfileActivity extends AppCompatActivity {
 
@@ -40,6 +45,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private Calendar calendar;
 
+    /**
+     * Método llamado al crear la actividad.
+     * Configura la vista, inicializa el ViewModel, prepara el selector de fecha,
+     * el dropdown de países, y establece los observadores y listeners.
+     *
+     * @param savedInstanceState Bundle con estado previo si existe.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +73,11 @@ public class EditUserProfileActivity extends AppCompatActivity {
         observeViewModel();
     }
 
+    /**
+     * Configura los listeners para los distintos elementos de la interfaz.
+     * Incluye selección de avatar, botón de guardar, botón de retroceso,
+     * y habilita el botón guardar en función de los cambios en los campos de texto.
+     */
     private void setUpListeners() {
         binding.imgProfilePic.setOnClickListener(v -> launchAvatarPickDialog());
 
@@ -78,6 +95,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
         enableButtonOnTextChange();
     }
 
+    /**
+     * Observa los cambios en el estado de la vista proporcionados por el ViewModel.
+     * Actualiza la UI en función del estado de validación, carga, éxito o error.
+     */
     private void observeViewModel() {
         editUserProfileViewModel.getEditUserProfileViewState().observe(this, editUserProfileViewState ->  {
 
@@ -108,6 +129,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Inicializa y configura el selector de fecha para el campo de fecha de nacimiento.
+     */
     private void setUpDatePicker() {
         DatePickerUtils.setupDatePicker(
                 this,
@@ -116,6 +140,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
         );
     }
 
+    /**
+     * Configura el dropdown con la lista de países disponibles para el campo país.
+     */
     private void setUpCountryDropdown() {
         AutoCompleteTextView countryInput = binding.atvCountry;
 
@@ -128,13 +155,19 @@ public class EditUserProfileActivity extends AppCompatActivity {
         countryInput.setAdapter(adapter);
     }
 
-
+    /**
+     * Habilita el botón guardar solo cuando alguno de los campos de texto tiene contenido válido.
+     */
     private void enableButtonOnTextChange(){
         TextWatcherUtils.enableViewOnTextChange(binding.etName, binding.btnSaveProfile,binding.tilName);
         TextWatcherUtils.enableViewOnTextChange(binding.etBirthdate, binding.btnSaveProfile,binding.tilBirthdate);
         TextWatcherUtils.enableViewOnTextChange(binding.atvCountry, binding.btnSaveProfile,binding.tilCountry);
     }
 
+    /**
+     * Muestra un diálogo para que el usuario seleccione un avatar de entre los disponibles.
+     * Actualiza el avatar seleccionado en el ViewModel y en la UI.
+     */
     private void launchAvatarPickDialog() {
         Avatar[] avatars = Avatar.values();
 

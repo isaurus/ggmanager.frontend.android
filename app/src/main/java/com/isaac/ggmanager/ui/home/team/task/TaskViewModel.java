@@ -20,6 +20,13 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * ViewModel encargado de gestionar la lógica y datos relacionados con las tareas del usuario.
+ * <p>
+ * Obtiene las tareas asignadas al usuario autenticado, actualiza el estado de las tareas,
+ * y permite marcar tareas como completadas.
+ * </p>
+ */
 @HiltViewModel
 public class TaskViewModel extends ViewModel {
 
@@ -32,6 +39,14 @@ public class TaskViewModel extends ViewModel {
 
     private List<String> tasksAssigned;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param getAuthenticatedUserUseCase Caso de uso para obtener usuario autenticado.
+     * @param getCurrentUserUseCase       Caso de uso para obtener datos del usuario actual.
+     * @param deleteTaskByIdUseCase       Caso de uso para eliminar (completar) una tarea por su ID.
+     * @param getUserTasksUseCase         Caso de uso para obtener tareas asignadas a un usuario.
+     */
     @Inject
     public TaskViewModel(GetAuthenticatedUserUseCase getAuthenticatedUserUseCase,
                          GetCurrentUserUseCase getCurrentUserUseCase,
@@ -43,8 +58,18 @@ public class TaskViewModel extends ViewModel {
         this.getUserTasksUseCase = getUserTasksUseCase;
     }
 
-    public LiveData<TaskViewState> getTaskViewState() { return taskViewState; }
+    /**
+     * Devuelve un LiveData observable con el estado actual de la vista de tareas.
+     *
+     * @return LiveData con TaskViewState.
+     */
+    public LiveData<TaskViewState> getTaskViewState() {
+        return taskViewState;
+    }
 
+    /**
+     * Obtiene el usuario actualmente autenticado y carga sus tareas asignadas.
+     */
     public void getCurrentUser(){
         String currentUserId = getAuthenticatedUserUseCase.execute().getUid();
         LiveData<Resource<UserModel>> getCurrentUserResult = getCurrentUserUseCase.execute(currentUserId);
@@ -66,6 +91,11 @@ public class TaskViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Obtiene las tareas asignadas a un usuario dado.
+     *
+     * @param tasksAssigned Lista de IDs de tareas asignadas.
+     */
     private void getTasksAssignedToUser(List<String> tasksAssigned){
         LiveData<Resource<List<TaskModel>>> getTasksAssignedToUserResult = getUserTasksUseCase.execute(tasksAssigned);
 
@@ -80,10 +110,16 @@ public class TaskViewModel extends ViewModel {
                 case ERROR:
                     taskViewState.setValue(TaskViewState.error(taskModelResource.getMessage()));
                     taskViewState.removeSource(getTasksAssignedToUserResult);
+                    break;
             }
         });
     }
 
+    /**
+     * Marca una tarea como completada eliminándola de la lista de tareas asignadas.
+     *
+     * @param task Tarea a marcar como completada.
+     */
     public void markTaskAsCompleted(TaskModel task){
         String taskId = task.getId();
         LiveData<Resource<Boolean>> deleteTaskResult = deleteTaskByIdUseCase.execute(taskId);
@@ -93,6 +129,7 @@ public class TaskViewModel extends ViewModel {
             if (booleanResource == null) return;
             switch (booleanResource.getStatus()){
                 case SUCCESS:
+                    // Refresca la lista de tareas tras marcar como completada
                     getCurrentUser();
                     taskViewState.removeSource(deleteTaskResult);
                     break;
