@@ -29,15 +29,6 @@ public interface FirestoreRepository<T> {
     LiveData<Resource<List<T>>> getAll();
 
     /**
-     * Crea una nueva entidad en Firestore.
-     * Asigna automáticamente un ID si la entidad no lo tiene.
-     *
-     * @param model Entidad a crear
-     * @return LiveData con Resource que indica éxito o error
-     */
-    //LiveData<Resource<Boolean>> create(T model);
-
-    /**
      * Actualiza una entidad existente en Firestore.
      * La entidad debe tener un ID válido.
      *

@@ -16,8 +16,12 @@ import com.isaac.ggmanager.ui.home.HomeActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
- * Esta clase lanza al usuario al corazón de la aplicación si está logeado y, en caso contrario,
- * lo direcciona a la fase de registro/login.
+ * Activity inicial que verifica el estado de autenticación del usuario.
+ *
+ * <p>Si el usuario no está autenticado, redirige a la pantalla de login.
+ * Si el usuario está autenticado, comprueba si el perfil está completo:
+ * - Si el perfil está completo, redirige al HomeActivity.
+ * - Si no, redirige a la pantalla para completar el perfil del usuario.</p>
  */
 @AndroidEntryPoint
 public class LaunchActivity extends AppCompatActivity {
@@ -28,30 +32,41 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Habilita el modo Edge-to-Edge para la UI
         EdgeToEdge.enable(this);
 
         binding = ActivityLaunchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Obtiene la instancia del ViewModel con inyección de dependencias
         launchViewModel = new ViewModelProvider(this).get(LaunchViewModel.class);
 
-        observeViewModel();
+        observarEstadoAutenticacion();
     }
 
-    private void observeViewModel(){
-        if (!launchViewModel.isUserAuthenticated()){
+    /**
+     * Observa el estado de autenticación y perfil del usuario para determinar la navegación adecuada.
+     * <p>
+     * - Si no está autenticado, navega a LoginActivity.
+     * - Si está autenticado, verifica si el perfil está completo y redirige en consecuencia.
+     * - Muestra mensajes de error en caso de fallo.
+     * </p>
+     */
+    private void observarEstadoAutenticacion() {
+        if (!launchViewModel.isUserAuthenticated()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         } else {
             launchViewModel.fetchUserProfile();
             launchViewModel.getLaunchViewState().observe(this, launchViewState -> {
-                switch (launchViewState.getStatus()){
+                switch (launchViewState.getStatus()) {
                     case SUCCESS:
-                        if (launchViewState.isUserHasProfile()){
+                        if (launchViewState.isUserHasProfile()) {
                             startActivity(new Intent(this, HomeActivity.class));
                         } else {
                             startActivity(new Intent(this, EditUserProfileActivity.class));
                         }
+                        finish();
                         break;
                     case ERROR:
                         Toast.makeText(this, launchViewState.getMessage(), Toast.LENGTH_SHORT).show();

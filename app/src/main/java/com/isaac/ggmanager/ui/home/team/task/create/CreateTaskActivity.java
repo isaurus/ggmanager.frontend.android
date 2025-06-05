@@ -22,6 +22,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Actividad que permite crear una nueva tarea dentro de un equipo.
+ *
+ * Esta clase gestiona la interfaz para ingresar datos de la tarea, seleccionar
+ * fecha límite, prioridad y asignar la tarea a un miembro del equipo.
+ *
+ * La tarea se guarda en Firebase Firestore y se actualizan las referencias en el equipo y usuario.
+ */
 public class CreateTaskActivity extends AppCompatActivity {
 
     private ActivityCreateTaskBinding binding;
@@ -31,6 +39,11 @@ public class CreateTaskActivity extends AppCompatActivity {
     private String selectedMemberId;
     private String teamId;
 
+    /**
+     * Método llamado al crear la actividad. Inicializa la interfaz y configura componentes.
+     *
+     * @param savedInstanceState Estado guardado previamente (si lo hay).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +59,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         binding.btnCreateTask.setOnClickListener(v -> createTask());
     }
 
+    /**
+     * Configura el selector de fecha para la fecha límite de la tarea.
+     * Muestra un DatePickerDialog y actualiza el campo de texto con la fecha seleccionada.
+     */
     private void setupDatePicker() {
         binding.etDeadline.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
@@ -57,12 +74,20 @@ public class CreateTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Configura el dropdown de selección de prioridad con opciones predefinidas ("Alta", "Media", "Baja").
+     */
     private void setupPriorityDropdown() {
         String[] priorities = {"Alta", "Media", "Baja"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, priorities);
         ((MaterialAutoCompleteTextView) binding.atvPriority).setAdapter(adapter);
     }
 
+    /**
+     * Carga el usuario autenticado actual y obtiene su equipo.
+     * Si el usuario no está autenticado o no pertenece a un equipo, muestra mensaje y cierra la actividad.
+     * En caso exitoso, carga los miembros del equipo para asignar tareas.
+     */
     private void loadCurrentUserAndTeamMembers() {
         String uid = auth.getUid();
         if (uid == null) {
@@ -89,6 +114,11 @@ public class CreateTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Carga los miembros del equipo dado su ID y configura el dropdown para seleccionar el miembro asignado.
+     *
+     * @param teamId Identificador del equipo cuyos miembros se cargarán.
+     */
     private void loadTeamMembers(String teamId) {
         db.collection("users")
                 .whereEqualTo("teamId", teamId)
@@ -116,6 +146,11 @@ public class CreateTaskActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Crea una nueva tarea con los datos ingresados en la interfaz.
+     * Valida que todos los campos estén completos, crea el documento en Firestore y actualiza referencias en equipo y usuario.
+     * Muestra mensajes de éxito o error según corresponda.
+     */
     private void createTask() {
         String title = binding.etTeamName.getText().toString().trim();
         String description = binding.etTeamDescription.getText().toString().trim();
@@ -147,15 +182,26 @@ public class CreateTaskActivity extends AppCompatActivity {
             updateUserWithTaskId(taskId);
         }).addOnFailureListener(e -> {
             Toast.makeText(this, "Error al crear tarea", Toast.LENGTH_SHORT).show();
-            Log.e("Prueba", e.getMessage());
+            Log.e("CreateTaskActivity", e.getMessage());
         });
     }
 
+    /**
+     * Actualiza el documento del equipo agregando el ID de la tarea creada a la lista de tareas del equipo.
+     *
+     * @param taskId Identificador de la tarea creada.
+     */
     private void updateTeamWithTaskId(String taskId) {
         DocumentReference teamRef = db.collection("teams").document(teamId);
         teamRef.update("teamTasksId", FieldValue.arrayUnion(taskId));
     }
 
+    /**
+     * Actualiza el documento del usuario asignado agregando el ID de la tarea creada a su lista de tareas.
+     * Muestra un mensaje de éxito al finalizar o un mensaje de error en caso de fallo.
+     *
+     * @param taskId Identificador de la tarea creada.
+     */
     private void updateUserWithTaskId(String taskId) {
         DocumentReference userRef = db.collection("users").document(selectedMemberId);
         userRef.update("teamTasksId", FieldValue.arrayUnion(taskId))
@@ -166,12 +212,18 @@ public class CreateTaskActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(this, "Error al asignar tarea", Toast.LENGTH_SHORT).show());
     }
 
+    /**
+     * Convierte una cadena con formato "dd/MM/yyyy" a un objeto {@link Date}.
+     *
+     * @param birthdate Fecha en formato cadena "dd/MM/yyyy".
+     * @return Objeto Date correspondiente o null si el formato es inválido.
+     */
     private Date formatDate(String birthdate){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try{
             return simpleDateFormat.parse(birthdate);
         } catch (ParseException e){
-            e.getMessage();
+            Log.e("CreateTaskActivity", "Error al parsear fecha: " + e.getMessage());
         }
         return null;
     }

@@ -20,6 +20,11 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+/**
+ * ViewModel encargado de gestionar la lógica y estado de la edición del perfil de usuario.
+ * Realiza validaciones de formulario, interacción con casos de uso para crear y actualizar usuarios,
+ * y mantiene el estado observable para la UI.
+ */
 @HiltViewModel
 public class EditUserProfileViewModel extends ViewModel {
 
@@ -30,10 +35,21 @@ public class EditUserProfileViewModel extends ViewModel {
     private final UpdateUserUseCase updateUserUseCase;
     private final GetCurrentUserUseCase getCurrentUserUseCase;
 
+    /**
+     * Estado observable que contiene el estado actual de la vista de edición de perfil.
+     */
     public final MediatorLiveData<EditUserProfileViewState> editUserProfileViewState = new MediatorLiveData<>();
 
     private String selectedAvatar;
 
+    /**
+     * Constructor inyectado con los casos de uso necesarios.
+     *
+     * @param getAuthenticatedUserUseCase Caso de uso para obtener usuario autenticado actual.
+     * @param createUserUseCase Caso de uso para crear un nuevo usuario.
+     * @param updateUserUseCase Caso de uso para actualizar usuario existente.
+     * @param getCurrentUserUseCase Caso de uso para obtener el usuario actual.
+     */
     @Inject
     public EditUserProfileViewModel(GetAuthenticatedUserUseCase getAuthenticatedUserUseCase,
                                     CreateUserUseCase createUserUseCase,
@@ -45,8 +61,21 @@ public class EditUserProfileViewModel extends ViewModel {
         this.getCurrentUserUseCase = getCurrentUserUseCase;
     }
 
-    public LiveData<EditUserProfileViewState> getEditUserProfileViewState() { return editUserProfileViewState; }
+    /**
+     * Obtiene el estado observable de la vista de edición de perfil.
+     *
+     * @return LiveData con el estado de la vista.
+     */
+    public LiveData<EditUserProfileViewState> getEditUserProfileViewState() {
+        return editUserProfileViewState;
+    }
 
+    /**
+     * Ejecuta la creación del perfil de usuario usando el caso de uso correspondiente.
+     * Actualiza el estado observable según el resultado.
+     *
+     * @param user Modelo de usuario a crear.
+     */
     public void createUserProfile(UserModel user){
         LiveData<Resource<Boolean>> editUserProfileResult = createUserUseCase.execute(user);
         editUserProfileViewState.setValue(EditUserProfileViewState.loading());
@@ -65,16 +94,28 @@ public class EditUserProfileViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Método placeholder para la actualización del perfil de usuario.
+     * Actualmente sin implementación.
+     */
     public void updateUserProfile(){}
 
-
+    /**
+     * Valida los datos del formulario de edición de perfil.
+     * Si la validación es correcta, procede a crear el perfil del usuario.
+     *
+     * @param avatar Clave del avatar seleccionado.
+     * @param name Nombre introducido por el usuario.
+     * @param birthdate Fecha de nacimiento en formato "dd/MM/yyyy".
+     * @param country País seleccionado.
+     */
     public void validateEditUserForm(String avatar, String name, String birthdate, String country) {
         boolean isNameValid = isValidName(name);
         boolean isBirthdateValid = isValidBirthdate(birthdate);
         boolean isCountryValid = isValidCountry(country);
 
         if (!isValidAvatar(avatar)) {
-            avatar = "ic_avatar_avocado";
+            avatar = "ic_avatar_avocado"; // Valor por defecto en caso de avatar inválido
         }
 
         editUserProfileViewState.setValue(EditUserProfileViewState.validating(
@@ -93,22 +134,55 @@ public class EditUserProfileViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Valida si la clave del avatar es válida.
+     *
+     * @param avatar Clave del avatar.
+     * @return true si el avatar no es nulo, false en caso contrario.
+     */
     private boolean isValidAvatar(String avatar){
         return avatar != null;
     }
 
+    /**
+     * Valida el nombre.
+     * Debe ser no vacío y no superar la longitud máxima permitida.
+     *
+     * @param name Nombre a validar.
+     * @return true si es válido, false si es vacío o demasiado largo.
+     */
     private boolean isValidName(String name){
         return !name.isEmpty() && !(name.length() > MAX_NAME_LENGTH);
     }
 
+    /**
+     * Valida el país.
+     * Debe ser no vacío.
+     *
+     * @param country País a validar.
+     * @return true si es válido, false si está vacío.
+     */
     private boolean isValidCountry(String country){
         return !country.isEmpty();
     }
 
+    /**
+     * Valida la fecha de nacimiento.
+     * Debe ser no vacía.
+     *
+     * @param birthdate Fecha a validar en formato texto.
+     * @return true si es válido, false si está vacío.
+     */
     private boolean isValidBirthdate(String birthdate) {
         return !birthdate.isEmpty();
     }
 
+    /**
+     * Convierte un String con fecha en formato "dd/MM/yyyy" a un objeto Date.
+     *
+     * @param birthdate Fecha en formato String.
+     * @return Objeto Date o null si no se pudo parsear.
+     */
     private Date formatDate(String birthdate){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try{
@@ -119,10 +193,20 @@ public class EditUserProfileViewModel extends ViewModel {
         return null;
     }
 
+    /**
+     * Establece el avatar seleccionado por clave.
+     *
+     * @param avatarKey Clave del avatar seleccionado.
+     */
     public void setSelectedAvatar(String avatarKey) {
         this.selectedAvatar = avatarKey;
     }
 
+    /**
+     * Obtiene la clave del avatar seleccionado actualmente.
+     *
+     * @return Clave del avatar seleccionado.
+     */
     public String getSelectedAvatar() {
         return selectedAvatar;
     }
