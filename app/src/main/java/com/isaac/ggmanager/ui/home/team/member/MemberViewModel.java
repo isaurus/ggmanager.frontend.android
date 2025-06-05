@@ -145,7 +145,11 @@ public class MemberViewModel extends ViewModel {
             if (booleanResource == null) return;
             switch (booleanResource.getStatus()) {
                 case SUCCESS:
+
+                    getTeamMembers();
+
                     addTeamToUser();
+
                     memberViewState.removeSource(addUserToTeamResult);
                     break;
                 case ERROR:
